@@ -1991,7 +1991,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>RM Dot</string>
     </property>
    </widget>
    <widget class="QGraphicsView" name="graphicsView">
