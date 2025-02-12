@@ -18,7 +18,9 @@ public:
     ~MainWindow();
 
 public slots:
-    void print_text();
+    void add_row();
+    void clear_table();
+    void rm_dot();
 
 private:
     Ui::MainWindow *ui;
