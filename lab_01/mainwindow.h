@@ -4,6 +4,9 @@
 #include <QMainWindow>
 using namespace std;
 
+int check_num(string num);
+void send_error_message(string text);
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -21,7 +24,6 @@ public slots:
     void add_row();
     void clear_table();
     void rm_dot();
-    int check_num(string num);
 
 private:
     Ui::MainWindow *ui;
