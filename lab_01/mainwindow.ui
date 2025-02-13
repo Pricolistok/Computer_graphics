@@ -489,7 +489,7 @@
       <x>1050</x>
       <y>260</y>
       <width>241</width>
-      <height>311</height>
+      <height>281</height>
      </rect>
     </property>
     <property name="gridStyle">
@@ -2471,6 +2471,19 @@
        </colorrole>
       </disabled>
      </palette>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushBtnFind">
+    <property name="geometry">
+     <rect>
+      <x>1090</x>
+      <y>550</y>
+      <width>161</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Find</string>
     </property>
    </widget>
   </widget>

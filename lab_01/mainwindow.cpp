@@ -6,13 +6,20 @@
 
 using namespace std;
 
+
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     ui->widget->setStyleSheet("background-color:black;");
+
+    drawWidget = new MyDrawWidget(ui->widget);
+    drawWidget->setShouldDraw(false);
+    drawWidget->setGeometry(0, 0, ui->widget->width(), ui->widget->height());  // Устанавливаем его размер
+    drawWidget->show();
+
     connect(ui->pushBtnAddDot, SIGNAL(clicked()), this, SLOT(add_row()));
     connect(ui->pushBtnRMall, SIGNAL(clicked()), this, SLOT(clear_table()));
-    connect(ui->pushBtnRMDot, SIGNAL(clicked()), this, SLOT(rm_dot()));
+    connect(ui->pushBtnFind, SIGNAL(clicked()), this, SLOT(reset_draw()));
 }
 
 int check_num(string num)
@@ -33,6 +40,18 @@ void send_error_message(string text)
     message.setWindowTitle("Error");
     message.setText(text.c_str());
     message.exec();
+}
+
+void MyDrawWidget::setShouldDraw(bool value)
+{
+    flag_draw = value;
+}
+
+
+void MainWindow::reset_draw()
+{
+    drawWidget->setShouldDraw(true);
+    ui->widget->update();
 }
 
 void MainWindow::add_row()
@@ -74,6 +93,22 @@ void MainWindow::rm_dot()
         return;
     }
     ui->tableWidget->removeRow(ui->lineEditRMId->text().toInt() - 1);
+}
+
+
+MyDrawWidget::MyDrawWidget(QWidget *parent) : QWidget(parent)
+{
+    setStyleSheet("background-color: black;");
+}
+
+void MyDrawWidget::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+    painter.setPen({Qt::white, 2});
+    if (flag_draw == true)
+    {
+        painter.drawEllipse(QPoint(10, 10), 1, 1);
+    }
 }
 
 MainWindow::~MainWindow()
