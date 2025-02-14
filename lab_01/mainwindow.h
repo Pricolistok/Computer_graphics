@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <vector>
 using namespace std;
 
 int check_num(string num);
@@ -23,6 +24,8 @@ class MyDrawWidget : public QWidget
         QMainWindow *mainWindow;
         bool flag_draw;
         void setShouldDraw(bool value);
+        vector<int> x_data;
+        vector<int> y_data;
 
     protected:
         void paintEvent(QPaintEvent *event) override;

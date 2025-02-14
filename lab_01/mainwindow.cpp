@@ -3,6 +3,7 @@
 #include <QPushButton>
 #include <QMessageBox>
 #include <QPainter>
+#include <iostream>
 
 using namespace std;
 
@@ -14,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
 
     drawWidget = new MyDrawWidget(ui->widget);
     drawWidget->setShouldDraw(false);
+    drawWidget->mainWindow = this;
     drawWidget->setGeometry(0, 0, ui->widget->width(), ui->widget->height());  // Устанавливаем его размер
     drawWidget->show();
 
@@ -50,8 +52,34 @@ void MyDrawWidget::setShouldDraw(bool value)
 
 void MainWindow::reset_draw()
 {
+    QString data;
+    char buffer[100];
+    int result_message;
+    string str_mes;
     drawWidget->setShouldDraw(true);
     ui->widget->update();
+    int cnt_dots = ui->tableWidget->rowCount();
+    cout << cnt_dots << endl;
+    for (int i = 0; i < cnt_dots; i++)
+    {
+        data = ui->tableWidget->item(i, 0)->text();
+        if (check_num(data.toStdString()) != 0)
+        {
+            result_message = snprintf(buffer, 100, "Error with X in row %d", i);
+            str_mes = buffer;
+            send_error_message(str_mes);
+            return;
+        }
+        data = ui->tableWidget->item(i, 1)->text();
+        if (check_num(data.toStdString()) != 0)
+        {
+            result_message = snprintf(buffer, 100, "Error with Y in row %d", i);
+            str_mes = buffer;
+            send_error_message(str_mes);
+            return;
+        }
+        cout << i << " " << ui->tableWidget->item(i, 0)->text().toStdString() << " " << ui->tableWidget->item(i, 1)->text().toStdString() << endl;
+    }
 }
 
 void MainWindow::add_row()
@@ -95,7 +123,6 @@ void MainWindow::rm_dot()
     ui->tableWidget->removeRow(ui->lineEditRMId->text().toInt() - 1);
 }
 
-
 MyDrawWidget::MyDrawWidget(QWidget *parent) : QWidget(parent)
 {
     setStyleSheet("background-color: black;");
@@ -107,6 +134,7 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
     painter.setPen({Qt::white, 2});
     if (flag_draw == true)
     {
+
         painter.drawEllipse(QPoint(10, 10), 1, 1);
     }
 }
