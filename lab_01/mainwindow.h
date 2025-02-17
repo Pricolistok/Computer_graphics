@@ -7,6 +7,12 @@ using namespace std;
 
 int check_num(string num);
 void send_error_message(string text);
+double cnt_bisector(double a, double b, double c);
+double cnt_size_of_line(int x_data_1, int x_data_2, int y_data_1, int y_data_2);
+void message_result(int arr_result[], double tmp);
+int cnt_y_bis(double a, double b, int y1, int y2);
+int cnt_x_bis(double a, double b, int x1, int x2);
+int cnt_scale(int arr_result[], int len, int screen_width, int screen_height);
 
 
 QT_BEGIN_NAMESPACE
@@ -22,10 +28,11 @@ class MyDrawWidget : public QWidget
     public:
         explicit MyDrawWidget(QWidget *parent = nullptr);
         QMainWindow *mainWindow;
-        bool flag_draw;
+        int flag_draw = 0;
         void setShouldDraw(bool value);
         vector<int> x_data;
         vector<int> y_data;
+        void analisys_dots(int arr_result[10]);
 
     protected:
         void paintEvent(QPaintEvent *event) override;
