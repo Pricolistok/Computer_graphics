@@ -78,6 +78,8 @@ void MainWindow::reset_draw()
             send_error_message(str_mes);
             return;
         }
+        drawWidget->x_data.push_back(ui->tableWidget->item(i, 0)->text().toInt());
+        drawWidget->y_data.push_back(ui->tableWidget->item(i, 1)->text().toInt());
         cout << i << " " << ui->tableWidget->item(i, 0)->text().toStdString() << " " << ui->tableWidget->item(i, 1)->text().toStdString() << endl;
     }
 }
@@ -132,10 +134,9 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     painter.setPen({Qt::white, 2});
-    if (flag_draw == true)
+    for (int i = 0; i < int(this->x_data.size()); i++)
     {
-
-        painter.drawEllipse(QPoint(10, 10), 1, 1);
+        painter.drawEllipse(QPoint(this->x_data[i], this->y_data[i]), 1, 1);
     }
 }
 
