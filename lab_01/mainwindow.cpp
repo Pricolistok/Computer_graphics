@@ -4,6 +4,8 @@
 #include <QMessageBox>
 #include <QPainter>
 #include <iostream>
+#include <string>
+#include <exception>
 
 using namespace std;
 
@@ -26,14 +28,15 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
 
 int check_num(string num)
 {
-    for (size_t i = 0; i < num.size(); i++)
+    try
     {
-        if (isdigit(num[i]) != true)
-        {
-            return 1;
-        }
+        stoi(num);
+        return 0;
     }
-    return 0;
+    catch (exception)
+    {
+        return 1;
+    }
 }
 
 void send_error_message(string text)
@@ -134,9 +137,16 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     painter.setPen({Qt::white, 2});
+    painter.drawLine(0, 300, 1000, 300);
+    painter.drawLine(990, 295, 1000, 300);
+    painter.drawLine(990, 305, 1000, 300);
+    painter.drawLine(500, 0, 500, 600);
+    painter.drawLine(495, 10, 500, 0);
+    painter.drawLine(505, 10, 500, 0);
+    painter.setPen({Qt::red, 2});
     for (int i = 0; i < int(this->x_data.size()); i++)
     {
-        painter.drawEllipse(QPoint(this->x_data[i], this->y_data[i]), 1, 1);
+        painter.drawEllipse(QPoint(this->x_data[i] + 500, -1 * this->y_data[i] + 300), 1, 1);
     }
 }
 
