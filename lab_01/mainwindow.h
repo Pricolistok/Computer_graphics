@@ -13,6 +13,8 @@ void message_result(int arr_result[], double tmp);
 int cnt_y_bis(double a, double b, int y1, int y2);
 int cnt_x_bis(double a, double b, int x1, int x2);
 int cnt_scale(int arr_result[], int len, int screen_width, int screen_height);
+bool line_intersection(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int* intersection_x, int* intersection_y);
+bool are_points_distinct(int x1, int y1, int x2, int y2, int x3, int y3);
 
 
 QT_BEGIN_NAMESPACE
@@ -32,6 +34,7 @@ class MyDrawWidget : public QWidget
         void setShouldDraw(bool value);
         vector<int> x_data;
         vector<int> y_data;
+        int flag_cnt = 0;
         void analisys_dots(int arr_result[10]);
 
     protected:
