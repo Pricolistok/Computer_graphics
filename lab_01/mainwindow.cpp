@@ -66,11 +66,6 @@ void MainWindow::reset_draw()
 
     int cnt_dots = ui->tableWidget->rowCount();
 
-    if (cnt_dots == 0) {
-        send_error_message("No data to draw.");
-        return;
-    }
-
     for (int i = 0; i < cnt_dots; i++)
     {
         data = ui->tableWidget->item(i, 0)->text();
@@ -165,7 +160,7 @@ void message_result(double arr_result[])
 {
     QMessageBox message_result;
     QString message;
-    message_result.setWindowTitle("Result");
+    message_result.setWindowTitle("Результат");
     message = QString(
                   "Координаты треугольника у которого минимальная биссектриса:\nX1:%1 Y1:%2\nX2:%3 Y2:%4\nX3:%5 Y3:%6\n"
                   "Координаты начала биссектрисы:\nX:%7 Y:%8\nКоординаты конца биссетрисы:\nX:%9 Y:%10\nДлина биссектрисы:%11\n")
@@ -229,9 +224,10 @@ void set_data(double arr_result[], double x_1, double y_1, double x_2, double y_
     arr_result[5] = y_3;
     x_tmp = cnt_x_bis(b, c, x_2, x_3);
     y_tmp = cnt_y_bis(b, c, y_2, y_3);
-    cout << "jj " << x_tmp << " " << y_tmp << endl;
+    qDebug() << "   x_tmp: " << x_tmp << "  y_tmp: " << y_tmp;
     line_intersection(x_1, y_1, x_tmp, y_tmp, x_2, y_2, x_3, y_3, &x_s, &y_s);
-    cout << "ii " << x_s << " " << y_s << endl;
+    qDebug() << "   x_s: " << x_s << "  y_s: " << y_s;
+
     arr_result[6] = x_s;
     arr_result[7] = y_s;
     arr_result[8] = x_1;
@@ -243,7 +239,6 @@ void MyDrawWidget::analisys_dots(double arr_result[11])
 {
     double a, b, c, tmp;
     int len_data = int(this->x_data.size());
-    double x_tmp, y_tmp, x_s, y_s;
     double min = DBL_MAX;
 
     qDebug() << x_data;
@@ -273,7 +268,7 @@ void MyDrawWidget::analisys_dots(double arr_result[11])
                 tmp = cnt_bisector(a, b, c);
                 if (tmp < min)
                 {
-                    cout << "1B " << tmp << endl;
+                    qDebug() << "1IF" << tmp << "ВЕРШИНА X: " << x_data[i] << "Y: " << y_data[i];
                     min = tmp;
                     set_data(arr_result, x_data[i], y_data[i], x_data[j], y_data[j], x_data[z], y_data[z], c, a);
                 }
@@ -281,7 +276,7 @@ void MyDrawWidget::analisys_dots(double arr_result[11])
                 tmp = cnt_bisector(b, c, a);
                 if (tmp < min)
                 {
-                    cout << "2B " << tmp << endl;
+                    qDebug() << "2IF" << tmp << "ВЕРШИНА X: " << x_data[j] << "Y: " << y_data[j];
                     min = tmp;
                     set_data(arr_result, x_data[j], y_data[j], x_data[i], y_data[i], x_data[z], y_data[z], b, a);
                 }
@@ -289,7 +284,7 @@ void MyDrawWidget::analisys_dots(double arr_result[11])
                 tmp = cnt_bisector(c, a, b);
                 if (tmp < min)
                 {
-                    cout << "3B " << tmp << endl;
+                    qDebug() << "1IF" << tmp << "ВЕРШИНА X: " << x_data[z] << "Y: " << y_data[z];
                     min = tmp;
                     set_data(arr_result, x_data[z], y_data[z], x_data[i], y_data[i], x_data[j], y_data[j], b, c);
                 }
@@ -305,7 +300,7 @@ double cnt_scale(double arr_result[], int len, int screen_width, int screen_heig
     int padding = 30;
     double width;
     double height;
-    double min_x = arr_result[0], max_x;
+    double min_x, max_x;
     double min_y, max_y;
 
     min_x = min({arr_result[0], arr_result[2], arr_result[4], arr_result[6]});
