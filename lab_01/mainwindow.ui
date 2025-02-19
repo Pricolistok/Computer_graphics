@@ -527,8 +527,15 @@
       <height>91</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <stylestrategy>PreferAntialias</stylestrategy>
+     </font>
+    </property>
     <property name="text">
-     <string>Add Dot</string>
+     <string>Добавить
+ точку</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_X">
@@ -1498,8 +1505,13 @@
       <height>25</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>Remove All</string>
+     <string>Удалитьвсе точки</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEditRMId">
@@ -1507,7 +1519,7 @@
      <rect>
       <x>1130</x>
       <y>230</y>
-      <width>121</width>
+      <width>71</width>
       <height>25</height>
      </rect>
     </property>
@@ -1984,14 +1996,19 @@
    <widget class="QPushButton" name="pushBtnRMDot">
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1218</x>
       <y>230</y>
-      <width>89</width>
+      <width>131</width>
       <height>25</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>RM Dot</string>
+     <string>Удалить точку</string>
     </property>
    </widget>
    <widget class="QWidget" name="widget" native="true">
@@ -2476,14 +2493,19 @@
    <widget class="QPushButton" name="pushBtnFind">
     <property name="geometry">
      <rect>
-      <x>1150</x>
+      <x>1130</x>
       <y>570</y>
-      <width>161</width>
-      <height>25</height>
+      <width>191</width>
+      <height>31</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>Find</string>
+     <string>Поиск решений</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -2529,7 +2551,7 @@
      <x>0</x>
      <y>0</y>
      <width>1479</width>
-     <height>21</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuGeometry">

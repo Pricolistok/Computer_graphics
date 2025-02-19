@@ -5,16 +5,18 @@
 #include <vector>
 using namespace std;
 
-int check_num(string num);
+int check_num(QString num);
 void send_error_message(string text);
 double cnt_bisector(double a, double b, double c);
-double cnt_size_of_line(int x_data_1, int x_data_2, int y_data_1, int y_data_2);
-void message_result(int arr_result[], double tmp);
-int cnt_y_bis(double a, double b, int y1, int y2);
-int cnt_x_bis(double a, double b, int x1, int x2);
-int cnt_scale(int arr_result[], int len, int screen_width, int screen_height);
-bool line_intersection(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int* intersection_x, int* intersection_y);
-bool are_points_distinct(int x1, int y1, int x2, int y2, int x3, int y3);
+double cnt_size_of_line(double x_data_1, double x_data_2, double y_data_1, double y_data_2);
+void message_result(double arr_result[]);
+double cnt_y_bis(double a, double b, double y1, double y2);
+double cnt_x_bis(double a, double b, double x1, double x2);
+double cnt_scale(double arr_result[], int len, int screen_width, int screen_height);
+void line_intersection(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4, double* intersection_x, double* intersection_y);
+bool are_points_distinct(double x1, double y1, double x2, double y2, double x3, double y3);
+void set_data(double arr_result[], double x_1, double y_1, double x_2, double y_2, double x_3, double y_3, double b, double c);
+void findCanonicalParams(double x1, double y1, double x2, double y2, double arr_res[]);
 
 
 QT_BEGIN_NAMESPACE
@@ -32,10 +34,10 @@ class MyDrawWidget : public QWidget
         QMainWindow *mainWindow;
         int flag_draw = 0;
         void setShouldDraw(bool value);
-        vector<int> x_data;
-        vector<int> y_data;
+        vector<double> x_data;
+        vector<double> y_data;
         int flag_cnt = 0;
-        void analisys_dots(int arr_result[10]);
+        void analisys_dots(double arr_result[11]);
 
     protected:
         void paintEvent(QPaintEvent *event) override;
