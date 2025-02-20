@@ -1511,7 +1511,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Удалитьвсе точки</string>
+     <string>Удалить все точки</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEditRMId">

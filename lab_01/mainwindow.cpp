@@ -5,9 +5,7 @@
 #include <QPainter>
 #include <iostream>
 #include <string>
-#include <exception>
 #include <math.h>
-#include <format>
 #include <cfloat>
 
 using namespace std;
@@ -164,8 +162,8 @@ void message_result(double arr_result[])
     QString message;
     message_result.setWindowTitle("Результат");
     message = QString(
-                  "Координаты треугольника у которого минимальная биссектриса:\nX1:%1 Y1:%2\nX2:%3 Y2:%4\nX3:%5 Y3:%6\n"
-                  "Координаты начала биссектрисы:\nX:%7 Y:%8\nКоординаты конца биссетрисы:\nX:%9 Y:%10\nДлина биссектрисы:%11\n")
+                  "Координаты треугольника у которого минимальная биссектриса:\nX1: %1 Y1: %2\nX2: %3 Y2: %4\nX3: %5 Y3: %6\n"
+                  "Координаты начала биссектрисы:\nX: %7 Y: %8\nКоординаты конца биссетрисы:\nX: %9 Y: %10\nДлина биссектрисы: %11\n")
                   .arg(arr_result[0]).arg(arr_result[1]).arg(arr_result[2]).arg(arr_result[3]).arg(arr_result[4]).arg(arr_result[5])
                   .arg(arr_result[8]).arg(arr_result[9]).arg(arr_result[6]).arg(arr_result[7]).arg(arr_result[10]);
     message_result.setText(message);
@@ -253,13 +251,13 @@ void MyDrawWidget::analisys_dots(double arr_result[11])
             {
                 if (!are_points_distinct(x_data[i], y_data[i], x_data[j], y_data[j], x_data[z], y_data[z]))
                 {
-                    send_error_message("Ошибка! Есть равные одинаковые точки!");
-                    return;
+                    // send_error_message("Ошибка! Есть одинаковые точки!");
+                    continue;
                 }
 
                 if (check_in_one_line(x_data[i], y_data[i], x_data[j], y_data[j], x_data[z], y_data[z]))
                 {
-                    send_error_message("Ошибка! Есть три точки лежат на одной прямой!");
+                    // send_error_message("Ошибка! Есть три точки лежат на одной прямой!");
                     continue;
                 }
 
@@ -329,13 +327,13 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
     painter.end();
     double arr[11], scale;
     int len_data = int(this->x_data.size());
-    int min_x, max_x;
-    int min_y, max_y;
+    double min_x, max_x;
+    double min_y, max_y;
 
     if (len_data < 3)
     {
         if (this->flag_cnt != 0)
-            send_error_message("Ошибка! Отсутствуют данные!");
+            send_error_message("Ошибка! Данных недостаточно для построения треугольника!");
         this->flag_cnt += 1;
         return;
     }
@@ -349,11 +347,11 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
 
     scale = cnt_scale(arr, 10, 1000, 600);
 
-    int figure_width = (max_x - min_x) * scale;
-    int figure_height = (max_y - min_y) * scale;
+    double figure_width = (max_x - min_x) * scale;
+    double figure_height = (max_y - min_y) * scale;
 
-    int offset_x = (1000 - figure_width) / 2 - min_x * scale + 30;
-    int offset_y = (600 - figure_height) / 2 + max_y * scale + 30;
+    double offset_x = (1000 - figure_width) / 2 - min_x * scale + 30;
+    double offset_y = (600 - figure_height) / 2 + max_y * scale + 30;
 
     painter.begin(this);
     painter.setPen({Qt::green, 2});
@@ -366,7 +364,7 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
     if (arr[10] != 0)
         message_result(arr);
     else
-        send_error_message("Ошибка! Не найдено ни одного треугольника!");
+        send_error_message("Ошибка! Не найдено ни одного не вырожденного треугольника!");
 }
 
 
