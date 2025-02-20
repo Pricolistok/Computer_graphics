@@ -129,17 +129,19 @@ void MainWindow::clear_table()
 void MainWindow::rm_dot()
 {
     QString input_data = ui->lineEditRMId->text();
+    int size_table = ui->tableWidget->rowCount();
     if (!check_num(input_data))
     {
         send_error_message("Ошибка! В номере точки ошибка!");
         return;
     }
-    if (input_data.toInt() > ui->tableWidget->rowCount() - 1 || input_data.toInt() <= 0)
+    if (input_data.toInt() > ui->tableWidget->rowCount() || input_data.toInt() <= 0)
     {
         send_error_message("Ошибка! Такого индекса не существует!");
         return;
     }
     ui->tableWidget->removeRow(ui->lineEditRMId->text().toInt() - 1);
+    ui->tableWidget->setRowCount(size_table - 1);
 }
 
 MyDrawWidget::MyDrawWidget(QWidget *parent) : QWidget(parent)
@@ -237,7 +239,7 @@ void set_data(double arr_result[], double x_1, double y_1, double x_2, double y_
 
 void MyDrawWidget::analisys_dots(double arr_result[11])
 {
-    double a, b, c, tmp;
+    double a, b, c, tmp = 0;
     int len_data = int(this->x_data.size());
     double min = DBL_MAX;
 
