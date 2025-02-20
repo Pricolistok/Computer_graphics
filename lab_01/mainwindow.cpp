@@ -177,7 +177,7 @@ bool check_in_one_line(double x1, double y1, double x2, double y2, double x3, do
 
 double cnt_x_bis(double a, double b, double x1, double x2)
 {
-    return (a * x2 + b * x1) / (a + b);
+    return (a * x1 + b * x2) / (a + b);
 }
 
 double cnt_y_bis(double a, double b, double y1, double y2)
@@ -257,8 +257,8 @@ void MyDrawWidget::analisys_dots(double arr_result[11])
 
                 if (check_in_one_line(x_data[i], y_data[i], x_data[j], y_data[j], x_data[z], y_data[z]))
                 {
-                    send_error_message("Ошибка! Все три точки лежат на одной прямой!");
-                    return;
+                    send_error_message("Ошибка! Есть три точки лежат на одной прямой!");
+                    continue;
                 }
 
                 a = sqrt(pow(x_data[j] - x_data[i], 2) + pow(y_data[j] - y_data[i], 2));
@@ -297,7 +297,7 @@ void MyDrawWidget::analisys_dots(double arr_result[11])
 
 double cnt_scale(double arr_result[], int len, int screen_width, int screen_height)
 {
-    int padding = 30;
+    int padding = 45;
     double width;
     double height;
     double min_x, max_x;
@@ -350,8 +350,8 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
     int figure_width = (max_x - min_x) * scale;
     int figure_height = (max_y - min_y) * scale;
 
-    int offset_x = (1000 - figure_width) / 2 - min_x * scale;
-    int offset_y = (600 - figure_height) / 2 + max_y * scale;
+    int offset_x = (1000 - figure_width) / 2 - min_x * scale + 30;
+    int offset_y = (600 - figure_height) / 2 + max_y * scale + 30;
 
     painter.begin(this);
     painter.setPen({Qt::green, 2});
@@ -361,7 +361,10 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
 
     painter.setPen({Qt::yellow, 2});
     painter.drawLine(arr[6] * scale + offset_x, arr[7] * scale * -1 + offset_y, arr[8] * scale + offset_x, arr[9] * scale * -1 + offset_y);
-    message_result(arr);
+    if (arr[10] != 0)
+        message_result(arr);
+    else
+        send_error_message("Ошибка! Не найдено ни одного треугольника!");
 }
 
 
