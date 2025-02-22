@@ -54,7 +54,6 @@ void MainWindow::reset_draw()
 {
     QString data;
     char buffer[100];
-    int result_message;
     string str_mes;
 
     drawWidget->x_data.clear();
@@ -69,7 +68,7 @@ void MainWindow::reset_draw()
         data = ui->tableWidget->item(i, 0)->text();
         if (!check_num(data))
         {
-            result_message = snprintf(buffer, 100, "Ошибка! Ошибка в строке %d, с параметром X!", i + 1);
+            snprintf(buffer, 100, "Ошибка! Ошибка в строке %d, с параметром X!", i + 1);
             str_mes = buffer;
             send_error_message(str_mes);
             return;
@@ -78,7 +77,7 @@ void MainWindow::reset_draw()
         data = ui->tableWidget->item(i, 1)->text();
         if (!check_num(data))
         {
-            result_message = snprintf(buffer, 100, "Ошибка! Ошибка в строке %d, с параметром Y!", i + 1);
+            snprintf(buffer, 100, "Ошибка! Ошибка в строке %d, с параметром Y!", i + 1);
             str_mes = buffer;
             send_error_message(str_mes);
             return;
@@ -133,11 +132,11 @@ void MainWindow::rm_dot()
         send_error_message("Ошибка! В номере точки ошибка!");
         return;
     }
-    if (input_data.toInt() > ui->tableWidget->rowCount() || input_data.toInt() <= 0)
-    {
+    if (input_data.toInt() > ui->tableWidget->rowCount() || input_data.toInt() <= 0) {
         send_error_message("Ошибка! Такого индекса не существует!");
         return;
     }
+
     ui->tableWidget->removeRow(ui->lineEditRMId->text().toInt() - 1);
     ui->tableWidget->setRowCount(size_table - 1);
 }
@@ -268,6 +267,7 @@ void MyDrawWidget::analisys_dots(double arr_result[11])
                 tmp = cnt_bisector(a, b, c);
                 if (tmp < min)
                 {
+                    arr_result[10] = tmp;
                     qDebug() << "1IF" << tmp << "ВЕРШИНА X: " << x_data[i] << "Y: " << y_data[i];
                     min = tmp;
                     set_data(arr_result, x_data[i], y_data[i], x_data[j], y_data[j], x_data[z], y_data[z], c, a);
@@ -276,6 +276,7 @@ void MyDrawWidget::analisys_dots(double arr_result[11])
                 tmp = cnt_bisector(b, c, a);
                 if (tmp < min)
                 {
+                    arr_result[10] = tmp;
                     qDebug() << "2IF" << tmp << "ВЕРШИНА X: " << x_data[j] << "Y: " << y_data[j];
                     min = tmp;
                     set_data(arr_result, x_data[j], y_data[j], x_data[i], y_data[i], x_data[z], y_data[z], b, a);
@@ -284,6 +285,7 @@ void MyDrawWidget::analisys_dots(double arr_result[11])
                 tmp = cnt_bisector(c, a, b);
                 if (tmp < min)
                 {
+                    arr_result[10] = tmp;
                     qDebug() << "1IF" << tmp << "ВЕРШИНА X: " << x_data[z] << "Y: " << y_data[z];
                     min = tmp;
                     set_data(arr_result, x_data[z], y_data[z], x_data[i], y_data[i], x_data[j], y_data[j], b, c);
@@ -291,11 +293,10 @@ void MyDrawWidget::analisys_dots(double arr_result[11])
             }
         }
     }
-    arr_result[10] = tmp;
 }
 
 
-double cnt_scale(double arr_result[], int len, int screen_width, int screen_height)
+double cnt_scale(double arr_result[], int screen_width, int screen_height)
 {
     int padding = 45;
     double width;
@@ -324,6 +325,8 @@ double cnt_scale(double arr_result[], int len, int screen_width, int screen_heig
 void MyDrawWidget::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
+
+    Q_UNUSED(event);
     painter.end();
     double arr[11], scale;
     int len_data = int(this->x_data.size());
@@ -345,7 +348,7 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
     min_y = min({arr[1], arr[3], arr[5], arr[7]});
     max_y = max({arr[1], arr[3], arr[5], arr[7]});
 
-    scale = cnt_scale(arr, 10, 1000, 600);
+    scale = cnt_scale(arr, 1000, 600);
 
     double figure_width = (max_x - min_x) * scale;
     double figure_height = (max_y - min_y) * scale;
@@ -354,6 +357,7 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
     double offset_y = (600 - figure_height) / 2 + max_y * scale + 30;
 
     painter.begin(this);
+
     painter.setPen({Qt::green, 2});
     painter.drawLine(arr[0] * scale + offset_x, arr[1] * scale * -1 + offset_y, arr[2] * scale + offset_x, arr[3] * scale * -1 + offset_y);
     painter.drawLine(arr[0] * scale + offset_x, arr[1] * scale * -1 + offset_y, arr[4] * scale + offset_x, arr[5] * scale * -1 + offset_y);

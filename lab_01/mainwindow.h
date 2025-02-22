@@ -12,7 +12,7 @@ double cnt_size_of_line(double x_data_1, double x_data_2, double y_data_1, doubl
 void message_result(double arr_result[]);
 double cnt_y_bis(double a, double b, double y1, double y2);
 double cnt_x_bis(double a, double b, double x1, double x2);
-double cnt_scale(double arr_result[], int len, int screen_width, int screen_height);
+double cnt_scale(double arr_result[], int screen_width, int screen_height);
 void line_intersection(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4, double* intersection_x, double* intersection_y);
 bool are_points_distinct(double x1, double y1, double x2, double y2, double x3, double y3);
 void set_data(double arr_result[], double x_1, double y_1, double x_2, double y_2, double x_3, double y_3, double b, double c);
