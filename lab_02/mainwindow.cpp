@@ -12,8 +12,6 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     drawWidget->setGeometry(0, 0, ui->widget->width(), ui->widget->height());
     drawWidget->show();
     drawWidget->update();
-
-    connect(ui->pushBtnFind, SIGNAL(clicked()), this, SLOT(reset_draw()));
 }
 
 MainWindow::~MainWindow()
