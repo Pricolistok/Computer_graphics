@@ -511,7 +511,7 @@
      <string>Перенос</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_transfer_dx">
+   <widget class="QLineEdit" name="lineEdit_transfer_dX">
     <property name="geometry">
      <rect>
       <x>1330</x>
@@ -2056,7 +2056,7 @@
      </palette>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton__scale">
+   <widget class="QPushButton" name="pushButton_scale">
     <property name="geometry">
      <rect>
       <x>1310</x>
@@ -3601,7 +3601,7 @@
      <string>Координаты центра</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_rotate_corner_2">
+   <widget class="QLabel" name="label_rotate_angle">
     <property name="geometry">
      <rect>
       <x>1310</x>
@@ -3616,10 +3616,10 @@
      </font>
     </property>
     <property name="text">
-     <string>kX:</string>
+     <string>φ:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_rotate_corner">
+   <widget class="QLabel" name="label_rotate_angle_2">
     <property name="geometry">
      <rect>
       <x>1300</x>
@@ -4116,7 +4116,7 @@
      </palette>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_rotate_corner">
+   <widget class="QLineEdit" name="lineEdit_rotate_angler">
     <property name="geometry">
      <rect>
       <x>1340</x>
@@ -6117,7 +6117,7 @@
      <x>0</x>
      <y>0</y>
      <width>1654</width>
-     <height>21</height>
+     <height>17</height>
     </rect>
    </property>
   </widget>

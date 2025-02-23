@@ -53,10 +53,6 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
     double result_x_exp_2_parabola = cnt_x_intersection_exp_with_parabola(-1);
     double result_x_exp_exp = cnt_x_intersection_exp_with_exp();
 
-    qDebug() << "Exp-Parabola 1:" << result_x_exp_1_parabola;
-    qDebug() << "Exp-Parabola 2:" << result_x_exp_2_parabola;
-    qDebug() << "Exp-Exp:" << result_x_exp_exp;
-
     painter.setPen(Qt::white);
     painter.drawLine(500, 0, 500, 600);
 

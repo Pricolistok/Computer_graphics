@@ -6,16 +6,18 @@
 #include <QPushButton>
 #include <QPainter>
 #include <QWidget>
+#include <QMessageBox>
 #include "ui_mainwindow.h"
 #include "maindrawer.h"
-
-using namespace std;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
 }
 QT_END_NAMESPACE
+
+void send_error_message(char text[]);
+int check_num(const char num[]);
 
 
 class MainWindow : public QMainWindow
@@ -25,8 +27,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    //public slots:
-    //   void reset_draw();
+public slots:
+    void reset_transfer();
 
 private:
     Ui::MainWindow *ui;

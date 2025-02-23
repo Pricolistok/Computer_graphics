@@ -22,6 +22,11 @@ class MyDrawWidget : public QWidget
     Q_OBJECT
 
 public:
+    double transfer_dX = 0, transfer_dY = 0;
+    double scale_cX = 0, scale_cY = 0;
+    double scale_kX = 1, scale_kY = 1;
+    double rotate_cX = 0, rotate_cY = 0;
+    double rotate_angle = 0;
     explicit MyDrawWidget(QWidget *parent = nullptr);
 
 protected:
