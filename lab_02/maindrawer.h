@@ -15,6 +15,7 @@
 double cnt_x_intersection_exp_with_parabola(int mode);
 double cnt_y_exp(double x);
 double cnt_y_parabola(double x);
+double correct_angle(double angle);
 
 
 class MyDrawWidget : public QWidget

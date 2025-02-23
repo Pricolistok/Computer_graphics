@@ -4116,7 +4116,7 @@
      </palette>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_rotate_angler">
+   <widget class="QLineEdit" name="lineEdit_rotate_angle">
     <property name="geometry">
      <rect>
       <x>1340</x>
