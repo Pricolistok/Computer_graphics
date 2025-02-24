@@ -31,6 +31,8 @@ public slots:
     void reset_transfer();
     void reset_scale();
     void reset_rotate();
+    void restart();
+
 
 private:
     Ui::MainWindow *ui;

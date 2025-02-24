@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     connect(ui->pushButton_transfer, SIGNAL(clicked()), this, SLOT(reset_transfer()));
     connect(ui->pushButton_scale, SIGNAL(clicked()), this, SLOT(reset_scale()));
     connect(ui->pushButton_rotate, SIGNAL(clicked()), this, SLOT(reset_rotate()));
+    connect(ui->pushButton_restart, SIGNAL(clicked()), this, SLOT(restart()));
 }
 
 int check_num(const char num[])
@@ -151,6 +152,23 @@ void MainWindow::reset_rotate()
     drawWidget->rotate_cX = rotate_cX_str.toDouble();
     drawWidget->rotate_cY = rotate_cY_str.toDouble();
     drawWidget->rotate_angle = correct_angle(rotate_angle_str.toDouble());
+    drawWidget->update();
+}
+
+void MainWindow::restart()
+{
+    creator_data_parabola(drawWidget->x_parabola, drawWidget->y_parabola, drawWidget->start_draw + 3, drawWidget->finish_draw - 3, drawWidget->step_draw);
+    creator_data_exp(drawWidget->x_exp_posi, drawWidget->y_exp_posi, drawWidget->start_draw, drawWidget->finish_draw - 4, drawWidget->step_draw, 1);
+    creator_data_exp(drawWidget->x_exp_neg, drawWidget->y_exp_neg, drawWidget->start_draw + 4, drawWidget->finish_draw, drawWidget->step_draw, -1);
+    drawWidget->transfer_dX = 0;
+    drawWidget->transfer_dY = 0;
+    drawWidget->scale_cX = 0;
+    drawWidget->scale_cY = 0;
+    drawWidget->scale_kX = 1;
+    drawWidget->scale_kY = 1;
+    drawWidget->rotate_cX = 0;
+    drawWidget->rotate_cY = 0;
+    drawWidget->rotate_angle = 0;
     drawWidget->update();
 }
 
