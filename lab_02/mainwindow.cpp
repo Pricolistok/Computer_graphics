@@ -58,6 +58,7 @@ void MainWindow::reset_transfer()
     }
     drawWidget->transfer_dX = x_transfer_str.toDouble();
     drawWidget->transfer_dY = y_transfer_str.toDouble();
+    drawWidget->update();
 }
 
 
@@ -92,10 +93,11 @@ void MainWindow::reset_scale()
         send_error_message(message);
         return;
     }
-    drawWidget->scale_cX = scale_cX_str.toDouble();
-    drawWidget->scale_cY = scale_cY_str.toDouble();
+    drawWidget->scale_cX = scale_cX_str.toDouble() + WIDTH_CANVAS / 2;
+    drawWidget->scale_cY = scale_cY_str.toDouble() + HEIGHT_CANVAS / 2;
     drawWidget->scale_kX = scale_kX_str.toDouble();
     drawWidget->scale_kY = scale_kY_str.toDouble();
+    drawWidget->update();
 }
 
 double correct_angle(double angle)
@@ -138,9 +140,10 @@ void MainWindow::reset_rotate()
         send_error_message(message);
         return;
     }
-    drawWidget->rotate_cX = rotate_cX_str.toDouble();
-    drawWidget->rotate_cY = rotate_cY_str.toDouble();
+    drawWidget->rotate_cX = rotate_cX_str.toDouble() + WIDTH_CANVAS / 2;
+    drawWidget->rotate_cY = rotate_cY_str.toDouble() + HEIGHT_CANVAS / 2;
     drawWidget->rotate_angle = correct_angle(rotate_angle_str.toDouble());
+    drawWidget->update();
 }
 
 MainWindow::~MainWindow()
