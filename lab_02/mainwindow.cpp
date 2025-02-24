@@ -17,13 +17,21 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
 
 int check_num(const char num[])
 {
+    int flag_dot = 0;
     size_t len_num = strlen(num);
     if (len_num == 0)
         return false;
     for (size_t i = 0; i < strlen(num); i++)
     {
-        if (i == 0 && (num[i] == '+' || num[i] == '-'))
+        if (num[i] == '.' && flag_dot == 0)
+        {
+            flag_dot = 1;
             continue;
+        }
+        else if (num[i] == '.' && flag_dot == 1)
+            return false;
+        if (i == 0 && (num[i] == '+' || num[i] == '-'))
+            continue;            
         if (isdigit(num[i]) != true)
             return false;
     }
@@ -93,8 +101,8 @@ void MainWindow::reset_scale()
         send_error_message(message);
         return;
     }
-    drawWidget->scale_cX = scale_cX_str.toDouble() + WIDTH_CANVAS / 2;
-    drawWidget->scale_cY = scale_cY_str.toDouble() + HEIGHT_CANVAS / 2;
+    drawWidget->scale_cX = scale_cX_str.toDouble();
+    drawWidget->scale_cY = scale_cY_str.toDouble();
     drawWidget->scale_kX = scale_kX_str.toDouble();
     drawWidget->scale_kY = scale_kY_str.toDouble();
     drawWidget->update();
@@ -140,8 +148,8 @@ void MainWindow::reset_rotate()
         send_error_message(message);
         return;
     }
-    drawWidget->rotate_cX = rotate_cX_str.toDouble() + WIDTH_CANVAS / 2;
-    drawWidget->rotate_cY = rotate_cY_str.toDouble() + HEIGHT_CANVAS / 2;
+    drawWidget->rotate_cX = rotate_cX_str.toDouble();
+    drawWidget->rotate_cY = rotate_cY_str.toDouble();
     drawWidget->rotate_angle = correct_angle(rotate_angle_str.toDouble());
     drawWidget->update();
 }
