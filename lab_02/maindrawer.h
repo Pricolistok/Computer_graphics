@@ -36,6 +36,14 @@ public:
     double x_exp_posi[CNT_DOTS], y_exp_posi[CNT_DOTS];
     double x_exp_neg[CNT_DOTS], y_exp_neg[CNT_DOTS];
 
+    double transfer_dX_s = 0, transfer_dY_s = 0;
+    double scale_cX_s = 0, scale_cY_s = 0, scale_kX_s = 1, scale_kY_s = 1;
+    double rotate_cX_s = 0, rotate_cY_s = 0, rotate_angle_s = 0;
+    double scale_base_s = 20;
+    double x_parabola_s[CNT_DOTS], y_parabola_s[CNT_DOTS];
+    double x_exp_posi_s[CNT_DOTS], y_exp_posi_s[CNT_DOTS];
+    double x_exp_neg_s[CNT_DOTS], y_exp_neg_s[CNT_DOTS];
+
     void cnt_scale_result(double x, double y, double result[2]);
     void cnt_transfer_result(double x, double y, double result[2]);
     void cnt_rotate_result(double x, double y, double result[2]);

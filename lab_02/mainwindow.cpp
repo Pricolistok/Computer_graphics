@@ -1,5 +1,11 @@
 #include "mainwindow.h"
 
+void copy_array(double arr1[], double arr2[])
+{
+    for (int i = 0; i < CNT_DOTS; i++)
+        arr1[i] = arr2[i];
+}
+
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -14,6 +20,47 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     connect(ui->pushButton_scale, SIGNAL(clicked()), this, SLOT(reset_scale()));
     connect(ui->pushButton_rotate, SIGNAL(clicked()), this, SLOT(reset_rotate()));
     connect(ui->pushButton_restart, SIGNAL(clicked()), this, SLOT(restart()));
+    connect(ui->pushButton_step_back, SIGNAL(clicked()), this, SLOT(step_back()));
+}
+
+void MainWindow::step_back()
+{
+    drawWidget->transfer_dX = drawWidget->transfer_dX_s;
+    drawWidget->transfer_dY = drawWidget->transfer_dY_s;
+
+    drawWidget->scale_cX = drawWidget->scale_cX_s;
+    drawWidget->scale_cY = drawWidget->scale_cY_s;
+    drawWidget->scale_kX = drawWidget->scale_kX_s;
+    drawWidget->scale_kY = drawWidget->scale_kY_s;
+
+    drawWidget->rotate_angle = drawWidget->rotate_angle_s;
+    drawWidget->rotate_cX = drawWidget->rotate_cX;
+    drawWidget->rotate_cY = drawWidget->rotate_cY;
+
+
+    copy_array(drawWidget->x_parabola, drawWidget->x_parabola_s);
+    copy_array(drawWidget->y_parabola, drawWidget->y_parabola_s);
+
+    copy_array(drawWidget->x_exp_posi, drawWidget->x_exp_posi_s);
+    copy_array(drawWidget->y_exp_posi, drawWidget->y_exp_posi_s);
+
+    copy_array(drawWidget->x_exp_neg, drawWidget->x_exp_neg_s);
+    copy_array(drawWidget->y_exp_neg, drawWidget->y_exp_neg_s);
+
+    drawWidget->update();
+
+}
+
+void MainWindow::copy_all_dots()
+{
+    copy_array(drawWidget->x_parabola_s, drawWidget->x_parabola);
+    copy_array(drawWidget->y_parabola_s, drawWidget->y_parabola);
+
+    copy_array(drawWidget->x_exp_posi_s, drawWidget->x_exp_posi);
+    copy_array(drawWidget->y_exp_posi_s, drawWidget->y_exp_posi);
+
+    copy_array(drawWidget->x_exp_neg_s, drawWidget->x_exp_neg);
+    copy_array(drawWidget->y_exp_neg_s, drawWidget->y_exp_neg);
 }
 
 int check_num(const char num[])
@@ -65,6 +112,11 @@ void MainWindow::reset_transfer()
         send_error_message(message);
         return;
     }
+    drawWidget->transfer_dX_s = drawWidget->transfer_dX;
+    drawWidget->transfer_dY_s = drawWidget->transfer_dY_s;
+    copy_all_dots();
+
+
     drawWidget->transfer_dX = x_transfer_str.toDouble();
     drawWidget->transfer_dY = y_transfer_str.toDouble();
     drawWidget->update();
@@ -102,6 +154,13 @@ void MainWindow::reset_scale()
         send_error_message(message);
         return;
     }
+
+    drawWidget->scale_cX_s = drawWidget->scale_cX;
+    drawWidget->scale_cY_s = drawWidget->scale_cY;
+    drawWidget->scale_kX_s = drawWidget->scale_kX;
+    drawWidget->scale_kY_s = drawWidget->scale_kY;
+    copy_all_dots();
+
     drawWidget->scale_cX = scale_cX_str.toDouble();
     drawWidget->scale_cY = scale_cY_str.toDouble();
     drawWidget->scale_kX = scale_kX_str.toDouble();
@@ -149,6 +208,12 @@ void MainWindow::reset_rotate()
         send_error_message(message);
         return;
     }
+
+    drawWidget->rotate_angle_s = drawWidget->rotate_angle;
+    drawWidget->rotate_cX_s = drawWidget->rotate_cX;
+    drawWidget->rotate_cY_s = drawWidget->rotate_cY;
+    copy_all_dots();
+
     drawWidget->rotate_cX = rotate_cX_str.toDouble();
     drawWidget->rotate_cY = rotate_cY_str.toDouble();
     drawWidget->rotate_angle = correct_angle(rotate_angle_str.toDouble());

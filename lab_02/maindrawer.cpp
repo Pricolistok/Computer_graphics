@@ -119,7 +119,6 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
     for (int i = 0; i < this->cnt_dots; i++)
     {
         cnt_result(this->x_parabola[i], this->y_parabola[i], result_now);
-        qDebug() << "RES " << result_now[0] << " " << result_now[1];
         x_parabola[i] = result_now[0];
         y_parabola[i] = result_now[1];
         painter.drawEllipse(QPointF(result_now[0] * this->scale_base + offset_to_center_x, result_now[1] * this->scale_base + offset_to_center_y), 1, 1);
