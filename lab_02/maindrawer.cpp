@@ -13,8 +13,8 @@ void creator_data_parabola(double data_x[], double data_y[], double start, doubl
     int iter = 0;
     for (double x = start; x <= finish; x += step)
     {
-        data_x[iter] = x;
-        data_y[iter] = cnt_y_parabola(x);
+        data_x[iter] = x * SCALE;
+        data_y[iter] = cnt_y_parabola(x) * SCALE;
         iter++;
     }
 }
@@ -24,8 +24,8 @@ void creator_data_exp(double data_x[], double data_y[], double start, double fin
     int iter = 0;
     for (double x = start; x <= finish; x += step)
     {
-        data_x[iter] = x;
-        data_y[iter] = cnt_y_exp(flag_posi * x);
+        data_x[iter] = x * SCALE;
+        data_y[iter] = cnt_y_exp(flag_posi * x) * SCALE;
         iter++;
     }
 }
@@ -116,22 +116,45 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
 
     painter.setPen(Qt::white);
 
+
     for (int i = 0; i < this->cnt_dots; i++)
     {
-        cnt_result(this->x_parabola[i], this->y_parabola[i], result_now);
-        x_parabola[i] = result_now[0];
-        y_parabola[i] = result_now[1];
-        painter.drawEllipse(QPointF(result_now[0] * this->scale_base + offset_to_center_x, result_now[1] * this->scale_base + offset_to_center_y), 1, 1);
+        if (flag_step_back == 0)
+        {
+            cnt_result(this->x_parabola[i], this->y_parabola[i], result_now);
+            x_parabola[i] = result_now[0];
+            y_parabola[i] = result_now[1];
+            painter.drawEllipse(QPointF(result_now[0] + offset_to_center_x, result_now[1] + offset_to_center_y), 1, 1);
+        }
+        else
+        {
+            painter.drawEllipse(QPointF(x_parabola[i] + offset_to_center_x, y_parabola[i] + offset_to_center_y), 1, 1);
+        }
 
-        cnt_result(this->x_exp_posi[i], this->y_exp_posi[i], result_now);
-        x_exp_posi[i] = result_now[0];
-        y_exp_posi[i] = result_now[1];
-        painter.drawEllipse(QPointF(result_now[0] * this->scale_base + offset_to_center_x, result_now[1] * this->scale_base + offset_to_center_y), 1, 1);
 
-        cnt_result(this->x_exp_neg[i], this->y_exp_neg[i], result_now);
-        x_exp_neg[i] = result_now[0];
-        y_exp_neg[i] = result_now[1];
-        painter.drawEllipse(QPointF(result_now[0] * this->scale_base + offset_to_center_x, result_now[1] * this->scale_base + offset_to_center_y), 1, 1);
+        if (flag_step_back == 0)
+        {
+            cnt_result(this->x_exp_posi[i], this->y_exp_posi[i], result_now);
+            x_exp_posi[i] = result_now[0];
+            y_exp_posi[i] = result_now[1];
+            painter.drawEllipse(QPointF(result_now[0] + offset_to_center_x, result_now[1] + offset_to_center_y), 1, 1);
+        }
+        else
+        {
+            painter.drawEllipse(QPointF(x_exp_posi[i] + offset_to_center_x, y_exp_posi[i] + offset_to_center_y), 1, 1);
+        }
+
+        if (flag_step_back == 0)
+        {
+            cnt_result(this->x_exp_neg[i], this->y_exp_neg[i], result_now);
+            x_exp_neg[i] = result_now[0];
+            y_exp_neg[i] = result_now[1];
+            painter.drawEllipse(QPointF(result_now[0] + offset_to_center_x, result_now[1] + offset_to_center_y), 1, 1);
+        }
+        else
+        {
+            painter.drawEllipse(QPointF(x_exp_neg[i] + offset_to_center_x, y_exp_neg[i] + offset_to_center_y), 1, 1);
+        }
     }
 
     // path.moveTo(result_x_exp_1_parabola * scale + offset_to_center_x, cnt_y_parabola(result_x_exp_1_parabola) * scale + offset_to_center_y);

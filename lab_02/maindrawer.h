@@ -11,6 +11,7 @@
 
 #define WIDTH_CANVAS 1200
 #define HEIGHT_CANVAS 800
+#define SCALE 20
 #define CNT_DOTS 10000
 
 
@@ -29,12 +30,14 @@ public:
     double transfer_dX = 0, transfer_dY = 0;
     double scale_cX = 0, scale_cY = 0, scale_kX = 1, scale_kY = 1;
     double rotate_cX = 0, rotate_cY = 0, rotate_angle = 0;
-    double scale_base = 20;
+    double scale_base = SCALE;
     int cnt_dots = CNT_DOTS;
     double start_draw = -5, finish_draw = 5, step_draw = (finish_draw - start_draw) / cnt_dots;
     double x_parabola[CNT_DOTS], y_parabola[CNT_DOTS];
     double x_exp_posi[CNT_DOTS], y_exp_posi[CNT_DOTS];
     double x_exp_neg[CNT_DOTS], y_exp_neg[CNT_DOTS];
+
+    int flag_step_back = 0;
 
     double transfer_dX_s = 0, transfer_dY_s = 0;
     double scale_cX_s = 0, scale_cY_s = 0, scale_kX_s = 1, scale_kY_s = 1;

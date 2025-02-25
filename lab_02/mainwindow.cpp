@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
 
 void MainWindow::step_back()
 {
+    drawWidget->flag_step_back = 1;
     drawWidget->transfer_dX = drawWidget->transfer_dX_s;
     drawWidget->transfer_dY = drawWidget->transfer_dY_s;
 
@@ -120,6 +121,7 @@ void MainWindow::reset_transfer()
     drawWidget->transfer_dX = x_transfer_str.toDouble();
     drawWidget->transfer_dY = y_transfer_str.toDouble();
     drawWidget->update();
+    drawWidget->flag_step_back = 0;
 }
 
 
@@ -166,6 +168,7 @@ void MainWindow::reset_scale()
     drawWidget->scale_kX = scale_kX_str.toDouble();
     drawWidget->scale_kY = scale_kY_str.toDouble();
     drawWidget->update();
+    drawWidget->flag_step_back = 0;
 }
 
 double correct_angle(double angle)
@@ -218,13 +221,26 @@ void MainWindow::reset_rotate()
     drawWidget->rotate_cY = rotate_cY_str.toDouble();
     drawWidget->rotate_angle = correct_angle(rotate_angle_str.toDouble());
     drawWidget->update();
+    drawWidget->flag_step_back = 0;
 }
 
 void MainWindow::restart()
 {
+    drawWidget->transfer_dX_s = drawWidget->transfer_dX;
+    drawWidget->transfer_dY_s = drawWidget->transfer_dY;
+    drawWidget->scale_cX_s = drawWidget->scale_cX;
+    drawWidget->scale_cY_s = drawWidget->scale_cY;
+    drawWidget->scale_kX_s = drawWidget->scale_kX;
+    drawWidget->scale_kY_s = drawWidget->scale_kY;
+    drawWidget->rotate_angle_s = drawWidget->rotate_angle;
+    drawWidget->rotate_cX_s = drawWidget->rotate_cX;
+    drawWidget->rotate_cY_s = drawWidget->rotate_cY;
+    copy_all_dots();
+
     creator_data_parabola(drawWidget->x_parabola, drawWidget->y_parabola, drawWidget->start_draw + 3, drawWidget->finish_draw - 3, drawWidget->step_draw);
     creator_data_exp(drawWidget->x_exp_posi, drawWidget->y_exp_posi, drawWidget->start_draw, drawWidget->finish_draw - 4, drawWidget->step_draw, 1);
     creator_data_exp(drawWidget->x_exp_neg, drawWidget->y_exp_neg, drawWidget->start_draw + 4, drawWidget->finish_draw, drawWidget->step_draw, -1);
+
     drawWidget->transfer_dX = 0;
     drawWidget->transfer_dY = 0;
     drawWidget->scale_cX = 0;
@@ -234,6 +250,7 @@ void MainWindow::restart()
     drawWidget->rotate_cX = 0;
     drawWidget->rotate_cY = 0;
     drawWidget->rotate_angle = 0;
+    drawWidget->flag_step_back = 0;
     drawWidget->update();
 }
 
