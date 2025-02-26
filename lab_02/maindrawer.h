@@ -8,6 +8,7 @@
 #include <QMainWindow>
 #include <QPainterPath>
 #include <cmath>
+#include <math.h>
 
 #define WIDTH_CANVAS 1200
 #define HEIGHT_CANVAS 800
@@ -50,7 +51,6 @@ public:
     void cnt_scale_result();
     void cnt_transfer_result();
     void cnt_rotate_result();
-    void cnt_result(double x, double y, double result[2]);
     explicit MyDrawWidget(QWidget *parent = nullptr);
 
 

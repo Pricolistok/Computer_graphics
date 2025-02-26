@@ -183,7 +183,7 @@ double correct_angle(double angle)
 
     while (angle > 360)
         angle -= 360;
-
+    qDebug() << angle;
     return angle * flag;
 }
 
@@ -238,6 +238,7 @@ void MainWindow::restart()
     drawWidget->rotate_cX_s = drawWidget->rotate_cX;
     drawWidget->rotate_cY_s = drawWidget->rotate_cY;
     copy_all_dots();
+
 
     creator_data_parabola(drawWidget->x_parabola, drawWidget->y_parabola, drawWidget->start_draw + 3, drawWidget->finish_draw - 3, drawWidget->step_draw);
     creator_data_exp(drawWidget->x_exp_posi, drawWidget->y_exp_posi, drawWidget->start_draw, drawWidget->finish_draw - 4, drawWidget->step_draw, 1);

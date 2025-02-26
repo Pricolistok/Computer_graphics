@@ -11,6 +11,11 @@ MyDrawWidget::MyDrawWidget(QWidget *parent) : QWidget(parent)
 void creator_data_parabola(double data_x[], double data_y[], double start, double finish, double step)
 {
     int iter = 0;
+    for (int i = 0; i < CNT_DOTS; i++)
+    {
+        data_x[i] = NULL;
+        data_y[i] = NULL;
+    }
     for (double x = start; x <= finish; x += step)
     {
         data_x[iter] = x * SCALE;
@@ -22,6 +27,11 @@ void creator_data_parabola(double data_x[], double data_y[], double start, doubl
 void creator_data_exp(double data_x[], double data_y[], double start, double finish, double step, int flag_posi)
 {
     int iter = 0;
+    for (int i = 0; i < CNT_DOTS; i++)
+    {
+        data_x[i] = NULL;
+        data_y[i] = NULL;
+    }
     for (double x = start; x <= finish; x += step)
     {
         data_x[iter] = x * SCALE;
@@ -46,22 +56,29 @@ void MyDrawWidget::cnt_transfer_result()
     }
 }
 
-
 void MyDrawWidget::cnt_rotate_result()
 {
+    double temp_x, temp_y;
+    double new_angle = - this->rotate_angle * M_PI / 180;
     for (int i = 0; i < CNT_DOTS; i++)
     {
-        this->x_parabola[i] = this->rotate_cX + ((this->x_parabola[i] - this->rotate_cX) * cos(this->rotate_angle)) + ((this->y_parabola[i] - this->rotate_cY) * sin(this->rotate_angle) * 1200/800);
-        this->y_parabola[i] = this->rotate_cY + ((this->y_parabola[i] - this->rotate_cY) * cos(this->rotate_angle)) - ((this->x_parabola[i] - this->rotate_cX) * sin(this->rotate_angle) * 800/1200);
+        temp_x = this->x_parabola[i];
+        temp_y = this->y_parabola[i];
+        this->x_parabola[i] = this->rotate_cX + ((temp_x - this->rotate_cX) * cos(new_angle)) - ((temp_y - this->rotate_cY) * sin(new_angle));
+        this->y_parabola[i] = this->rotate_cY + ((temp_x - this->rotate_cX) * sin(new_angle)) + ((temp_y - this->rotate_cY) * cos(new_angle));
 
-        this->x_exp_posi[i] = this->rotate_cX + ((this->x_exp_posi[i] - this->rotate_cX) * cos(this->rotate_angle)) + ((this->y_exp_posi[i] - this->rotate_cY) * sin(this->rotate_angle) * 1200/800);
-        this->y_exp_posi[i] = this->rotate_cY + ((this->y_exp_posi[i] - this->rotate_cY) * cos(this->rotate_angle)) - ((this->x_exp_posi[i] - this->rotate_cX) * sin(this->rotate_angle) * 800/1200);
+        temp_x = this->x_exp_posi[i];
+        temp_y = this->y_exp_posi[i];
+        this->x_exp_posi[i] = this->rotate_cX + ((temp_x - this->rotate_cX) * cos(new_angle)) - ((temp_y - this->rotate_cY) * sin(new_angle));
+        this->y_exp_posi[i] = this->rotate_cY + ((temp_x - this->rotate_cX) * sin(new_angle)) + ((temp_y - this->rotate_cY) * cos(new_angle));
 
-        this->x_exp_neg[i] = this->rotate_cX + ((this->x_exp_neg[i] - this->rotate_cX) * cos(this->rotate_angle)) + ((this->y_exp_neg[i] - this->rotate_cY) * sin(this->rotate_angle) * 1200/800);
-        this->y_exp_neg[i] = this->rotate_cY + ((this->y_exp_neg[i] - this->rotate_cY) * cos(this->rotate_angle)) - ((this->x_exp_neg[i] - this->rotate_cX) * sin(this->rotate_angle) * 800/1200);
-
+        temp_x = this->x_exp_neg[i];
+        temp_y = this->y_exp_neg[i];
+        this->x_exp_neg[i] = this->rotate_cX + ((temp_x - this->rotate_cX) * cos(new_angle)) - ((temp_y - this->rotate_cY) * sin(new_angle));
+        this->y_exp_neg[i] = this->rotate_cY + ((temp_x - this->rotate_cX) * sin(new_angle)) + ((temp_y - this->rotate_cY) * cos(new_angle));
     }
 }
+
 
 
 void MyDrawWidget::cnt_scale_result()
