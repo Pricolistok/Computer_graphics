@@ -47,9 +47,9 @@ public:
     double x_exp_posi_s[CNT_DOTS], y_exp_posi_s[CNT_DOTS];
     double x_exp_neg_s[CNT_DOTS], y_exp_neg_s[CNT_DOTS];
 
-    void cnt_scale_result(double x, double y, double result[2]);
-    void cnt_transfer_result(double x, double y, double result[2]);
-    void cnt_rotate_result(double x, double y, double result[2]);
+    void cnt_scale_result();
+    void cnt_transfer_result();
+    void cnt_rotate_result();
     void cnt_result(double x, double y, double result[2]);
     explicit MyDrawWidget(QWidget *parent = nullptr);
 

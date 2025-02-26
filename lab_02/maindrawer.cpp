@@ -3,7 +3,7 @@
 
 MyDrawWidget::MyDrawWidget(QWidget *parent) : QWidget(parent)
 {
-    creator_data_parabola(x_parabola, y_parabola, start_draw - 3, finish_draw + 3, step_draw);
+    creator_data_parabola(x_parabola, y_parabola, start_draw + 3, finish_draw - 3, step_draw);
     creator_data_exp(x_exp_posi, y_exp_posi, start_draw, finish_draw - 4, step_draw, 1);
     creator_data_exp(x_exp_neg, y_exp_neg, start_draw + 4, finish_draw, step_draw, -1);
 }
@@ -31,38 +31,52 @@ void creator_data_exp(double data_x[], double data_y[], double start, double fin
 }
 
 
-void MyDrawWidget::cnt_transfer_result(double x, double y, double result[2])
+void MyDrawWidget::cnt_transfer_result()
 {
-    result[0] = this->transfer_dX + x;
-    result[1] = y -  this->transfer_dY;
+    for (int i = 0; i < CNT_DOTS; i++)
+    {
+        this->x_parabola[i] = this->transfer_dX + this->x_parabola[i];
+        this->y_parabola[i] = this->y_parabola[i] -  this->transfer_dY;
+
+        this->x_exp_posi[i] = this->transfer_dX + this->x_exp_posi[i];
+        this->y_exp_posi[i] = this->y_exp_posi[i] -  this->transfer_dY;
+
+        this->x_exp_neg[i] = this->transfer_dX + this->x_exp_neg[i];
+        this->y_exp_neg[i] = this->y_exp_neg[i] -  this->transfer_dY;
+    }
 }
 
 
-void MyDrawWidget::cnt_rotate_result(double x, double y, double result[2])
+void MyDrawWidget::cnt_rotate_result()
 {
-    result[0] = this->rotate_cX + ((x - this->rotate_cX) * cos(this->rotate_angle)) + ((y - this->rotate_cY) * sin(this->rotate_angle) * 1200/800);
-    result[1] = this->rotate_cY + ((y - this->rotate_cY) * cos(this->rotate_angle)) - ((x - this->rotate_cX) * sin(this->rotate_angle) * 800/1200);
+    for (int i = 0; i < CNT_DOTS; i++)
+    {
+        this->x_parabola[i] = this->rotate_cX + ((this->x_parabola[i] - this->rotate_cX) * cos(this->rotate_angle)) + ((this->y_parabola[i] - this->rotate_cY) * sin(this->rotate_angle) * 1200/800);
+        this->y_parabola[i] = this->rotate_cY + ((this->y_parabola[i] - this->rotate_cY) * cos(this->rotate_angle)) - ((this->x_parabola[i] - this->rotate_cX) * sin(this->rotate_angle) * 800/1200);
+
+        this->x_exp_posi[i] = this->rotate_cX + ((this->x_exp_posi[i] - this->rotate_cX) * cos(this->rotate_angle)) + ((this->y_exp_posi[i] - this->rotate_cY) * sin(this->rotate_angle) * 1200/800);
+        this->y_exp_posi[i] = this->rotate_cY + ((this->y_exp_posi[i] - this->rotate_cY) * cos(this->rotate_angle)) - ((this->x_exp_posi[i] - this->rotate_cX) * sin(this->rotate_angle) * 800/1200);
+
+        this->x_exp_neg[i] = this->rotate_cX + ((this->x_exp_neg[i] - this->rotate_cX) * cos(this->rotate_angle)) + ((this->y_exp_neg[i] - this->rotate_cY) * sin(this->rotate_angle) * 1200/800);
+        this->y_exp_neg[i] = this->rotate_cY + ((this->y_exp_neg[i] - this->rotate_cY) * cos(this->rotate_angle)) - ((this->x_exp_neg[i] - this->rotate_cX) * sin(this->rotate_angle) * 800/1200);
+
+    }
 }
 
 
-void MyDrawWidget::cnt_scale_result(double x, double y, double result[2])
+void MyDrawWidget::cnt_scale_result()
 {
-    result[0] = (this->scale_kX * x) + this->scale_cX * (1 - this->scale_kX);
-    result[1] = (this->scale_kY * y) + this->scale_cY * (1 - this->scale_kY);
-}
+    for (int i = 0; i < CNT_DOTS; i++)
+    {
+        this->x_parabola[i] = (this->scale_kX * this->x_parabola[i]) + this->scale_cX * (1 - this->scale_kX);
+        this->y_parabola[i] = (this->scale_kY * this->y_parabola[i]) + this->scale_cY * (1 - this->scale_kY);
 
-void MyDrawWidget::cnt_result(double x, double y, double result[2])
-{
-    double x_now, y_now;
-    cnt_transfer_result(x, y, result);
-    x_now = result[0];
-    y_now = result[1];
+        this->x_exp_posi[i] = (this->scale_kX * this->x_exp_posi[i]) + this->scale_cX * (1 - this->scale_kX);
+        this->y_exp_posi[i] = (this->scale_kY * this->y_exp_posi[i]) + this->scale_cY * (1 - this->scale_kY);
 
-    cnt_scale_result(x_now, y_now, result);
-    x_now = result[0];
-    y_now = result[1];
-
-    cnt_rotate_result(x_now, y_now, result);
+        this->x_exp_neg[i] = (this->scale_kX * this->x_exp_neg[i]) + this->scale_cX * (1 - this->scale_kX);
+        this->y_exp_neg[i] = (this->scale_kY * this->y_exp_neg[i]) + this->scale_cY * (1 - this->scale_kY);
+    }
 }
 
 double cnt_y_parabola(double x)
@@ -119,42 +133,9 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
 
     for (int i = 0; i < this->cnt_dots; i++)
     {
-        if (flag_step_back == 0)
-        {
-            cnt_result(this->x_parabola[i], this->y_parabola[i], result_now);
-            x_parabola[i] = result_now[0];
-            y_parabola[i] = result_now[1];
-            painter.drawEllipse(QPointF(result_now[0] + offset_to_center_x, result_now[1] + offset_to_center_y), 1, 1);
-        }
-        else
-        {
-            painter.drawEllipse(QPointF(x_parabola[i] + offset_to_center_x, y_parabola[i] + offset_to_center_y), 1, 1);
-        }
-
-
-        if (flag_step_back == 0)
-        {
-            cnt_result(this->x_exp_posi[i], this->y_exp_posi[i], result_now);
-            x_exp_posi[i] = result_now[0];
-            y_exp_posi[i] = result_now[1];
-            painter.drawEllipse(QPointF(result_now[0] + offset_to_center_x, result_now[1] + offset_to_center_y), 1, 1);
-        }
-        else
-        {
-            painter.drawEllipse(QPointF(x_exp_posi[i] + offset_to_center_x, y_exp_posi[i] + offset_to_center_y), 1, 1);
-        }
-
-        if (flag_step_back == 0)
-        {
-            cnt_result(this->x_exp_neg[i], this->y_exp_neg[i], result_now);
-            x_exp_neg[i] = result_now[0];
-            y_exp_neg[i] = result_now[1];
-            painter.drawEllipse(QPointF(result_now[0] + offset_to_center_x, result_now[1] + offset_to_center_y), 1, 1);
-        }
-        else
-        {
-            painter.drawEllipse(QPointF(x_exp_neg[i] + offset_to_center_x, y_exp_neg[i] + offset_to_center_y), 1, 1);
-        }
+        painter.drawEllipse(QPointF(x_parabola[i] + offset_to_center_x, y_parabola[i] + offset_to_center_y), 1, 1);
+        painter.drawEllipse(QPointF(x_exp_posi[i] + offset_to_center_x, y_exp_posi[i] + offset_to_center_y), 1, 1);
+        painter.drawEllipse(QPointF(x_exp_neg[i] + offset_to_center_x, y_exp_neg[i] + offset_to_center_y), 1, 1);
     }
 
     // path.moveTo(result_x_exp_1_parabola * scale + offset_to_center_x, cnt_y_parabola(result_x_exp_1_parabola) * scale + offset_to_center_y);

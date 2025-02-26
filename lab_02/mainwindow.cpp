@@ -117,9 +117,9 @@ void MainWindow::reset_transfer()
     drawWidget->transfer_dY_s = drawWidget->transfer_dY_s;
     copy_all_dots();
 
-
     drawWidget->transfer_dX = x_transfer_str.toDouble();
     drawWidget->transfer_dY = y_transfer_str.toDouble();
+    drawWidget->cnt_transfer_result();
     drawWidget->update();
     drawWidget->flag_step_back = 0;
 }
@@ -167,6 +167,7 @@ void MainWindow::reset_scale()
     drawWidget->scale_cY = scale_cY_str.toDouble();
     drawWidget->scale_kX = scale_kX_str.toDouble();
     drawWidget->scale_kY = scale_kY_str.toDouble();
+    drawWidget->cnt_scale_result();
     drawWidget->update();
     drawWidget->flag_step_back = 0;
 }
@@ -220,6 +221,7 @@ void MainWindow::reset_rotate()
     drawWidget->rotate_cX = rotate_cX_str.toDouble();
     drawWidget->rotate_cY = rotate_cY_str.toDouble();
     drawWidget->rotate_angle = correct_angle(rotate_angle_str.toDouble());
+    drawWidget->cnt_rotate_result();
     drawWidget->update();
     drawWidget->flag_step_back = 0;
 }
