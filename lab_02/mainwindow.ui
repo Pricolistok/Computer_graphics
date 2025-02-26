@@ -6641,6 +6641,22 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit_transfer_dX</tabstop>
+  <tabstop>lineEdit_transfer_dY</tabstop>
+  <tabstop>pushButton_transfer</tabstop>
+  <tabstop>lineEdit_scale_cX</tabstop>
+  <tabstop>lineEdit_scale_cY</tabstop>
+  <tabstop>lineEdit_scale_kX</tabstop>
+  <tabstop>lineEdit_scale_kY</tabstop>
+  <tabstop>pushButton_scale</tabstop>
+  <tabstop>lineEdit_rotate_cX</tabstop>
+  <tabstop>lineEdit_rotate_cY</tabstop>
+  <tabstop>lineEdit_rotate_angle</tabstop>
+  <tabstop>pushButton_rotate</tabstop>
+  <tabstop>pushButton_restart</tabstop>
+  <tabstop>pushButton_step_back</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

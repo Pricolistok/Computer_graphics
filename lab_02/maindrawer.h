@@ -17,11 +17,13 @@
 
 
 double cnt_x_intersection_exp_with_parabola(int mode);
+double cnt_x_intersection_exp_with_exp();
 double cnt_y_exp(double x);
 double cnt_y_parabola(double x);
 double correct_angle(double angle);
 void creator_data_exp(double data_x[], double data_y[], double start, double finish, double step, int flag_posi);
 void creator_data_parabola(double data_x[], double data_y[], double start, double finish, double step);
+void creator_data_hatching(double data_x[], double data_y[], int *len_data);
 
 class MyDrawWidget : public QWidget
 {
@@ -37,6 +39,9 @@ public:
     double x_parabola[CNT_DOTS], y_parabola[CNT_DOTS];
     double x_exp_posi[CNT_DOTS], y_exp_posi[CNT_DOTS];
     double x_exp_neg[CNT_DOTS], y_exp_neg[CNT_DOTS];
+    double x_move_to, y_move_to;
+    double x_hatching[CNT_DOTS], y_hatching[CNT_DOTS];
+    int len_hatching;
 
     int flag_step_back = 0;
 
@@ -47,6 +52,8 @@ public:
     double x_parabola_s[CNT_DOTS], y_parabola_s[CNT_DOTS];
     double x_exp_posi_s[CNT_DOTS], y_exp_posi_s[CNT_DOTS];
     double x_exp_neg_s[CNT_DOTS], y_exp_neg_s[CNT_DOTS];
+    double x_move_to_s, y_move_to_s;
+    double x_hatching_s[CNT_DOTS], y_hatching_s[CNT_DOTS];
 
     void cnt_scale_result();
     void cnt_transfer_result();

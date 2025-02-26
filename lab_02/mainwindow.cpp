@@ -48,6 +48,9 @@ void MainWindow::step_back()
     copy_array(drawWidget->x_exp_neg, drawWidget->x_exp_neg_s);
     copy_array(drawWidget->y_exp_neg, drawWidget->y_exp_neg_s);
 
+    copy_array(drawWidget->x_hatching, drawWidget->x_hatching_s);
+    copy_array(drawWidget->y_hatching, drawWidget->y_hatching_s);
+
     drawWidget->update();
 
 }
@@ -62,6 +65,9 @@ void MainWindow::copy_all_dots()
 
     copy_array(drawWidget->x_exp_neg_s, drawWidget->x_exp_neg);
     copy_array(drawWidget->y_exp_neg_s, drawWidget->y_exp_neg);
+
+    copy_array(drawWidget->x_hatching_s, drawWidget->x_hatching);
+    copy_array(drawWidget->y_hatching_s, drawWidget->y_hatching);
 }
 
 int check_num(const char num[])
@@ -100,16 +106,16 @@ void MainWindow::reset_transfer()
 {
     QString x_transfer_str = ui->lineEdit_transfer_dX->text();
     QString y_transfer_str = ui->lineEdit_transfer_dY->text();
-    char message[150];
+    char message[250];
     if (!check_num(x_transfer_str.toStdString().c_str()))
     {
-        strcpy_s(message, "Ошибка! Ошибка при введение переноса по X!");
+        strcpy_s(message, "Ошибка! Ошибка при введении переноса по X! Введите корректное вещественное число!");
         send_error_message(message);
         return;
     }
     if (!check_num(y_transfer_str.toStdString().c_str()))
     {
-        strcpy_s(message, "Ошибка! Ошибка при введение переноса по Y!");
+        strcpy_s(message, "Ошибка! Ошибка при введении переноса по Y! Введите корректное вещественное число!");
         send_error_message(message);
         return;
     }
@@ -131,28 +137,28 @@ void MainWindow::reset_scale()
     QString scale_cY_str = ui->lineEdit_scale_cY->text();
     QString scale_kX_str = ui->lineEdit_scale_kX->text();
     QString scale_kY_str = ui->lineEdit_scale_kY->text();
-    char message[150];
+    char message[250];
     if (!check_num(scale_cX_str.toStdString().c_str()))
     {
-        strcpy_s(message, "Ошибка! Ошибка при введение координат центра по X!");
+        strcpy_s(message, "Ошибка! Ошибка при введении координат центра по X! Введите корректное вещественное число!");
         send_error_message(message);
         return;
     }
     if (!check_num(scale_cY_str.toStdString().c_str()))
     {
-        strcpy_s(message, "Ошибка! Ошибка при введение координат центра по Y!");
+        strcpy_s(message, "Ошибка! Ошибка при введении координат центра по Y! Введите корректное вещественное число!");
         send_error_message(message);
         return;
     }
     if (!check_num(scale_kX_str.toStdString().c_str()))
     {
-        strcpy_s(message, "Ошибка! Ошибка при введение коэффициента масштабирования по X!");
+        strcpy_s(message, "Ошибка! Ошибка при введении коэффициента масштабирования по X! Введите корректное вещественное число!");
         send_error_message(message);
         return;
     }
     if (!check_num(scale_kY_str.toStdString().c_str()))
     {
-        strcpy_s(message, "Ошибка! Ошибка при введение коэффициента масштабирования по Y!");
+        strcpy_s(message, "Ошибка! Ошибка при введении коэффициента масштабирования по Y! Введите корректное вещественное число!");
         send_error_message(message);
         return;
     }
@@ -172,43 +178,28 @@ void MainWindow::reset_scale()
     drawWidget->flag_step_back = 0;
 }
 
-double correct_angle(double angle)
-{
-    int flag = 1;
-    if (angle < 0)
-    {
-        flag = -1;
-        angle *= -1;
-    }
-
-    while (angle > 360)
-        angle -= 360;
-    qDebug() << angle;
-    return angle * flag;
-}
-
 
 void MainWindow::reset_rotate()
 {
     QString rotate_cX_str = ui->lineEdit_rotate_cX->text();
     QString rotate_cY_str = ui->lineEdit_rotate_cY->text();
     QString rotate_angle_str = ui->lineEdit_rotate_angle->text();
-    char message[150];
+    char message[250];
     if (!check_num(rotate_cX_str.toStdString().c_str()))
     {
-        strcpy_s(message, "Ошибка! Ошибка при введение координат центра по X!");
+        strcpy_s(message, "Ошибка! Ошибка при введении координат центра по X! Введите корректное вещественное число!");
         send_error_message(message);
         return;
     }
     if (!check_num(rotate_cY_str.toStdString().c_str()))
     {
-        strcpy_s(message, "Ошибка! Ошибка при введение координат центра по Y!");
+        strcpy_s(message, "Ошибка! Ошибка при введении координат центра по Y! Введите корректное вещественное число!");
         send_error_message(message);
         return;
     }
     if (!check_num(rotate_angle_str.toStdString().c_str()))
     {
-        strcpy_s(message, "Ошибка! Ошибка при введение угла поворота!");
+        strcpy_s(message, "Ошибка! Ошибка при введении угла поворота! Введите корректное вещественное число!");
         send_error_message(message);
         return;
     }
@@ -220,7 +211,7 @@ void MainWindow::reset_rotate()
 
     drawWidget->rotate_cX = rotate_cX_str.toDouble();
     drawWidget->rotate_cY = rotate_cY_str.toDouble();
-    drawWidget->rotate_angle = correct_angle(rotate_angle_str.toDouble());
+    drawWidget->rotate_angle = rotate_angle_str.toDouble();
     drawWidget->cnt_rotate_result();
     drawWidget->update();
     drawWidget->flag_step_back = 0;
@@ -228,6 +219,7 @@ void MainWindow::reset_rotate()
 
 void MainWindow::restart()
 {
+    int len = 0;
     drawWidget->transfer_dX_s = drawWidget->transfer_dX;
     drawWidget->transfer_dY_s = drawWidget->transfer_dY;
     drawWidget->scale_cX_s = drawWidget->scale_cX;
@@ -243,6 +235,8 @@ void MainWindow::restart()
     creator_data_parabola(drawWidget->x_parabola, drawWidget->y_parabola, drawWidget->start_draw + 3, drawWidget->finish_draw - 3, drawWidget->step_draw);
     creator_data_exp(drawWidget->x_exp_posi, drawWidget->y_exp_posi, drawWidget->start_draw, drawWidget->finish_draw - 4, drawWidget->step_draw, 1);
     creator_data_exp(drawWidget->x_exp_neg, drawWidget->y_exp_neg, drawWidget->start_draw + 4, drawWidget->finish_draw, drawWidget->step_draw, -1);
+    creator_data_hatching(drawWidget->x_hatching, drawWidget->y_hatching, &len);
+    drawWidget->len_hatching = len;
 
     drawWidget->transfer_dX = 0;
     drawWidget->transfer_dY = 0;
