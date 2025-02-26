@@ -187,7 +187,7 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
     double offset_to_center_x = WIDTH_CANVAS / 2, offset_to_center_y = HEIGHT_CANVAS / 2;
     QPainter painter(this);
     double result_now[2];
-    QBrush brush(Qt::red, Qt::BDiagPattern);  // Попробуйте SolidPattern вместо BDiagPattern
+    QBrush brush(Qt::red, Qt::BDiagPattern);
     QPainterPath path;
     Q_UNUSED(event);
 
