@@ -120,7 +120,7 @@ void MainWindow::reset_transfer()
         return;
     }
     drawWidget->transfer_dX_s = drawWidget->transfer_dX;
-    drawWidget->transfer_dY_s = drawWidget->transfer_dY_s;
+    drawWidget->transfer_dY_s = drawWidget->transfer_dY;
     copy_all_dots();
 
     drawWidget->transfer_dX = x_transfer_str.toDouble();
