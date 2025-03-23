@@ -22,8 +22,8 @@ class MainWindow : public QMainWindow
 public:
     void draw_line();
     void draw_spector();
-    void set_color_line();
-    void set_color_BG();
+    void set_color_line(int id);
+    void set_color_BG(int id);
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 

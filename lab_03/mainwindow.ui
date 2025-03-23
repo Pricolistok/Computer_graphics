@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>2511</width>
+    <width>1664</width>
     <height>752</height>
    </rect>
   </property>
@@ -499,7 +499,7 @@
       <x>1180</x>
       <y>40</y>
       <width>20</width>
-      <height>221</height>
+      <height>241</height>
      </rect>
     </property>
     <property name="orientation">
@@ -546,7 +546,7 @@
     <property name="geometry">
      <rect>
       <x>1040</x>
-      <y>290</y>
+      <y>280</y>
       <width>571</width>
       <height>20</height>
      </rect>
@@ -561,7 +561,7 @@
       <x>1360</x>
       <y>40</y>
       <width>20</width>
-      <height>221</height>
+      <height>241</height>
      </rect>
     </property>
     <property name="orientation">
@@ -665,8 +665,8 @@
    <widget class="QLabel" name="labelCoordXS">
     <property name="geometry">
      <rect>
-      <x>1101</x>
-      <y>340</y>
+      <x>1100</x>
+      <y>330</y>
       <width>21</width>
       <height>21</height>
      </rect>
@@ -683,8 +683,8 @@
    <widget class="QLabel" name="labelCoordXS_2">
     <property name="geometry">
      <rect>
-      <x>1101</x>
-      <y>370</y>
+      <x>1100</x>
+      <y>360</y>
       <width>21</width>
       <height>21</height>
      </rect>
@@ -701,8 +701,8 @@
    <widget class="QLabel" name="labelCoordXS_3">
     <property name="geometry">
      <rect>
-      <x>1271</x>
-      <y>370</y>
+      <x>1270</x>
+      <y>360</y>
       <width>21</width>
       <height>21</height>
      </rect>
@@ -719,8 +719,8 @@
    <widget class="QLabel" name="labelCoordXS_4">
     <property name="geometry">
      <rect>
-      <x>1271</x>
-      <y>340</y>
+      <x>1270</x>
+      <y>330</y>
       <width>21</width>
       <height>21</height>
      </rect>
@@ -894,7 +894,7 @@
     <property name="geometry">
      <rect>
       <x>1040</x>
-      <y>120</y>
+      <y>140</y>
       <width>111</width>
       <height>18</height>
      </rect>
@@ -907,7 +907,7 @@
     <property name="geometry">
      <rect>
       <x>1040</x>
-      <y>240</y>
+      <y>260</y>
       <width>121</width>
       <height>18</height>
      </rect>
@@ -920,7 +920,7 @@
     <property name="geometry">
      <rect>
       <x>1040</x>
-      <y>160</y>
+      <y>180</y>
       <width>101</width>
       <height>18</height>
      </rect>
@@ -933,7 +933,7 @@
     <property name="geometry">
      <rect>
       <x>1040</x>
-      <y>100</y>
+      <y>120</y>
       <width>69</width>
       <height>18</height>
      </rect>
@@ -946,7 +946,7 @@
     <property name="geometry">
      <rect>
       <x>1040</x>
-      <y>200</y>
+      <y>220</y>
       <width>121</width>
       <height>18</height>
      </rect>
@@ -972,7 +972,7 @@
     <property name="geometry">
      <rect>
       <x>1040</x>
-      <y>178</y>
+      <y>198</y>
       <width>141</width>
       <height>20</height>
      </rect>
@@ -985,7 +985,7 @@
     <property name="geometry">
      <rect>
       <x>1040</x>
-      <y>220</y>
+      <y>240</y>
       <width>131</width>
       <height>18</height>
      </rect>
@@ -998,7 +998,7 @@
     <property name="geometry">
      <rect>
       <x>1040</x>
-      <y>140</y>
+      <y>160</y>
       <width>91</width>
       <height>18</height>
      </rect>
@@ -1011,7 +1011,7 @@
     <property name="geometry">
      <rect>
       <x>1210</x>
-      <y>100</y>
+      <y>120</y>
       <width>69</width>
       <height>18</height>
      </rect>
@@ -1024,7 +1024,7 @@
     <property name="geometry">
      <rect>
       <x>1210</x>
-      <y>160</y>
+      <y>180</y>
       <width>111</width>
       <height>18</height>
      </rect>
@@ -1037,7 +1037,7 @@
     <property name="geometry">
      <rect>
       <x>1210</x>
-      <y>180</y>
+      <y>200</y>
       <width>141</width>
       <height>18</height>
      </rect>
@@ -1063,7 +1063,7 @@
     <property name="geometry">
      <rect>
       <x>1210</x>
-      <y>240</y>
+      <y>260</y>
       <width>121</width>
       <height>18</height>
      </rect>
@@ -1076,7 +1076,7 @@
     <property name="geometry">
      <rect>
       <x>1210</x>
-      <y>120</y>
+      <y>140</y>
       <width>101</width>
       <height>18</height>
      </rect>
@@ -1089,7 +1089,7 @@
     <property name="geometry">
      <rect>
       <x>1210</x>
-      <y>200</y>
+      <y>220</y>
       <width>141</width>
       <height>18</height>
      </rect>
@@ -1102,7 +1102,7 @@
     <property name="geometry">
      <rect>
       <x>1210</x>
-      <y>220</y>
+      <y>240</y>
       <width>121</width>
       <height>18</height>
      </rect>
@@ -1115,7 +1115,7 @@
     <property name="geometry">
      <rect>
       <x>1210</x>
-      <y>140</y>
+      <y>160</y>
       <width>111</width>
       <height>18</height>
      </rect>
@@ -1128,7 +1128,7 @@
     <property name="geometry">
      <rect>
       <x>1380</x>
-      <y>190</y>
+      <y>210</y>
       <width>111</width>
       <height>18</height>
      </rect>
@@ -1142,12 +1142,13 @@
      <rect>
       <x>1380</x>
       <y>170</y>
-      <width>211</width>
-      <height>21</height>
+      <width>271</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>Брензенем (с устр. ступенчатости)</string>
+     <string>Брензенем (с устр. 
+ступенчатости)</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="radioButtonBrenzenhemInt">
@@ -1155,7 +1156,7 @@
      <rect>
       <x>1380</x>
       <y>150</y>
-      <width>151</width>
+      <width>171</width>
       <height>18</height>
      </rect>
     </property>
@@ -1181,7 +1182,7 @@
      <rect>
       <x>1380</x>
       <y>90</y>
-      <width>201</width>
+      <width>251</width>
       <height>41</height>
      </rect>
     </property>
@@ -1194,7 +1195,7 @@
     <property name="geometry">
      <rect>
       <x>1380</x>
-      <y>210</y>
+      <y>230</y>
       <width>161</width>
       <height>21</height>
      </rect>
@@ -1203,19 +1204,83 @@
      <string>Библиотечная функция</string>
     </property>
    </widget>
+   <widget class="QRadioButton" name="radioButtonLineBlack">
+    <property name="geometry">
+     <rect>
+      <x>1040</x>
+      <y>100</y>
+      <width>121</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Черный</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioButtonBgBlack">
+    <property name="geometry">
+     <rect>
+      <x>1210</x>
+      <y>100</y>
+      <width>101</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Черный</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>2511</width>
-     <height>25</height>
+     <width>1664</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>radioButtonLineWhite</tabstop>
+  <tabstop>radioButtonLineBlack</tabstop>
+  <tabstop>radioButtonLineYellow</tabstop>
+  <tabstop>radioButtonLineOrange</tabstop>
+  <tabstop>radioButtonLineRed</tabstop>
+  <tabstop>radioButtonLineViolet</tabstop>
+  <tabstop>radioButtonLineLightGreen</tabstop>
+  <tabstop>radioButtonLineDarkGreen</tabstop>
+  <tabstop>radioButtonLineLightBlue</tabstop>
+  <tabstop>radioButtonLineDarkBlue</tabstop>
+  <tabstop>radioButtonBgWhite</tabstop>
+  <tabstop>radioButtonBgBlack</tabstop>
+  <tabstop>radioButtonBgYellow</tabstop>
+  <tabstop>radioButtonBgOrange</tabstop>
+  <tabstop>radioButtonBgRed</tabstop>
+  <tabstop>radioButtonBgViolet</tabstop>
+  <tabstop>radioButtonBgLightGreen</tabstop>
+  <tabstop>radioButtonBgDarkGreen</tabstop>
+  <tabstop>radioButtonBgLightBlue</tabstop>
+  <tabstop>radioButtonBgDarkBlue</tabstop>
+  <tabstop>radioButtonDiffAnalys</tabstop>
+  <tabstop>radioButtonBrenzenhemFloat</tabstop>
+  <tabstop>radioButtonBrenzenhemInt</tabstop>
+  <tabstop>radioButtonBrenzenhemStair</tabstop>
+  <tabstop>radioButtonVu</tabstop>
+  <tabstop>radioButtonLibFunc</tabstop>
+  <tabstop>lineEditXS</tabstop>
+  <tabstop>lineEditYS</tabstop>
+  <tabstop>lineEditXF</tabstop>
+  <tabstop>lineEditYF</tabstop>
+  <tabstop>pushButtonLine</tabstop>
+  <tabstop>lineEditAngle</tabstop>
+  <tabstop>lineEditSizeofLine</tabstop>
+  <tabstop>pushButtonSpector</tabstop>
+  <tabstop>pushButtonTimeData</tabstop>
+  <tabstop>pushButtonClearDisp</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

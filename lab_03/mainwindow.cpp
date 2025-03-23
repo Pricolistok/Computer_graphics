@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     radio_btn_group_BG_color->addButton(ui->radioButtonBgViolet, 7);
     radio_btn_group_BG_color->addButton(ui->radioButtonBgWhite, 8);
     radio_btn_group_BG_color->addButton(ui->radioButtonBgYellow, 9);
+    radio_btn_group_BG_color->addButton(ui->radioButtonBgBlack, 10);
 
     radio_btn_group_Line_color = new QButtonGroup(this);
     radio_btn_group_Line_color->addButton(ui->radioButtonLineDarkBlue, 1);
@@ -38,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
     radio_btn_group_Line_color->addButton(ui->radioButtonLineViolet, 7);
     radio_btn_group_Line_color->addButton(ui->radioButtonLineWhite, 8);
     radio_btn_group_Line_color->addButton(ui->radioButtonLineYellow, 9);
+    radio_btn_group_Line_color->addButton(ui->radioButtonLineBlack, 10);
 
     radio_btn_group_method = new QButtonGroup(this);
     radio_btn_group_method->addButton(ui->radioButtonBrenzenhemFloat, 1);
@@ -45,6 +47,15 @@ MainWindow::MainWindow(QWidget *parent)
     radio_btn_group_method->addButton(ui->radioButtonBrenzenhemStair, 3);
     radio_btn_group_method->addButton(ui->radioButtonDiffAnalys, 4);
     radio_btn_group_method->addButton(ui->radioButtonLibFunc, 5);
+
+    drawWidget->colorBG = "background-color: white;";
+    drawWidget->colorLine = "black";
+    ui->radioButtonBgWhite->setChecked(true);
+    ui->radioButtonLineBlack->setChecked(true);
+    ui->radioButtonLibFunc->setChecked(true);
+
+    connect(radio_btn_group_Line_color, &QButtonGroup::idClicked, this, &MainWindow::set_color_line);
+    connect(radio_btn_group_BG_color, &QButtonGroup::idClicked, this, &MainWindow::set_color_BG);
 
     connect(ui->pushButtonLine, &QPushButton::clicked, this, &MainWindow::draw_line);
     connect(ui->pushButtonSpector, &QPushButton::clicked, this, &MainWindow::draw_spector);
@@ -60,52 +71,82 @@ void display_error_message(const char text[LEN_TEXT_ERROR_MESSAGE])
     message.exec();
 }
 
-void MainWindow::set_color_line()
+void MainWindow::set_color_line(int id)
 {
-    connect(this->radio_btn_group_Line_color, &QButtonGroup::idClicked, this, [=](int id) {
-        if (id == 1)
-            drawWidget->colorLine = "background-color: darkBlue;";
-        else if (id == 2)
-            drawWidget->colorLine = "background-color: darkGreen;";
-        else if (id == 3)
-            drawWidget->colorLine = "background-color: blue;";
-        else if (id == 4)
-            drawWidget->colorLine = "background-color: lightGreen;";
-        else if (id == 5)
-            drawWidget->colorLine = "background-color: darkOrange;";
-        else if (id == 6)
-            drawWidget->colorLine = "background-color: red;";
-        else if (id == 7)
-            drawWidget->colorLine = "background-color: darkMagenta;";
-        else if (id == 8)
-            drawWidget->colorLine = "background-color: white;";
-        else if (id == 9)
-            drawWidget->colorLine = "background-color: yellow;";
-    });
+    switch (id)
+    {
+        case 1:
+            drawWidget->colorLine = "darkBlue";
+            break;
+        case 2:
+            drawWidget->colorLine = "darkGreen";
+            break;
+        case 3:
+            drawWidget->colorLine = "blue";
+            break;
+        case 4:
+            drawWidget->colorLine = "lightGreen";
+            break;
+        case 5:
+            drawWidget->colorLine = "orange";
+            break;
+        case 6:
+            drawWidget->colorLine = "red";
+            break;
+        case 7:
+            drawWidget->colorLine = "purple";
+            break;
+        case 8:
+            drawWidget->colorLine = "white";
+            break;
+        case 9:
+            drawWidget->colorLine = "yellow";
+            break;
+        case 10:
+            drawWidget->colorLine = "black";
+            break;
+        default:
+            break;
+    }
 }
 
-void MainWindow::set_color_BG()
+void MainWindow::set_color_BG(int id)
 {
-    connect(this->radio_btn_group_BG_color, &QButtonGroup::idClicked, this, [=](int id) {
-        if (id == 1)
+    switch (id)
+    {
+        case 1:
             drawWidget->colorBG = "background-color: darkBlue;";
-        else if (id == 2)
+            break;
+        case 2:
             drawWidget->colorBG = "background-color: darkGreen;";
-        else if (id == 3)
+            break;
+        case 3:
             drawWidget->colorBG = "background-color: blue;";
-        else if (id == 4)
+            break;
+        case 4:
             drawWidget->colorBG = "background-color: lightGreen;";
-        else if (id == 5)
-            drawWidget->colorBG = "background-color: darkOrange;";
-        else if (id == 6)
+            break;
+        case 5:
+            drawWidget->colorBG = "background-color: Orange;";
+            break;
+        case 6:
             drawWidget->colorBG = "background-color: red;";
-        else if (id == 7)
-            drawWidget->colorBG = "background-color: darkMagenta;";
-        else if (id == 8)
+            break;
+        case 7:
+            drawWidget->colorBG = "background-color: purple;";
+            break;
+        case 8:
             drawWidget->colorBG = "background-color: white;";
-        else if (id == 9)
+            break;
+        case 9:
             drawWidget->colorBG = "background-color: yellow;";
-    });
+            break;
+        case 10:
+            drawWidget->colorBG = "background-color: black;";
+            break;
+        default:
+            break;
+    }
 }
 
 void MainWindow::draw_line()
@@ -143,15 +184,13 @@ void MainWindow::draw_line()
     }
     if (error == 0)
     {
-        set_color_line();
-        set_color_BG();
         ui->widget->setStyleSheet(drawWidget->colorBG.c_str());
         drawWidget->line.xs = xs;
         drawWidget->line.ys = ys;
         drawWidget->line.xf = xf;
         drawWidget->line.yf = yf;
+        drawWidget->update();
     }
-    drawWidget->update();
 }
 
 void MainWindow::draw_spector()
@@ -160,7 +199,6 @@ void MainWindow::draw_spector()
     QString data_lenLine = ui->lineEditSizeofLine->text();
     double angle, lenLine;
     int error = 0;
-    char color_result[100];
     bool result;
     angle = data_angle.toDouble(&result);
     if (!result)
@@ -178,8 +216,8 @@ void MainWindow::draw_spector()
     {
         drawWidget->angle = angle;
         drawWidget->lenLine = lenLine;
+        drawWidget->update();
     }
-    drawWidget->update();
 }
 
 
