@@ -48,6 +48,7 @@ class MyDrawWidget : public QWidget
 Q_OBJECT
 
 public:
+    method_t method;
     std::string colorLine;
     std::string colorBG;
     line_t line;

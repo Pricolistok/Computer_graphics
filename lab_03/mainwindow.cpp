@@ -56,6 +56,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(radio_btn_group_Line_color, &QButtonGroup::idClicked, this, &MainWindow::set_color_line);
     connect(radio_btn_group_BG_color, &QButtonGroup::idClicked, this, &MainWindow::set_color_BG);
+    connect(radio_btn_group_method, &QButtonGroup::idClicked, this, &MainWindow::set_method);
 
     connect(ui->pushButtonLine, &QPushButton::clicked, this, &MainWindow::draw_line);
     connect(ui->pushButtonSpector, &QPushButton::clicked, this, &MainWindow::draw_spector);
@@ -70,6 +71,31 @@ void display_error_message(const char text[LEN_TEXT_ERROR_MESSAGE])
     message.setText(text);
     message.exec();
 }
+
+void MainWindow::set_method(int id)
+{
+    switch (id)
+    {
+        case 1:
+            drawWidget->method = BRENZENHEM_FLOAT;
+            break;
+        case 2:
+            drawWidget->method = BRENZENHEM_INT;
+            break;
+        case 3:
+            drawWidget->method = BRENZENHEM_STAIR;
+            break;
+        case 4:
+            drawWidget->method = DIFF;
+            break;
+        case 5:
+            drawWidget->method = LIB_FUNC;
+            break;
+        default:
+            break;
+    }
+}
+
 
 void MainWindow::set_color_line(int id)
 {
