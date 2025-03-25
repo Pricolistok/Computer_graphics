@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     drawWidget->colorBG = "background-color: white;";
     drawWidget->colorLine = "black";
+    drawWidget->method = LIB_FUNC;
     ui->radioButtonBgWhite->setChecked(true);
     ui->radioButtonLineBlack->setChecked(true);
     ui->radioButtonLibFunc->setChecked(true);
