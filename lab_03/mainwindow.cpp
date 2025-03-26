@@ -1,8 +1,20 @@
 #include <QMessageBox>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QTimer>
+#include <unistd.h>
 
 using namespace std;
+
+void cnt_rotate_result(double &x, double &y, double angle)
+{
+    double temp_x, temp_y;
+    double new_angle = angle * M_PI / 180;
+    temp_x = x;
+    temp_y = y;
+    x = (temp_x * cos(new_angle)) - (temp_y * sin(new_angle));
+    y = (temp_x * sin(new_angle)) + (temp_y * cos(new_angle));
+}
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -10,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    this->setWindowTitle("CG lab_03");
     ui->widget->setStyleSheet("background-color:black;");
     drawWidget = new MyDrawWidget(ui->widget);
     drawWidget->setGeometry(0, 0, ui->widget->width(), ui->widget->height());
@@ -63,13 +75,123 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButtonLine, &QPushButton::clicked, this, &MainWindow::draw_line);
     connect(ui->pushButtonSpector, &QPushButton::clicked, this, &MainWindow::draw_spector);
     connect(ui->pushButtonClearDisp, &QPushButton::clicked, this, &MainWindow::set_free);
+    connect(ui->pushButtonTimeData, &QPushButton::clicked, this, &MainWindow::set_data_time);
 
 }
+
+void MainWindow::set_data_time()
+{
+    drawWidget->lines.clear();
+    drawWidget->time_analysis.clear();
+
+    line_t line;
+    line.xs = 0;
+    line.ys = 0;
+    line.xf = 1000;
+    line.yf = 0;
+    line.method = DIFF;
+    line.colorLine = drawWidget->colorLine;
+    drawWidget->lines.push_back(line);
+    line.method = BRENZENHEM_FLOAT;
+    drawWidget->lines.push_back(line);
+    line.method = BRENZENHEM_INT;
+    drawWidget->lines.push_back(line);
+    line.method = BRENZENHEM_STAIR;
+    drawWidget->lines.push_back(line);
+    line.method = WU;
+    drawWidget->lines.push_back(line);
+
+    line.xs = 0;
+    line.ys = 0;
+    line.xf = 707;
+    line.yf = 707;
+    line.method = DIFF;
+    line.colorLine = drawWidget->colorLine;
+    drawWidget->lines.push_back(line);
+    line.method = BRENZENHEM_FLOAT;
+    drawWidget->lines.push_back(line);
+    line.method = BRENZENHEM_INT;
+    drawWidget->lines.push_back(line);
+    line.method = BRENZENHEM_STAIR;
+    drawWidget->lines.push_back(line);
+    line.method = WU;
+    drawWidget->lines.push_back(line);
+
+    drawWidget->repaint();
+
+    ui->widget->setStyleSheet(drawWidget->colorBG.c_str());
+
+    QTimer::singleShot(0, this, [this]() {
+        FILE *file = fopen("data_time.txt", "w");
+        if (file)
+        {
+            for (size_t i = 0; i < drawWidget->lines.size() - 5; i++) {
+                fprintf(file, "%lf %lf\n", drawWidget->time_analysis[5 + i], drawWidget->time_analysis[5 + i]);
+            }
+            fflush(file);
+            fclose(file);
+        }
+        else
+            qDebug() << "Error opening file";
+
+        drawWidget->cntSteps.clear();
+        drawWidget->lines.clear();
+
+        line_t line_rotate;
+        int angle_rotate = 0;
+        double xf = 1000, yf = 0;
+        while (angle_rotate <= 90)
+        {
+            line_rotate.xs = 0;
+            line_rotate.ys = 0;
+            line_rotate.xf = xf;
+            line_rotate.yf = yf;
+            line_rotate.colorLine = drawWidget->colorLine;
+            line_rotate.method = DIFF;
+            drawWidget->lines.push_back(line_rotate);
+            line_rotate.method = BRENZENHEM_FLOAT;
+            drawWidget->lines.push_back(line_rotate);
+            line_rotate.method = BRENZENHEM_INT;
+            drawWidget->lines.push_back(line_rotate);
+            line_rotate.method = BRENZENHEM_STAIR;
+            drawWidget->lines.push_back(line_rotate);
+            line_rotate.method = WU;
+            drawWidget->lines.push_back(line_rotate);
+            cnt_rotate_result(xf, yf, 5);
+            angle_rotate += 5;
+        }
+        drawWidget->repaint();
+        QTimer::singleShot(0, this, [this]()
+        {
+            FILE *file_stair = fopen("data_stair.txt", "w");
+            if (file_stair) {
+                for (size_t i = 0; i < 5; i++) {
+                    for (size_t j = i; j < drawWidget->cntSteps.size(); j += 5)
+                        fprintf(file_stair, "%d ", drawWidget->cntSteps[j]);
+                    fprintf(file_stair, "\n");
+                }
+                fflush(file_stair);
+                fclose(file_stair);
+            } else
+                qDebug() << "Error opening file";
+            QTimer::singleShot(0, this, [this]()
+            {
+                drawWidget->cntSteps.clear();
+                drawWidget->lines.clear();
+                drawWidget->update();
+            });
+        });
+    });
+}
+
+
+
 
 void MainWindow::set_free()
 {
     drawWidget->flag_free = true;
     drawWidget->lines.clear();
+    drawWidget->time_analysis.clear();
     drawWidget->update();
 }
 
@@ -237,15 +359,6 @@ void MainWindow::draw_line()
     }
 }
 
-void cnt_rotate_result(double &x, double &y, double angle)
-{
-    double temp_x, temp_y;
-    double new_angle = angle * M_PI / 180;
-    temp_x = x;
-    temp_y = y;
-    x = (temp_x * cos(new_angle)) - (temp_y * sin(new_angle));
-    y = (temp_x * sin(new_angle)) + (temp_y * cos(new_angle));
-}
 
 void MainWindow::draw_spector()
 {

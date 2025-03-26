@@ -26,6 +26,7 @@ public:
     void set_color_BG(int id);
     void set_method(int id);
     void set_free();
+    void set_data_time();
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 

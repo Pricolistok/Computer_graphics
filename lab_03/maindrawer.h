@@ -12,7 +12,7 @@ using namespace std;
 #define WIDTH_CANVAS 1000
 #define HEIGHT_CANVAS 700
 #define SIZE_OF_SPECTOR 1000
-#define CNT_LINES 10000
+#define CNT_LINES 100000
 
 typedef enum method
 {
@@ -54,7 +54,10 @@ class MyDrawWidget : public QWidget
 Q_OBJECT
 
 public:
+    bool flag_time_analysis = false;
     vector <line_t> lines;
+    vector <double> time_analysis;
+    vector <int> cntSteps;
     bool flag_free = false;
     method_t method;
     std::string colorLine;
