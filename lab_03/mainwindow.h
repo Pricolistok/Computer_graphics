@@ -25,6 +25,7 @@ public:
     void set_color_line(int id);
     void set_color_BG(int id);
     void set_method(int id);
+    void set_free();
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 

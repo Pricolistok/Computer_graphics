@@ -6,6 +6,103 @@ MyDrawWidget::MyDrawWidget(QWidget *parent) : QWidget(parent)
 
 }
 
+void MyDrawWidget::cnt_rotate_result(double &x, double &y)
+{
+    double temp_x, temp_y;
+    double new_angle = -this->angle_spector * M_PI / 180;
+    temp_x = x;
+    temp_y = y;
+    x = (temp_x * cos(new_angle)) - (temp_y * sin(new_angle));
+    y = (temp_x * sin(new_angle)) + (temp_y * cos(new_angle));
+}
+
+void cnt_wu(QPainter &painter, double xStart, double yStart, double xEnd, double yEnd, double offsetX, double offsetY)
+{
+    auto ipart = [](double x) { return std::floor(x); };
+    auto round = [](double x) { return std::floor(x + 0.5); };
+    auto fpart = [](double x) { return x - std::floor(x); };
+    auto rfpart = [&](double x) { return 1.0 - fpart(x); };
+
+    bool steep = std::abs(yEnd - yStart) > std::abs(xEnd - xStart);
+    if (steep) {
+        std::swap(xStart, yStart);
+        std::swap(xEnd, yEnd);
+    }
+
+    if (xStart > xEnd) {
+        std::swap(xStart, xEnd);
+        std::swap(yStart, yEnd);
+    }
+
+    double dx = xEnd - xStart;
+    double dy = yEnd - yStart;
+    double gradient = (dx == 0.0) ? 1.0 : dy / dx;
+
+    double xEndRounded = round(xStart);
+    double yEndInterpolated = yStart + gradient * (xEndRounded - xStart);
+    double xGap = rfpart(xStart + 0.5);
+    int xPixel1 = static_cast<int>(xEndRounded);
+    int yPixel1 = static_cast<int>(ipart(yEndInterpolated));
+
+    QColor color(0, 0, 0);
+    color.setAlphaF(rfpart(yEndInterpolated) * xGap);
+    painter.setPen(color);
+    if (steep)
+        painter.drawPoint(offsetX + yPixel1, offsetY - xPixel1);
+    else
+        painter.drawPoint(offsetX + xPixel1, offsetY - yPixel1);
+
+    color.setAlphaF(fpart(yEndInterpolated) * xGap);
+    painter.setPen(color);
+    if (steep)
+        painter.drawPoint(offsetX + yPixel1 + 1, offsetY - xPixel1);
+    else
+        painter.drawPoint(offsetX + xPixel1, offsetY - yPixel1 - 1);
+
+    double intery = yEndInterpolated + gradient;
+
+    xEndRounded = round(xEnd);
+    yEndInterpolated = yEnd + gradient * (xEndRounded - xEnd);
+    xGap = fpart(xEnd + 0.5);
+    int xPixel2 = static_cast<int>(xEndRounded);
+    int yPixel2 = static_cast<int>(ipart(yEndInterpolated));
+
+    color.setAlphaF(rfpart(yEndInterpolated) * xGap);
+    painter.setPen(color);
+    if (steep)
+        painter.drawPoint(offsetX + yPixel2, offsetY - xPixel2);
+    else
+        painter.drawPoint(offsetX + xPixel2, offsetY - yPixel2);
+
+    color.setAlphaF(fpart(yEndInterpolated) * xGap);
+    painter.setPen(color);
+    if (steep)
+        painter.drawPoint(offsetX + yPixel2 + 1, offsetY - xPixel2);
+    else
+        painter.drawPoint(offsetX + xPixel2, offsetY - yPixel2 - 1);
+
+    for (int x = xPixel1 + 1; x < xPixel2; x++) {
+        int y = static_cast<int>(ipart(intery));
+
+        color.setAlphaF(rfpart(intery));
+        painter.setPen(color);
+        if (steep)
+            painter.drawPoint(offsetX + y, offsetY - x);
+        else
+            painter.drawPoint(offsetX + x, offsetY - y);
+
+        color.setAlphaF(fpart(intery));
+        painter.setPen(color);
+        if (steep)
+            painter.drawPoint(offsetX + y + 1, offsetY - x);
+        else
+            painter.drawPoint(offsetX + x, offsetY - y - 1);
+
+        intery += gradient;
+    }
+}
+
+
 void cnt_diff(double &dX, double &dY, double &L, double xStart, double yStart, double xEnd, double yEnd)
 {
     double dx = xEnd - xStart;
@@ -145,6 +242,8 @@ void cnt_bresenham_antialiased(QPainter &painter, double xStart, double yStart, 
 
 void MyDrawWidget::paintEvent(QPaintEvent *event)
 {
+    if (method == FREE)
+        return;
     QPainter painter(this);
     QColor qcolorLine = QColor(colorLine.c_str());
     painter.setPen(qcolorLine);
@@ -152,29 +251,79 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
     double offset_to_center_x = WIDTH_CANVAS / 2;
     double offset_to_center_y = HEIGHT_CANVAS / 2;
 
-    double xStart = line.xs;
-    double yStart = line.ys;
-    double xEnd = line.xf;
-    double yEnd = line.yf;
+    double xStart, yStart, xEnd, yEnd;
 
-    switch (method)
+    if (!spector_flag)
     {
-        case DIFF:
-            cnt_diff_draw(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y);
-            break;
-        case BRENZENHEM_INT:
-            cnt_bresenham(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y);
-            break;
-        case BRENZENHEM_FLOAT:
-            cnt_bresenham_real(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y);
-            break;
-        case BRENZENHEM_STAIR:
-            cnt_bresenham_antialiased(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y);
-            break;
-        case LIB_FUNC:
-            painter.drawLine(xStart + offset_to_center_x, -yStart + offset_to_center_y, xEnd + offset_to_center_x, -yEnd + offset_to_center_y);
-        default:
-            break;
+        for (int i = 0; i < dataLine.cnt_lines; i++)
+        {
+            xStart = dataLine.lines[i].xs;
+            yStart = dataLine.lines[i].ys;
+            xEnd = dataLine.lines[i].xf;
+            yEnd = dataLine.lines[i].yf;
+            switch (dataLine.lines[i].method) {
+                case DIFF:
+                    cnt_diff_draw(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y);
+                    break;
+                case BRENZENHEM_INT:
+                    cnt_bresenham(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y);
+                    break;
+                case BRENZENHEM_FLOAT:
+                    cnt_bresenham_real(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y);
+                    break;
+                case BRENZENHEM_STAIR:
+                    cnt_bresenham_antialiased(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x,
+                                              offset_to_center_y);
+                    break;
+                case LIB_FUNC:
+                    painter.drawLine(round(xStart + offset_to_center_x), round(-yStart + offset_to_center_y),
+                                     round(xEnd + offset_to_center_x),
+                                     round(-yEnd + offset_to_center_y));
+                    break;
+                case WU:
+                    cnt_wu(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    else
+    {
+        xStart = 0;
+        yStart = 0;
+        xEnd = lenLine;
+        yEnd = 0;
+        double angle = 0;
+        while (angle <= 360)
+        {
+            switch (method)
+            {
+                case DIFF:
+                    cnt_diff_draw(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y);
+                    break;
+                case BRENZENHEM_INT:
+                    cnt_bresenham(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y);
+                    break;
+                case BRENZENHEM_FLOAT:
+                    cnt_bresenham_real(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y);
+                    break;
+                case BRENZENHEM_STAIR:
+                    cnt_bresenham_antialiased(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y);
+                    break;
+                case LIB_FUNC:
+                    painter.drawLine(xStart + offset_to_center_x, -yStart + offset_to_center_y, xEnd + offset_to_center_x,-yEnd + offset_to_center_y);
+                    break;
+                case WU:
+                    cnt_wu(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y);
+                    break;
+                default:
+                    break;
+            }
+            cnt_rotate_result(xEnd, yEnd);
+            angle += angle_spector;
+        }
+        spector_flag = false;
     }
 
     Q_UNUSED(event);

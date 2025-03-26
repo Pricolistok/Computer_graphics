@@ -47,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
     radio_btn_group_method->addButton(ui->radioButtonBrenzenhemStair, 3);
     radio_btn_group_method->addButton(ui->radioButtonDiffAnalys, 4);
     radio_btn_group_method->addButton(ui->radioButtonLibFunc, 5);
+    radio_btn_group_method->addButton(ui->radioButtonVu, 6);
 
     drawWidget->colorBG = "background-color: white;";
     drawWidget->colorLine = "black";
@@ -91,6 +92,9 @@ void MainWindow::set_method(int id)
             break;
         case 5:
             drawWidget->method = LIB_FUNC;
+            break;
+        case 6:
+            drawWidget->method = WU;
             break;
         default:
             break;
@@ -212,10 +216,12 @@ void MainWindow::draw_line()
     if (error == 0)
     {
         ui->widget->setStyleSheet(drawWidget->colorBG.c_str());
-        drawWidget->line.xs = xs;
-        drawWidget->line.ys = ys;
-        drawWidget->line.xf = xf;
-        drawWidget->line.yf = yf;
+        drawWidget->dataLine.lines[drawWidget->dataLine.cnt_lines].xs = xs;
+        drawWidget->dataLine.lines[drawWidget->dataLine.cnt_lines].ys = ys;
+        drawWidget->dataLine.lines[drawWidget->dataLine.cnt_lines].xf = xf;
+        drawWidget->dataLine.lines[drawWidget->dataLine.cnt_lines].yf = yf;
+        drawWidget->dataLine.lines[drawWidget->dataLine.cnt_lines].method = drawWidget->method;
+        drawWidget->dataLine.cnt_lines += 1;
         drawWidget->update();
     }
 }
@@ -241,7 +247,9 @@ void MainWindow::draw_spector()
     }
     if (error == 0)
     {
-        drawWidget->angle = angle;
+        ui->widget->setStyleSheet(drawWidget->colorBG.c_str());
+        drawWidget->spector_flag = true;
+        drawWidget->angle_spector = angle;
         drawWidget->lenLine = lenLine;
         drawWidget->update();
     }
