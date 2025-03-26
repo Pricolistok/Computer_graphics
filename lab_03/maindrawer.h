@@ -7,11 +7,12 @@
 #include <QPointF>
 #include <QMainWindow>
 #include <QPainterPath>
+using namespace std;
 
 #define WIDTH_CANVAS 1000
 #define HEIGHT_CANVAS 700
 #define SIZE_OF_SPECTOR 1000
-#define CNT_LINES 1000
+#define CNT_LINES 10000
 
 typedef enum method
 {
@@ -36,7 +37,7 @@ typedef enum color
     darkMagenta,
     white,
     yellow
-} color;
+} color_t;
 
 typedef struct line
 {
@@ -45,29 +46,19 @@ typedef struct line
     double xf;
     double yf;
     method_t method;
+    std::string colorLine;
 } line_t;
-
-typedef struct data_line
-{
-    line_t lines[CNT_LINES];
-    int cnt_lines = 0;
-} data_line_t;
 
 class MyDrawWidget : public QWidget
 {
 Q_OBJECT
 
 public:
-    data_line_t dataLine;
-    bool spector_flag = false;
-    double angle_spector;
-    double size_of_line;
+    vector <line_t> lines;
+    bool flag_free = false;
     method_t method;
     std::string colorLine;
     std::string colorBG;
-    line_t line;
-    double lenLine;
-    void cnt_rotate_result(double &x, double &y);
     explicit MyDrawWidget(QWidget *parent = nullptr);
 
 

@@ -62,7 +62,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->pushButtonLine, &QPushButton::clicked, this, &MainWindow::draw_line);
     connect(ui->pushButtonSpector, &QPushButton::clicked, this, &MainWindow::draw_spector);
+    connect(ui->pushButtonClearDisp, &QPushButton::clicked, this, &MainWindow::set_free);
 
+}
+
+void MainWindow::set_free()
+{
+    drawWidget->flag_free = true;
+    drawWidget->lines.clear();
+    drawWidget->update();
 }
 
 
@@ -215,15 +223,28 @@ void MainWindow::draw_line()
     }
     if (error == 0)
     {
+        line_t line;
+        line.xs = xs;
+        line.ys = ys;
+        line.xf = xf;
+        line.yf = yf;
+        line.method = drawWidget->method;
+        line.colorLine = drawWidget->colorLine;
+        drawWidget->lines.push_back(line);
         ui->widget->setStyleSheet(drawWidget->colorBG.c_str());
-        drawWidget->dataLine.lines[drawWidget->dataLine.cnt_lines].xs = xs;
-        drawWidget->dataLine.lines[drawWidget->dataLine.cnt_lines].ys = ys;
-        drawWidget->dataLine.lines[drawWidget->dataLine.cnt_lines].xf = xf;
-        drawWidget->dataLine.lines[drawWidget->dataLine.cnt_lines].yf = yf;
-        drawWidget->dataLine.lines[drawWidget->dataLine.cnt_lines].method = drawWidget->method;
-        drawWidget->dataLine.cnt_lines += 1;
+        drawWidget->flag_free = false;
         drawWidget->update();
     }
+}
+
+void cnt_rotate_result(double &x, double &y, double angle)
+{
+    double temp_x, temp_y;
+    double new_angle = angle * M_PI / 180;
+    temp_x = x;
+    temp_y = y;
+    x = (temp_x * cos(new_angle)) - (temp_y * sin(new_angle));
+    y = (temp_x * sin(new_angle)) + (temp_y * cos(new_angle));
 }
 
 void MainWindow::draw_spector()
@@ -247,10 +268,23 @@ void MainWindow::draw_spector()
     }
     if (error == 0)
     {
+        double angle_rotate = 0;
+        line_t line;
         ui->widget->setStyleSheet(drawWidget->colorBG.c_str());
-        drawWidget->spector_flag = true;
-        drawWidget->angle_spector = angle;
-        drawWidget->lenLine = lenLine;
+        drawWidget->flag_free = false;
+        double xf = lenLine, yf = 0;
+        while (angle_rotate <= 360)
+        {
+            line.xs = 0;
+            line.ys = 0;
+            line.xf = xf;
+            line.yf = yf;
+            line.method = drawWidget->method;
+            line.colorLine = drawWidget->colorLine;
+            drawWidget->lines.push_back(line);
+            cnt_rotate_result(xf, yf, angle);
+            angle_rotate += angle;
+        }
         drawWidget->update();
     }
 }
