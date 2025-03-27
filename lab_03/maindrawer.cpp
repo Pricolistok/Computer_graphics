@@ -8,7 +8,7 @@ MyDrawWidget::MyDrawWidget(QWidget *parent) : QWidget(parent)
 
 }
 
-void cnt_wu(QPainter &painter, double xStart, double yStart, double xEnd, double yEnd, double offsetX, double offsetY, const std::string &colorName, int &stepCount)
+void cnt_wu(QPainter &painter, double xStart, double yStart, double xEnd, double yEnd, double offsetX, double offsetY, const std::string &colorName, int &stepCount, bool draw)
 {
     auto ipart = [](double x) { return std::floor(x); };
     auto round = [](double x) { return std::floor(x + 0.5); };
@@ -39,13 +39,16 @@ void cnt_wu(QPainter &painter, double xStart, double yStart, double xEnd, double
     int yPixel1 = static_cast<int>(ipart(yEndInterpolated));
 
     QColor color(colorName.c_str());
-    color.setAlphaF(rfpart(yEndInterpolated) * xGap);
-    painter.setPen(color);
-    painter.drawPoint(offsetX + (steep ? yPixel1 : xPixel1), offsetY - (steep ? xPixel1 : yPixel1));
 
-    color.setAlphaF(fpart(yEndInterpolated) * xGap);
-    painter.setPen(color);
-    painter.drawPoint(offsetX + (steep ? yPixel1 + 1 : xPixel1), offsetY - (steep ? xPixel1 : yPixel1 + 1));
+    if (draw) {
+        color.setAlphaF(rfpart(yEndInterpolated) * xGap);
+        painter.setPen(color);
+        painter.drawPoint(offsetX + (steep ? yPixel1 : xPixel1), offsetY - (steep ? xPixel1 : yPixel1));
+
+        color.setAlphaF(fpart(yEndInterpolated) * xGap);
+        painter.setPen(color);
+        painter.drawPoint(offsetX + (steep ? yPixel1 + 1 : xPixel1), offsetY - (steep ? xPixel1 : yPixel1 + 1));
+    }
 
     // Второй конец
     xEndRounded = round(xEnd);
@@ -54,13 +57,15 @@ void cnt_wu(QPainter &painter, double xStart, double yStart, double xEnd, double
     int xPixel2 = static_cast<int>(xEndRounded);
     int yPixel2 = static_cast<int>(ipart(yEndInterpolated));
 
-    color.setAlphaF(rfpart(yEndInterpolated) * xGap);
-    painter.setPen(color);
-    painter.drawPoint(offsetX + (steep ? yPixel2 : xPixel2), offsetY - (steep ? xPixel2 : yPixel2));
+    if (draw) {
+        color.setAlphaF(rfpart(yEndInterpolated) * xGap);
+        painter.setPen(color);
+        painter.drawPoint(offsetX + (steep ? yPixel2 : xPixel2), offsetY - (steep ? xPixel2 : yPixel2));
 
-    color.setAlphaF(fpart(yEndInterpolated) * xGap);
-    painter.setPen(color);
-    painter.drawPoint(offsetX + (steep ? yPixel2 + 1 : xPixel2), offsetY - (steep ? xPixel2 : yPixel2 + 1));
+        color.setAlphaF(fpart(yEndInterpolated) * xGap);
+        painter.setPen(color);
+        painter.drawPoint(offsetX + (steep ? yPixel2 + 1 : xPixel2), offsetY - (steep ? xPixel2 : yPixel2 + 1));
+    }
 
     // Основной цикл
     double intery = yPixel1 + gradient;
@@ -75,21 +80,20 @@ void cnt_wu(QPainter &painter, double xStart, double yStart, double xEnd, double
             prevY = y;
         }
 
-        color.setAlphaF(rfpart(intery));
-        painter.setPen(color);
-        painter.drawPoint(offsetX + (steep ? y : x), offsetY - (steep ? x : y));
+        if (draw) {
+            color.setAlphaF(rfpart(intery));
+            painter.setPen(color);
+            painter.drawPoint(offsetX + (steep ? y : x), offsetY - (steep ? x : y));
 
-        color.setAlphaF(fpart(intery));
-        painter.setPen(color);
-        painter.drawPoint(offsetX + (steep ? y + 1 : x), offsetY - (steep ? x : y + 1));
+            color.setAlphaF(fpart(intery));
+            painter.setPen(color);
+            painter.drawPoint(offsetX + (steep ? y + 1 : x), offsetY - (steep ? x : y + 1));
+        }
 
         intery += gradient;
     }
     stepCount = stepCounter;
 }
-
-
-
 
 void cnt_diff(double &dX, double &dY, double &L, double xStart, double yStart, double xEnd, double yEnd)
 {
@@ -101,7 +105,7 @@ void cnt_diff(double &dX, double &dY, double &L, double xStart, double yStart, d
 }
 
 void cnt_diff_draw(QPainter &painter, double xStart, double yStart, double xEnd, double yEnd,
-                   double offsetX, double offsetY, string color, int &stepCount)
+                   double offsetX, double offsetY, string color, int &stepCount, bool draw)
 {
     stepCount = 0;
     QColor color_res = QColor(color.c_str());
@@ -123,7 +127,9 @@ void cnt_diff_draw(QPainter &painter, double xStart, double yStart, double xEnd,
             stepCount++;
         }
 
-        painter.drawPoint(offsetX + currentIntX, offsetY - currentIntY);
+        if (draw) {
+            painter.drawPoint(offsetX + currentIntX, offsetY - currentIntY);
+        }
 
         // Update previous integer coordinates
         prevIntX = currentIntX;
@@ -135,63 +141,95 @@ void cnt_diff_draw(QPainter &painter, double xStart, double yStart, double xEnd,
 }
 
 
-void cnt_bresenham(QPainter &painter, double xStart, double yStart, double xEnd, double yEnd, double offsetX, double offsetY, string color, int &stepCount)
+void cnt_bresenham(QPainter &painter, double xStart, double yStart, double xEnd, double yEnd,
+                   double offsetX, double offsetY, string color, int &stepCount, bool draw)
 {
-    int x0 = std::round(xStart);
-    int y0 = std::round(yStart);
-    int x1 = std::round(xEnd);
-    int y1 = std::round(yEnd);
+    // 1. Ввод исходных данных
+    int Xn = std::round(xStart);
+    int Yn = std::round(yStart);
+    int Xk = std::round(xEnd);
+    int Yk = std::round(yEnd);
 
-    int dx = std::abs(x1 - x0);
-    int dy = std::abs(y1 - y0);
-    int sx = (x0 < x1) ? 1 : -1;
-    int sy = (y0 < y1) ? 1 : -1;
-
-    bool swapXY = dy > dx;
-    if (swapXY) {
-        std::swap(dx, dy);
+    // 2. Проверка вырожденности отрезка
+    if (Xn == Xk && Yn == Yk) {
+        if (draw) {
+            painter.setPen(QColor(color.c_str()));
+            painter.drawPoint(offsetX + Xn, offsetY - Yn);
+        }
+        return;
     }
 
-    int error = 2 * dy - dx;
+    // 3. Вычисление приращений
+    int dX = Xk - Xn;
+    int dY = Yk - Yn;
+
+    // 4. Вычисление шага изменения координат
+    int SX = (dX > 0) ? 1 : -1;
+    int SY = (dY > 0) ? 1 : -1;
+
+    // 5. Вычисление модулей приращения
+    dX = std::abs(dX);
+    dY = std::abs(dY);
+
+    // 6. Вычисление модуля тангенса угла наклона
+    double m = (dX != 0) ? static_cast<double>(dY) / dX : 1.0;
+    bool fl = false;
+
+    // 7. Анализ m и обмен dX и dY при m > 1
+    if (m > 1.0) {
+        std::swap(dX, dY);
+        m = 1.0 / m;
+        fl = true;
+    }
+
+    // 8. Инициализация ошибки
+    int f = 2 * dY - dX;
+
+    // 9. Инициализация начальных координат
+    int X = Xn;
+    int Y = Yn;
+
+    // 10. Основной цикл
     QColor color_result = QColor(color.c_str());
+    int prevX = X, prevY = Y;
 
-    // Initialize the previous values for comparison
-    int prevX = x0;
-    int prevY = y0;
-
-    for (int i = 0; i <= dx; i++) {
-        painter.setPen(color_result);
-        painter.drawPoint(offsetX + x0, offsetY - y0);
-
-        // Check if both x and y crossed integer boundaries
-        if (std::floor(x0) != std::floor(prevX) && std::floor(y0) != std::floor(prevY)) {
-            stepCount++; // Increment step count when both coordinates cross to the next integer
+    for (int i = 0; i <= dX; i++) {
+        if (draw) {
+            painter.setPen(color_result);
+            painter.drawPoint(offsetX + X, offsetY - Y);
         }
 
-        // Update previous values
-        prevX = x0;
-        prevY = y0;
+        // Проверка пересечения границ пикселей
+        if (std::floor(X) != std::floor(prevX) && std::floor(Y) != std::floor(prevY)) {
+            stepCount++;
+        }
 
-        while (error >= 0) {
-            if (swapXY) {
-                x0 += sx;
+        prevX = X;
+        prevY = Y;
+
+        // Вычисление следующей координаты
+        if (f > 0) {
+            if (fl) {
+                X += SX;
             } else {
-                y0 += sy;
+                Y += SY;
             }
-            error -= 2 * dx;
+            f -= 2 * dX;
         }
 
-        if (swapXY) {
-            y0 += sy;
+        if (fl) {
+            Y += SY;
         } else {
-            x0 += sx;
+            X += SX;
         }
-        error += 2 * dy;
+        f += 2 * dY;
     }
 }
 
 
-void cnt_bresenham_real(QPainter &painter, double xStart, double yStart, double xEnd, double yEnd, double offsetX, double offsetY, string color, int &stepCount)
+
+void cnt_bresenham_real(QPainter &painter, double xStart, double yStart, double xEnd, double yEnd,
+                        double offsetX, double offsetY, string color, int &stepCount, bool draw)
 {
     double dx = xEnd - xStart;
     double dy = yEnd - yStart;
@@ -218,8 +256,10 @@ void cnt_bresenham_real(QPainter &painter, double xStart, double yStart, double 
     double prevY = y;
 
     for (int i = 0; i <= dx; i++) {
-        painter.setPen(color_result);
-        painter.drawPoint(offsetX + x, offsetY - y);
+        if (draw) {
+            painter.setPen(color_result);
+            painter.drawPoint(offsetX + x, offsetY - y);
+        }
 
         // Check if both x and y crossed integer boundaries
         if (std::floor(x) != std::floor(prevX) && std::floor(y) != std::floor(prevY)) {
@@ -243,26 +283,26 @@ void cnt_bresenham_real(QPainter &painter, double xStart, double yStart, double 
     }
 }
 
-
-
 void bresenhamAntialiased(QPainter &painter, double xStart, double yStart, double xEnd, double yEnd,
-                          double offsetX, double offsetY, const std::string &color, int &stepCount)
+                          double offsetX, double offsetY, const std::string &color, int &stepCount, bool draw)
 {
     const int I = 255;
 
-    double X0 = xStart;
-    double Y0 = yStart;
-    double X1 = xEnd;
-    double Y1 = yEnd;
+    double Xn = xStart;
+    double Yn = yStart;
+    double Xk = xEnd;
+    double Yk = yEnd;
 
-    if (std::abs(X0 - X1) < 1e-6 && std::abs(Y0 - Y1) < 1e-6) {
-        painter.setPen(QColor(color.c_str()));
-        painter.drawPoint(offsetX + round(X0), offsetY - round(Y0));
+    if (std::abs(Xn - Xk) < 1e-6 && std::abs(Yn - Yk) < 1e-6) {
+        if (draw) {
+            painter.setPen(QColor(color.c_str()));
+            painter.drawPoint(offsetX + round(Xn), offsetY - round(Yn));
+        }
         return;
     }
 
-    double dX = X1 - X0;
-    double dY = Y1 - Y0;
+    double dX = Xk - Xn;
+    double dY = Yk - Yn;
 
     int SX = (dX > 0) ? 1 : -1;
     int SY = (dY > 0) ? 1 : -1;
@@ -270,55 +310,61 @@ void bresenhamAntialiased(QPainter &painter, double xStart, double yStart, doubl
     dX = std::abs(dX);
     dY = std::abs(dY);
 
-    double m = (dX == 0) ? 1.0 : dY / dX;
+    double m = (dX != 0) ? dY / dX : 1.0;
+    bool fl = false;
 
-    bool steep = m > 1.0;
-    if (steep) {
+    if (m > 1.0) {
         std::swap(dX, dY);
         m = 1.0 / m;
-        std::swap(SX, SY);
+        fl = true;
     }
 
-    double f = 0.5 * I;
+    double f = I / 2.0;
+
+    double X = Xn;
+    double Y = Yn;
 
     double mI = m * I;
     double W = I - mI;
 
     QColor lineColor(color.c_str());
-    double X = X0;
-    double Y = Y0;
+    double prevDrawX = Xn;
+    double prevDrawY = Yn;
 
-    // Initialize the previous values for comparison
-    double prevX = X;
-    double prevY = Y;
-
+    // Основной цикл
     for (int i = 0; i <= dX; i++) {
-        double drawX = steep ? Y : X;
-        double drawY = steep ? X : Y;
+        double drawX = fl ? Y : X;
+        double drawY = fl ? X : Y;
 
         double Y_frac = drawY - std::floor(drawY);
         int intensity1 = std::clamp(static_cast<int>((1.0 - Y_frac) * I), 0, 255);
         int intensity2 = std::clamp(static_cast<int>(Y_frac * I), 0, 255);
 
-        lineColor.setAlpha(intensity1);
-        painter.setPen(lineColor);
-        painter.drawPoint(offsetX + round(drawX), offsetY - std::floor(drawY));
+        if (draw) {
+            lineColor.setAlpha(intensity1);
+            painter.setPen(lineColor);
+            painter.drawPoint(offsetX + round(drawX), offsetY - std::floor(drawY));
 
-        lineColor.setAlpha(intensity2);
-        painter.setPen(lineColor);
-        painter.drawPoint(offsetX + round(drawX), offsetY - std::ceil(drawY));
-
-        // Check if both x and y crossed integer boundaries
-        if (std::floor(drawX) != std::floor(prevX) && std::floor(drawY) != std::floor(prevY)) {
-            stepCount++; // Increment step count when both coordinates cross to the next integer
+            lineColor.setAlpha(intensity2);
+            painter.setPen(lineColor);
+            painter.drawPoint(offsetX + round(drawX), offsetY - std::ceil(drawY));
         }
 
-        // Update previous values
-        prevX = drawX;
-        prevY = drawY;
+        // Подсчет ступенек: изменение по X и Y одновременно
+        if (std::floor(drawX) != std::floor(prevDrawX) && std::floor(drawY) != std::floor(prevDrawY)) {
+            stepCount++;
+        }
 
+        prevDrawX = drawX;
+        prevDrawY = drawY;
+
+        // Вычисление координат и ошибки для следующего пикселя
         if (f < W) {
-            X += SX;
+            if (!fl) {
+                X += SX;
+            } else {
+                Y += SY;
+            }
             f += mI;
         } else {
             X += SX;
@@ -327,6 +373,8 @@ void bresenhamAntialiased(QPainter &painter, double xStart, double yStart, doubl
         }
     }
 }
+
+
 
 
 void MyDrawWidget::paintEvent(QPaintEvent *event)
@@ -354,16 +402,16 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
 
         switch (lines[i].method) {
             case DIFF:
-                cnt_diff_draw(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y, lines[i].colorLine, cnt_steps);
+                cnt_diff_draw(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y, lines[i].colorLine, cnt_steps, draw);
                 break;
             case BRENZENHEM_INT:
-                cnt_bresenham(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y, lines[i].colorLine, cnt_steps);
+                cnt_bresenham(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y, lines[i].colorLine, cnt_steps, draw);
                 break;
             case BRENZENHEM_FLOAT:
-                cnt_bresenham_real(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y, lines[i].colorLine, cnt_steps);
+                cnt_bresenham_real(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y, lines[i].colorLine, cnt_steps, draw);
                 break;
             case BRENZENHEM_STAIR:
-                bresenhamAntialiased(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y, lines[i].colorLine, cnt_steps);
+                bresenhamAntialiased(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y, lines[i].colorLine, cnt_steps, draw);
                 break;
             case LIB_FUNC:
                 qcolorLine = QColor(lines[i].colorLine.c_str());
@@ -372,7 +420,7 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
                                  round(xEnd + offset_to_center_x), round(-yEnd + offset_to_center_y));
                 break;
             case WU:
-                cnt_wu(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y, lines[i].colorLine, cnt_steps);
+                cnt_wu(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y, lines[i].colorLine, cnt_steps, draw);
                 break;
             default:
                 continue;
@@ -382,6 +430,7 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
         uint64_t ticks = end - start;
         cntSteps.push_back(cnt_steps);
         time_analysis.push_back(static_cast<double>(ticks));
+        draw = true;
     }
 
 

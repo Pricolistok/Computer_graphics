@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowTitle("CG lab_03");
-    ui->widget->setStyleSheet("background-color:black;");
+    ui->widget->setStyleSheet("background-color:white;");
     drawWidget = new MyDrawWidget(ui->widget);
     drawWidget->setGeometry(0, 0, ui->widget->width(), ui->widget->height());
     drawWidget->show();
@@ -83,6 +83,7 @@ void MainWindow::set_data_time()
 {
     drawWidget->lines.clear();
     drawWidget->time_analysis.clear();
+    ui->widget->setStyleSheet("background-color: white;");
 
     line_t line;
     line.xs = 0;
@@ -90,7 +91,7 @@ void MainWindow::set_data_time()
     line.xf = 1000;
     line.yf = 0;
     line.method = DIFF;
-    line.colorLine = drawWidget->colorLine;
+    line.colorLine = "white";
     drawWidget->lines.push_back(line);
     line.method = BRENZENHEM_FLOAT;
     drawWidget->lines.push_back(line);
@@ -106,7 +107,7 @@ void MainWindow::set_data_time()
     line.xf = 707;
     line.yf = 707;
     line.method = DIFF;
-    line.colorLine = drawWidget->colorLine;
+    line.colorLine = "white";
     drawWidget->lines.push_back(line);
     line.method = BRENZENHEM_FLOAT;
     drawWidget->lines.push_back(line);
@@ -117,9 +118,8 @@ void MainWindow::set_data_time()
     line.method = WU;
     drawWidget->lines.push_back(line);
 
+    drawWidget->draw = false;
     drawWidget->repaint();
-
-    ui->widget->setStyleSheet(drawWidget->colorBG.c_str());
 
     QTimer::singleShot(0, this, [this]() {
         FILE *file = fopen("data_time.txt", "w");
@@ -146,7 +146,7 @@ void MainWindow::set_data_time()
             line_rotate.ys = 0;
             line_rotate.xf = xf;
             line_rotate.yf = yf;
-            line_rotate.colorLine = drawWidget->colorLine;
+            line_rotate.colorLine = "white";
             line_rotate.method = DIFF;
             drawWidget->lines.push_back(line_rotate);
             line_rotate.method = BRENZENHEM_FLOAT;
@@ -160,6 +160,7 @@ void MainWindow::set_data_time()
             cnt_rotate_result(xf, yf, 5);
             angle_rotate += 5;
         }
+        drawWidget->draw = false;
         drawWidget->repaint();
         QTimer::singleShot(0, this, [this]()
         {
@@ -179,12 +180,11 @@ void MainWindow::set_data_time()
                 drawWidget->cntSteps.clear();
                 drawWidget->lines.clear();
                 drawWidget->update();
+                system("python main.py");
             });
         });
     });
 }
-
-
 
 
 void MainWindow::set_free()

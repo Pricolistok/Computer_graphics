@@ -54,6 +54,7 @@ class MyDrawWidget : public QWidget
 Q_OBJECT
 
 public:
+    bool draw = true;
     bool flag_time_analysis = false;
     vector <line_t> lines;
     vector <double> time_analysis;
