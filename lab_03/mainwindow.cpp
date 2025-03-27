@@ -343,6 +343,12 @@ void MainWindow::draw_line()
         error = 1;
         display_error_message("Ошибка при вводе конца отрезка по Y!");
     }
+    if (fabs(xs - xf) <= 1e-6 && fabs(ys - yf) <= 1e-6)
+    {
+        error = 1;
+        display_error_message("Отрезок вырожден!");
+    }
+
     if (error == 0)
     {
         line_t line;
@@ -379,8 +385,20 @@ void MainWindow::draw_spector()
         error = 1;
         display_error_message("Ошибка при вводе длины отрезка!");
     }
+    if (lenLine <= 1e-6)
+    {
+        error = 1;
+        display_error_message("Ошибка при вводе длины! Длина меньше или равна 0!");
+    }
+    if (fabs(angle) <= 1e-6)
+    {
+        error = 1;
+        display_error_message("Ошибка при вводе угла! Угол равен 0!");
+    }
     if (error == 0)
     {
+        if (angle < 0)
+            angle *= -1;
         double angle_rotate = 0;
         line_t line;
         ui->widget->setStyleSheet(drawWidget->colorBG.c_str());
