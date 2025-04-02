@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1241</width>
-    <height>744</height>
+    <width>1300</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="canvas">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -30,9 +30,9 @@
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
-      <x>830</x>
-      <y>150</y>
-      <width>331</width>
+      <x>840</x>
+      <y>120</y>
+      <width>371</width>
       <height>41</height>
      </rect>
     </property>
@@ -70,9 +70,9 @@
    <widget class="QLabel" name="labelMethod">
     <property name="geometry">
      <rect>
-      <x>920</x>
-      <y>120</y>
-      <width>191</width>
+      <x>910</x>
+      <y>90</y>
+      <width>241</width>
       <height>31</height>
      </rect>
     </property>
@@ -88,7 +88,7 @@
    <widget class="QLabel" name="labelColorBG">
     <property name="geometry">
      <rect>
-      <x>800</x>
+      <x>830</x>
       <y>10</y>
       <width>171</width>
       <height>31</height>
@@ -96,7 +96,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <pointsize>11</pointsize>
      </font>
     </property>
     <property name="text">
@@ -106,7 +106,7 @@
    <widget class="QPushButton" name="pushButtonColorBG">
     <property name="geometry">
      <rect>
-      <x>760</x>
+      <x>790</x>
       <y>50</y>
       <width>211</width>
       <height>41</height>
@@ -119,7 +119,7 @@
    <widget class="QPushButton" name="pushButtonColorCircle">
     <property name="geometry">
      <rect>
-      <x>1000</x>
+      <x>1030</x>
       <y>50</y>
       <width>211</width>
       <height>41</height>
@@ -132,7 +132,7 @@
    <widget class="QLabel" name="labelColorCircle">
     <property name="geometry">
      <rect>
-      <x>1020</x>
+      <x>1050</x>
       <y>10</y>
       <width>171</width>
       <height>31</height>
@@ -140,11 +140,282 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <pointsize>11</pointsize>
      </font>
     </property>
     <property name="text">
      <string>Цвет фигуры</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>180</y>
+      <width>471</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>______________________________________________________________________________________________</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>200</y>
+      <width>221</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Координаты центра</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>280</y>
+      <width>481</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>________________________________________________________________________________________________</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelColorBG_2">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>300</y>
+      <width>259</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Построение окружности</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditCircleR">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>390</y>
+      <width>221</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonDrawCircle">
+    <property name="geometry">
+     <rect>
+      <x>778</x>
+      <y>450</y>
+      <width>241</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Нарисовать
+окружность</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelColorCircleR">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>390</y>
+      <width>21</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>R</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelColorBG_3">
+    <property name="geometry">
+     <rect>
+      <x>1040</x>
+      <y>310</y>
+      <width>259</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Построение элипса</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonDrawEllipse">
+    <property name="geometry">
+     <rect>
+      <x>1050</x>
+      <y>450</y>
+      <width>231</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Нарисовать
+еллипс</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditElipseH">
+    <property name="geometry">
+     <rect>
+      <x>1050</x>
+      <y>370</y>
+      <width>221</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditElipseW">
+    <property name="geometry">
+     <rect>
+      <x>1050</x>
+      <y>410</y>
+      <width>221</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelColorCircleR_2">
+    <property name="geometry">
+     <rect>
+      <x>1030</x>
+      <y>390</y>
+      <width>21</width>
+      <height>67</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>W</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelColorCircleR_3">
+    <property name="geometry">
+     <rect>
+      <x>1030</x>
+      <y>360</y>
+      <width>21</width>
+      <height>43</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>H</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditCX">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>250</y>
+      <width>211</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditCY">
+    <property name="geometry">
+     <rect>
+      <x>1050</x>
+      <y>250</y>
+      <width>221</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelColorYC">
+    <property name="geometry">
+     <rect>
+      <x>1020</x>
+      <y>250</y>
+      <width>31</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Yc</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelXC">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>240</y>
+      <width>31</width>
+      <height>39</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Xc</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>520</y>
+      <width>481</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>________________________________________________________________________________________________</string>
     </property>
    </widget>
   </widget>
@@ -153,7 +424,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1241</width>
+     <width>1300</width>
      <height>33</height>
     </rect>
    </property>
