@@ -453,7 +453,6 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
                 cnt_bresenham_real(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y, lines[i].colorLine, cnt_steps, draw);
                 break;
             case BRENZENHEM_STAIR:
-                qDebug() << xEnd << " " << yEnd;
                 bresenhamAntialiased(painter, xStart, yStart, xEnd, yEnd, offset_to_center_x, offset_to_center_y, lines[i].colorLine, cnt_steps, draw);
                 break;
             case LIB_FUNC:

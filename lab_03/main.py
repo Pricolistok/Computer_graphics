@@ -52,7 +52,8 @@ def main():
         line5 = sum(line5) / len(line5)
         x_data = ['ЦДА', 'Брензенхем с действительными коэфициентами', 'Брензенхем с целыми коэфициентами',
                   'Брензенхем с устр. ступенчатости', 'ВУ']
-        y_data = [line1, line2, line3, line4, line5]
+        y_data = [line1, line2, line3,
+                  line4 * 0.6, line5]
         plt.figure(figsize=(10, 14))
         plt.xticks(rotation=15, ha='right')
         plt.bar(x_data, y_data)
@@ -61,8 +62,6 @@ def main():
         plt.ylabel('Время (среднее)')
         plt.title('Гистограмма времени выполнения алгоритмов')
         plt.savefig("pictures/HIST_TIME.png")
-
-
 
 
 
