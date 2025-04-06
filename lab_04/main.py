@@ -221,6 +221,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
     def eventCleanCanvas(self):
         self.ellipses.clear()
+        self.paint()
 
 
     def paint(self):
@@ -229,21 +230,22 @@ class MainApp(QMainWindow, Ui_MainWindow):
         pen.setColor(QColor(self.colorPen))
         painter.setPen(pen)
 
-
         for ellipse in self.ellipses:
             print(ellipse.color)
             pen.setColor(QColor(ellipse.color))
             painter.setPen(pen)
             rect = QRectF(
-                ellipse.cx - ellipse.rx,
-                ellipse.cy - ellipse.ry,
+                (ellipse.cx - ellipse.rx) + X_OFFSET,
+                Y_OFFSET - (ellipse.cy + ellipse.ry),
                 ellipse.rx * 2,
                 ellipse.ry * 2
             )
+            print((ellipse.cx - ellipse.rx) + X_OFFSET)
+            print(Y_OFFSET - (ellipse.cy - ellipse.ry))
             painter.drawEllipse(rect)
-
         painter.end()
         self.canvas.repaint()
+
 
 def main():
     app = QApplication(sys.argv)

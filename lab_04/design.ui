@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1506</width>
-    <height>1094</height>
+    <width>1616</width>
+    <height>1084</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,9 @@
    <widget class="QLabel" name="canvas">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>30</x>
       <y>30</y>
-      <width>900</width>
+      <width>1000</width>
       <height>1000</height>
      </rect>
     </property>
@@ -30,8 +30,8 @@
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
-      <x>1030</x>
-      <y>110</y>
+      <x>1140</x>
+      <y>100</y>
       <width>371</width>
       <height>41</height>
      </rect>
@@ -70,8 +70,8 @@
    <widget class="QLabel" name="labelMethod">
     <property name="geometry">
      <rect>
-      <x>1100</x>
-      <y>80</y>
+      <x>1210</x>
+      <y>70</y>
       <width>241</width>
       <height>31</height>
      </rect>
@@ -88,8 +88,8 @@
    <widget class="QLabel" name="labelColorBG">
     <property name="geometry">
      <rect>
-      <x>1020</x>
-      <y>0</y>
+      <x>1130</x>
+      <y>-10</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -106,8 +106,8 @@
    <widget class="QPushButton" name="pushButtonColorBG">
     <property name="geometry">
      <rect>
-      <x>980</x>
-      <y>40</y>
+      <x>1090</x>
+      <y>30</y>
       <width>211</width>
       <height>41</height>
      </rect>
@@ -119,8 +119,8 @@
    <widget class="QPushButton" name="pushButtonColorCircle">
     <property name="geometry">
      <rect>
-      <x>1220</x>
-      <y>40</y>
+      <x>1330</x>
+      <y>30</y>
       <width>211</width>
       <height>41</height>
      </rect>
@@ -132,8 +132,8 @@
    <widget class="QLabel" name="labelColorCircle">
     <property name="geometry">
      <rect>
-      <x>1240</x>
-      <y>0</y>
+      <x>1350</x>
+      <y>-10</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -150,8 +150,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>970</x>
-      <y>170</y>
+      <x>1080</x>
+      <y>160</y>
       <width>471</width>
       <height>20</height>
      </rect>
@@ -163,8 +163,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>1060</x>
-      <y>190</y>
+      <x>1170</x>
+      <y>180</y>
       <width>221</width>
       <height>41</height>
      </rect>
@@ -181,8 +181,8 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>970</x>
-      <y>270</y>
+      <x>1080</x>
+      <y>260</y>
       <width>481</width>
       <height>20</height>
      </rect>
@@ -194,8 +194,8 @@
    <widget class="QLabel" name="labelColorBG_2">
     <property name="geometry">
      <rect>
-      <x>970</x>
-      <y>270</y>
+      <x>1080</x>
+      <y>260</y>
       <width>259</width>
       <height>70</height>
      </rect>
@@ -212,8 +212,8 @@
    <widget class="QLineEdit" name="lineEditCircleR">
     <property name="geometry">
      <rect>
-      <x>970</x>
-      <y>350</y>
+      <x>1080</x>
+      <y>340</y>
       <width>231</width>
       <height>21</height>
      </rect>
@@ -222,8 +222,8 @@
    <widget class="QPushButton" name="pushButtonDrawCircle">
     <property name="geometry">
      <rect>
-      <x>970</x>
-      <y>460</y>
+      <x>1080</x>
+      <y>450</y>
       <width>241</width>
       <height>61</height>
      </rect>
@@ -241,8 +241,8 @@
    <widget class="QLabel" name="labelColorCircleR">
     <property name="geometry">
      <rect>
-      <x>970</x>
-      <y>320</y>
+      <x>1080</x>
+      <y>310</y>
       <width>151</width>
       <height>21</height>
      </rect>
@@ -259,8 +259,8 @@
    <widget class="QLabel" name="labelColorBG_3">
     <property name="geometry">
      <rect>
-      <x>1230</x>
-      <y>280</y>
+      <x>1340</x>
+      <y>270</y>
       <width>259</width>
       <height>51</height>
      </rect>
@@ -277,8 +277,8 @@
    <widget class="QPushButton" name="pushButtonDrawEllipse">
     <property name="geometry">
      <rect>
-      <x>1230</x>
-      <y>460</y>
+      <x>1340</x>
+      <y>450</y>
       <width>231</width>
       <height>61</height>
      </rect>
@@ -296,8 +296,8 @@
    <widget class="QLineEdit" name="lineEditElipseH">
     <property name="geometry">
      <rect>
-      <x>1230</x>
-      <y>350</y>
+      <x>1340</x>
+      <y>340</y>
       <width>221</width>
       <height>21</height>
      </rect>
@@ -306,8 +306,8 @@
    <widget class="QLineEdit" name="lineEditElipseW">
     <property name="geometry">
      <rect>
-      <x>1230</x>
-      <y>420</y>
+      <x>1340</x>
+      <y>410</y>
       <width>221</width>
       <height>21</height>
      </rect>
@@ -316,8 +316,8 @@
    <widget class="QLabel" name="labelColorCircleR_2">
     <property name="geometry">
      <rect>
-      <x>1230</x>
-      <y>380</y>
+      <x>1340</x>
+      <y>370</y>
       <width>221</width>
       <height>31</height>
      </rect>
@@ -334,8 +334,8 @@
    <widget class="QLabel" name="labelColorCircleR_3">
     <property name="geometry">
      <rect>
-      <x>1230</x>
-      <y>310</y>
+      <x>1340</x>
+      <y>300</y>
       <width>161</width>
       <height>43</height>
      </rect>
@@ -352,8 +352,8 @@
    <widget class="QLineEdit" name="lineEditCX">
     <property name="geometry">
      <rect>
-      <x>980</x>
-      <y>240</y>
+      <x>1090</x>
+      <y>230</y>
       <width>211</width>
       <height>21</height>
      </rect>
@@ -362,8 +362,8 @@
    <widget class="QLineEdit" name="lineEditCY">
     <property name="geometry">
      <rect>
-      <x>1240</x>
-      <y>240</y>
+      <x>1350</x>
+      <y>230</y>
       <width>221</width>
       <height>21</height>
      </rect>
@@ -372,8 +372,8 @@
    <widget class="QLabel" name="labelColorYC">
     <property name="geometry">
      <rect>
-      <x>1210</x>
-      <y>240</y>
+      <x>1320</x>
+      <y>230</y>
       <width>31</width>
       <height>21</height>
      </rect>
@@ -390,8 +390,8 @@
    <widget class="QLabel" name="labelXC">
     <property name="geometry">
      <rect>
-      <x>950</x>
-      <y>230</y>
+      <x>1060</x>
+      <y>220</y>
       <width>31</width>
       <height>39</height>
      </rect>
@@ -408,8 +408,8 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>970</x>
-      <y>530</y>
+      <x>1080</x>
+      <y>520</y>
       <width>511</width>
       <height>20</height>
      </rect>
@@ -421,8 +421,8 @@
    <widget class="QPushButton" name="pushButtonDrawSpectorEllipse">
     <property name="geometry">
      <rect>
-      <x>1240</x>
-      <y>860</y>
+      <x>1350</x>
+      <y>850</y>
       <width>231</width>
       <height>61</height>
      </rect>
@@ -440,8 +440,8 @@
    <widget class="QLabel" name="labelColorBG_4">
     <property name="geometry">
      <rect>
-      <x>1240</x>
-      <y>550</y>
+      <x>1350</x>
+      <y>540</y>
       <width>259</width>
       <height>51</height>
      </rect>
@@ -459,8 +459,8 @@
    <widget class="QLabel" name="labelColorCircleR_4">
     <property name="geometry">
      <rect>
-      <x>1230</x>
-      <y>650</y>
+      <x>1340</x>
+      <y>640</y>
       <width>51</width>
       <height>43</height>
      </rect>
@@ -477,8 +477,8 @@
    <widget class="QLineEdit" name="lineEditElipseSpectorH">
     <property name="geometry">
      <rect>
-      <x>1240</x>
-      <y>720</y>
+      <x>1350</x>
+      <y>710</y>
       <width>221</width>
       <height>21</height>
      </rect>
@@ -487,8 +487,8 @@
    <widget class="QPushButton" name="pushButtonDrawSpectorCircle">
     <property name="geometry">
      <rect>
-      <x>970</x>
-      <y>860</y>
+      <x>1080</x>
+      <y>850</y>
       <width>241</width>
       <height>61</height>
      </rect>
@@ -506,8 +506,8 @@
    <widget class="QLabel" name="labelColorBG_5">
     <property name="geometry">
      <rect>
-      <x>970</x>
-      <y>550</y>
+      <x>1080</x>
+      <y>540</y>
       <width>241</width>
       <height>51</height>
      </rect>
@@ -525,8 +525,8 @@
    <widget class="QLineEdit" name="lineEditCircleSpectorR">
     <property name="geometry">
      <rect>
-      <x>970</x>
-      <y>650</y>
+      <x>1080</x>
+      <y>640</y>
       <width>221</width>
       <height>21</height>
      </rect>
@@ -535,8 +535,8 @@
    <widget class="QLabel" name="labelColorCircleR_5">
     <property name="geometry">
      <rect>
-      <x>970</x>
-      <y>620</y>
+      <x>1080</x>
+      <y>610</y>
       <width>201</width>
       <height>21</height>
      </rect>
@@ -553,8 +553,8 @@
    <widget class="QLineEdit" name="lineEditElipseSpectorW">
     <property name="geometry">
      <rect>
-      <x>1240</x>
-      <y>650</y>
+      <x>1350</x>
+      <y>640</y>
       <width>221</width>
       <height>21</height>
      </rect>
@@ -563,8 +563,8 @@
    <widget class="QLabel" name="labelColorCircleR_6">
     <property name="geometry">
      <rect>
-      <x>1240</x>
-      <y>680</y>
+      <x>1350</x>
+      <y>670</y>
       <width>211</width>
       <height>41</height>
      </rect>
@@ -581,8 +581,8 @@
    <widget class="QLabel" name="labelColorBG_6">
     <property name="geometry">
      <rect>
-      <x>1240</x>
-      <y>610</y>
+      <x>1350</x>
+      <y>600</y>
       <width>259</width>
       <height>41</height>
      </rect>
@@ -599,8 +599,8 @@
    <widget class="QLabel" name="labelColorCircleR_7">
     <property name="geometry">
      <rect>
-      <x>1130</x>
-      <y>740</y>
+      <x>1240</x>
+      <y>730</y>
       <width>201</width>
       <height>21</height>
      </rect>
@@ -617,8 +617,8 @@
    <widget class="QLineEdit" name="lineEditStep">
     <property name="geometry">
      <rect>
-      <x>1130</x>
-      <y>770</y>
+      <x>1240</x>
+      <y>760</y>
       <width>221</width>
       <height>21</height>
      </rect>
@@ -627,8 +627,8 @@
    <widget class="QLineEdit" name="lineEditCount">
     <property name="geometry">
      <rect>
-      <x>1130</x>
-      <y>830</y>
+      <x>1240</x>
+      <y>820</y>
       <width>221</width>
       <height>21</height>
      </rect>
@@ -637,8 +637,8 @@
    <widget class="QLabel" name="labelColorCircleR_8">
     <property name="geometry">
      <rect>
-      <x>1130</x>
-      <y>800</y>
+      <x>1240</x>
+      <y>790</y>
       <width>251</width>
       <height>21</height>
      </rect>
@@ -655,8 +655,8 @@
    <widget class="QPushButton" name="pushButtonClear">
     <property name="geometry">
      <rect>
-      <x>1130</x>
-      <y>930</y>
+      <x>1240</x>
+      <y>920</y>
       <width>231</width>
       <height>61</height>
      </rect>
@@ -673,8 +673,8 @@
    <widget class="QPushButton" name="pushButtonData">
     <property name="geometry">
      <rect>
-      <x>1130</x>
-      <y>1000</y>
+      <x>1240</x>
+      <y>990</y>
       <width>231</width>
       <height>61</height>
      </rect>
@@ -694,7 +694,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1506</width>
+     <width>1616</width>
      <height>33</height>
     </rect>
    </property>
