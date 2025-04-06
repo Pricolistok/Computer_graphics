@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1300</width>
-    <height>800</height>
+    <width>1506</width>
+    <height>1094</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>CG lab_04</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="canvas">
@@ -19,8 +19,8 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>700</width>
-      <height>600</height>
+      <width>900</width>
+      <height>1000</height>
      </rect>
     </property>
     <property name="text">
@@ -30,8 +30,8 @@
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
-      <x>840</x>
-      <y>120</y>
+      <x>1030</x>
+      <y>110</y>
       <width>371</width>
       <height>41</height>
      </rect>
@@ -70,8 +70,8 @@
    <widget class="QLabel" name="labelMethod">
     <property name="geometry">
      <rect>
-      <x>910</x>
-      <y>90</y>
+      <x>1100</x>
+      <y>80</y>
       <width>241</width>
       <height>31</height>
      </rect>
@@ -88,8 +88,8 @@
    <widget class="QLabel" name="labelColorBG">
     <property name="geometry">
      <rect>
-      <x>830</x>
-      <y>10</y>
+      <x>1020</x>
+      <y>0</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -106,8 +106,8 @@
    <widget class="QPushButton" name="pushButtonColorBG">
     <property name="geometry">
      <rect>
-      <x>790</x>
-      <y>50</y>
+      <x>980</x>
+      <y>40</y>
       <width>211</width>
       <height>41</height>
      </rect>
@@ -119,8 +119,8 @@
    <widget class="QPushButton" name="pushButtonColorCircle">
     <property name="geometry">
      <rect>
-      <x>1030</x>
-      <y>50</y>
+      <x>1220</x>
+      <y>40</y>
       <width>211</width>
       <height>41</height>
      </rect>
@@ -132,8 +132,8 @@
    <widget class="QLabel" name="labelColorCircle">
     <property name="geometry">
      <rect>
-      <x>1050</x>
-      <y>10</y>
+      <x>1240</x>
+      <y>0</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -150,8 +150,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>780</x>
-      <y>180</y>
+      <x>970</x>
+      <y>170</y>
       <width>471</width>
       <height>20</height>
      </rect>
@@ -163,8 +163,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>870</x>
-      <y>200</y>
+      <x>1060</x>
+      <y>190</y>
       <width>221</width>
       <height>41</height>
      </rect>
@@ -181,8 +181,8 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>780</x>
-      <y>280</y>
+      <x>970</x>
+      <y>270</y>
       <width>481</width>
       <height>20</height>
      </rect>
@@ -194,8 +194,8 @@
    <widget class="QLabel" name="labelColorBG_2">
     <property name="geometry">
      <rect>
-      <x>770</x>
-      <y>300</y>
+      <x>970</x>
+      <y>270</y>
       <width>259</width>
       <height>70</height>
      </rect>
@@ -212,9 +212,9 @@
    <widget class="QLineEdit" name="lineEditCircleR">
     <property name="geometry">
      <rect>
-      <x>790</x>
-      <y>390</y>
-      <width>221</width>
+      <x>970</x>
+      <y>350</y>
+      <width>231</width>
       <height>21</height>
      </rect>
     </property>
@@ -222,8 +222,8 @@
    <widget class="QPushButton" name="pushButtonDrawCircle">
     <property name="geometry">
      <rect>
-      <x>778</x>
-      <y>450</y>
+      <x>970</x>
+      <y>460</y>
       <width>241</width>
       <height>61</height>
      </rect>
@@ -241,9 +241,9 @@
    <widget class="QLabel" name="labelColorCircleR">
     <property name="geometry">
      <rect>
-      <x>770</x>
-      <y>390</y>
-      <width>21</width>
+      <x>970</x>
+      <y>320</y>
+      <width>151</width>
       <height>21</height>
      </rect>
     </property>
@@ -253,14 +253,14 @@
      </font>
     </property>
     <property name="text">
-     <string>R</string>
+     <string>Радиус</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelColorBG_3">
     <property name="geometry">
      <rect>
-      <x>1040</x>
-      <y>310</y>
+      <x>1230</x>
+      <y>280</y>
       <width>259</width>
       <height>51</height>
      </rect>
@@ -271,14 +271,14 @@
      </font>
     </property>
     <property name="text">
-     <string>Построение элипса</string>
+     <string>Построение эллипса</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButtonDrawEllipse">
     <property name="geometry">
      <rect>
-      <x>1050</x>
-      <y>450</y>
+      <x>1230</x>
+      <y>460</y>
       <width>231</width>
       <height>61</height>
      </rect>
@@ -290,14 +290,14 @@
     </property>
     <property name="text">
      <string>Нарисовать
-еллипс</string>
+эллипс</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEditElipseH">
     <property name="geometry">
      <rect>
-      <x>1050</x>
-      <y>370</y>
+      <x>1230</x>
+      <y>350</y>
       <width>221</width>
       <height>21</height>
      </rect>
@@ -306,8 +306,8 @@
    <widget class="QLineEdit" name="lineEditElipseW">
     <property name="geometry">
      <rect>
-      <x>1050</x>
-      <y>410</y>
+      <x>1230</x>
+      <y>420</y>
       <width>221</width>
       <height>21</height>
      </rect>
@@ -316,10 +316,10 @@
    <widget class="QLabel" name="labelColorCircleR_2">
     <property name="geometry">
      <rect>
-      <x>1030</x>
-      <y>390</y>
-      <width>21</width>
-      <height>67</height>
+      <x>1230</x>
+      <y>380</y>
+      <width>221</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -328,15 +328,15 @@
      </font>
     </property>
     <property name="text">
-     <string>W</string>
+     <string>Ширина</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelColorCircleR_3">
     <property name="geometry">
      <rect>
-      <x>1030</x>
-      <y>360</y>
-      <width>21</width>
+      <x>1230</x>
+      <y>310</y>
+      <width>161</width>
       <height>43</height>
      </rect>
     </property>
@@ -346,14 +346,14 @@
      </font>
     </property>
     <property name="text">
-     <string>H</string>
+     <string>Длина</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEditCX">
     <property name="geometry">
      <rect>
-      <x>790</x>
-      <y>250</y>
+      <x>980</x>
+      <y>240</y>
       <width>211</width>
       <height>21</height>
      </rect>
@@ -362,8 +362,8 @@
    <widget class="QLineEdit" name="lineEditCY">
     <property name="geometry">
      <rect>
-      <x>1050</x>
-      <y>250</y>
+      <x>1240</x>
+      <y>240</y>
       <width>221</width>
       <height>21</height>
      </rect>
@@ -372,8 +372,8 @@
    <widget class="QLabel" name="labelColorYC">
     <property name="geometry">
      <rect>
-      <x>1020</x>
-      <y>250</y>
+      <x>1210</x>
+      <y>240</y>
       <width>31</width>
       <height>21</height>
      </rect>
@@ -390,8 +390,8 @@
    <widget class="QLabel" name="labelXC">
     <property name="geometry">
      <rect>
-      <x>760</x>
-      <y>240</y>
+      <x>950</x>
+      <y>230</y>
       <width>31</width>
       <height>39</height>
      </rect>
@@ -408,14 +408,284 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>780</x>
-      <y>520</y>
-      <width>481</width>
+      <x>970</x>
+      <y>530</y>
+      <width>511</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>________________________________________________________________________________________________</string>
+     <string>__________________________________________________________________________________________________</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonDrawSpectorEllipse">
+    <property name="geometry">
+     <rect>
+      <x>1240</x>
+      <y>860</y>
+      <width>231</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Нарисовать спектор
+эллипса</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelColorBG_4">
+    <property name="geometry">
+     <rect>
+      <x>1240</x>
+      <y>550</y>
+      <width>259</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Построение спектра
+эллипса</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelColorCircleR_4">
+    <property name="geometry">
+     <rect>
+      <x>1230</x>
+      <y>650</y>
+      <width>51</width>
+      <height>43</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditElipseSpectorH">
+    <property name="geometry">
+     <rect>
+      <x>1240</x>
+      <y>720</y>
+      <width>221</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonDrawSpectorCircle">
+    <property name="geometry">
+     <rect>
+      <x>970</x>
+      <y>860</y>
+      <width>241</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Нарисовать спектор
+окружности</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelColorBG_5">
+    <property name="geometry">
+     <rect>
+      <x>970</x>
+      <y>550</y>
+      <width>241</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Построение спектра
+окружности</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditCircleSpectorR">
+    <property name="geometry">
+     <rect>
+      <x>970</x>
+      <y>650</y>
+      <width>221</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelColorCircleR_5">
+    <property name="geometry">
+     <rect>
+      <x>970</x>
+      <y>620</y>
+      <width>201</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Начальный радиус</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditElipseSpectorW">
+    <property name="geometry">
+     <rect>
+      <x>1240</x>
+      <y>650</y>
+      <width>221</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelColorCircleR_6">
+    <property name="geometry">
+     <rect>
+      <x>1240</x>
+      <y>680</y>
+      <width>211</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Начальная высота</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelColorBG_6">
+    <property name="geometry">
+     <rect>
+      <x>1240</x>
+      <y>610</y>
+      <width>259</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Начальная длина</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelColorCircleR_7">
+    <property name="geometry">
+     <rect>
+      <x>1130</x>
+      <y>740</y>
+      <width>201</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Шаг отрисовки</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditStep">
+    <property name="geometry">
+     <rect>
+      <x>1130</x>
+      <y>770</y>
+      <width>221</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditCount">
+    <property name="geometry">
+     <rect>
+      <x>1130</x>
+      <y>830</y>
+      <width>221</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelColorCircleR_8">
+    <property name="geometry">
+     <rect>
+      <x>1130</x>
+      <y>800</y>
+      <width>251</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Количество фигур</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonClear">
+    <property name="geometry">
+     <rect>
+      <x>1130</x>
+      <y>930</y>
+      <width>231</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Очистка</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonData">
+    <property name="geometry">
+     <rect>
+      <x>1130</x>
+      <y>1000</y>
+      <width>231</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Справка</string>
     </property>
    </widget>
   </widget>
@@ -424,7 +694,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1300</width>
+     <width>1506</width>
      <height>33</height>
     </rect>
    </property>

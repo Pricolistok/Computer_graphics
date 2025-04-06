@@ -1,7 +1,8 @@
 class Ellipse:
-    def __init__(self, cx, ycy, rx, ry, color):
+    def __init__(self, cx, yc, rx, ry, color, method):
         self.cx = cx
-        self.cy = ycy
+        self.cy = yc
         self.rx = rx
         self.ry = ry
         self.color = color
+        self.method = method
