@@ -155,19 +155,19 @@ class MainApp(QMainWindow, Ui_MainWindow):
             self.time_ellipse.canonical.append((finish - start) * 1_000)
 
             start = time()
-            mainPainter(painter, pen, Ellipse(0, 0, radius, radius, self.colorPen, Methods.METHOD_PARAM),
+            mainPainter(painter, pen, Ellipse(0, 0, radius, radius + 20, self.colorPen, Methods.METHOD_PARAM),
                         False)
             finish = time()
             self.time_ellipse.param.append((finish - start) * 1_000)
 
             start = time()
-            mainPainter(painter, pen, Ellipse(0, 0, radius, radius, self.colorPen, Methods.METHOD_AVERAGE),
+            mainPainter(painter, pen, Ellipse(0, 0, radius, radius + 20, self.colorPen, Methods.METHOD_AVERAGE),
                         False)
             finish = time()
             self.time_ellipse.middle.append((finish - start) * 1_000)
 
             start = time()
-            mainPainter(painter, pen, Ellipse(0, 0, radius, radius, self.colorPen, Methods.METHOD_BRESENHAM),
+            mainPainter(painter, pen, Ellipse(0, 0, radius, radius + 20, self.colorPen, Methods.METHOD_BRESENHAM),
                         False)
             finish = time()
             self.time_ellipse.bresenham.append((finish - start) * 1_000)

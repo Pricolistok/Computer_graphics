@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1616, 1084)
+        MainWindow.resize(1614, 1079)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.canvas = QtWidgets.QLabel(self.centralwidget)
@@ -232,7 +232,7 @@ class Ui_MainWindow(object):
         self.pushButtonData.setObjectName("pushButtonData")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1616, 33))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1614, 33))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -241,6 +241,24 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        MainWindow.setTabOrder(self.pushButtonColorBG, self.pushButtonColorCircle)
+        MainWindow.setTabOrder(self.pushButtonColorCircle, self.comboBox)
+        MainWindow.setTabOrder(self.comboBox, self.lineEditCX)
+        MainWindow.setTabOrder(self.lineEditCX, self.lineEditCY)
+        MainWindow.setTabOrder(self.lineEditCY, self.lineEditCircleR)
+        MainWindow.setTabOrder(self.lineEditCircleR, self.pushButtonDrawCircle)
+        MainWindow.setTabOrder(self.pushButtonDrawCircle, self.lineEditElipseH)
+        MainWindow.setTabOrder(self.lineEditElipseH, self.lineEditElipseW)
+        MainWindow.setTabOrder(self.lineEditElipseW, self.pushButtonDrawEllipse)
+        MainWindow.setTabOrder(self.pushButtonDrawEllipse, self.lineEditCircleSpectorR)
+        MainWindow.setTabOrder(self.lineEditCircleSpectorR, self.lineEditStep)
+        MainWindow.setTabOrder(self.lineEditStep, self.lineEditCount)
+        MainWindow.setTabOrder(self.lineEditCount, self.pushButtonDrawSpectorCircle)
+        MainWindow.setTabOrder(self.pushButtonDrawSpectorCircle, self.lineEditElipseSpectorW)
+        MainWindow.setTabOrder(self.lineEditElipseSpectorW, self.lineEditElipseSpectorH)
+        MainWindow.setTabOrder(self.lineEditElipseSpectorH, self.pushButtonDrawSpectorEllipse)
+        MainWindow.setTabOrder(self.pushButtonDrawSpectorEllipse, self.pushButtonClear)
+        MainWindow.setTabOrder(self.pushButtonClear, self.pushButtonData)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

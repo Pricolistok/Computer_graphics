@@ -21,23 +21,17 @@ class DatasetEllipse:
 
 
 def create_one_graphic(canonical, param, middle, bresenham, len_circle, title, name, step=10):
-    """
-    Параметры:
-    - step: шаг, с которым берутся точки из массивов (по умолчанию 10).
-    """
     plt.figure(figsize=(10, 6))
     plt.xlabel('Длина радиуса')
-    plt.ylabel('Время в секундах')
+    plt.ylabel('Время')
     plt.title(title)
 
-    # Берём только каждую step-ую точку из массивов
     len_circle_thinned = len_circle[::step]
     canonical_thinned = canonical[::step]
     param_thinned = param[::step]
     middle_thinned = middle[::step]
     bresenham_thinned = bresenham[::step]
 
-    # Строим графики по прореженным данным
     plt.plot(
         len_circle_thinned, canonical_thinned,
         linestyle='-', color='blue', markersize=5, label="Каноническое уравнение"

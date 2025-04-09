@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1616</width>
-    <height>1084</height>
+    <width>1614</width>
+    <height>1079</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -694,13 +694,34 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1616</width>
+     <width>1614</width>
      <height>33</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>pushButtonColorBG</tabstop>
+  <tabstop>pushButtonColorCircle</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>lineEditCX</tabstop>
+  <tabstop>lineEditCY</tabstop>
+  <tabstop>lineEditCircleR</tabstop>
+  <tabstop>pushButtonDrawCircle</tabstop>
+  <tabstop>lineEditElipseH</tabstop>
+  <tabstop>lineEditElipseW</tabstop>
+  <tabstop>pushButtonDrawEllipse</tabstop>
+  <tabstop>lineEditCircleSpectorR</tabstop>
+  <tabstop>lineEditStep</tabstop>
+  <tabstop>lineEditCount</tabstop>
+  <tabstop>pushButtonDrawSpectorCircle</tabstop>
+  <tabstop>lineEditElipseSpectorW</tabstop>
+  <tabstop>lineEditElipseSpectorH</tabstop>
+  <tabstop>pushButtonDrawSpectorEllipse</tabstop>
+  <tabstop>pushButtonClear</tabstop>
+  <tabstop>pushButtonData</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
