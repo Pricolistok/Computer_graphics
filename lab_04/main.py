@@ -6,6 +6,7 @@ from design import Ui_MainWindow
 from consts import *
 from errors import *
 from ellipses import Ellipse
+from draw import mainPainter
 
 
 def checkFloatNum(*args):
@@ -41,7 +42,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
         self.colorBG = 'black'
         self.colorPen = 'white'
-        self.method = METHOD_LIB
+        self.method = Methods.METHOD_LIB
 
         self.ellipses = []
 
@@ -69,15 +70,15 @@ class MainApp(QMainWindow, Ui_MainWindow):
     def eventSetMethod(self, index: int):
         match index:
             case 0:
-                self.method = METHOD_LIB
+                self.method = Methods.METHOD_LIB
             case 1:
-                self.method = METHOD_CANONICAL
+                self.method = Methods.METHOD_CANONICAL
             case 2:
-                self.method = METHOD_CANONICAL
+                self.method = Methods.METHOD_CANONICAL
             case 3:
-                self.method = METHOD_CANONICAL
+                self.method = Methods.METHOD_CANONICAL
             case 4:
-                self.method = METHOD_LIB
+                self.method = Methods.METHOD_LIB
 
 
 
@@ -105,6 +106,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.pixMap.fill(QColor(self.colorBG))
         self.canvas.setPixmap(self.pixMap)
         self.pushButtonColorBG.setStyleSheet(f"background-color: {self.colorBG}")
+        self.paint()
 
 
     def changeColorCircle(self):
@@ -142,17 +144,18 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
     def eventAddEllipse(self):
         self.addEllipse()
+        self.paint()
 
 
     def addEllipse(self):
         tmp_cx = self.lineEditCX.text()
         tmp_cy = self.lineEditCY.text()
-        tmp_rx = self.lineEditElipseW.text()
-        tmp_ry = self.lineEditElipseH.text()
+        tmp_rx = self.lineEditElipseH.text()
+        tmp_ry = self.lineEditElipseW.text()
         array_result = checkFloatNum(tmp_cx, tmp_cy, tmp_rx, tmp_ry)
         if array_result[0] == OK:
-            if array_result[2] > 0:
-                ellipse = Ellipse(array_result[1], array_result[2], array_result[3] / 2, array_result[4] / 2, self.colorPen, self.method)
+            if array_result[3] > 0 and array_result[4] > 0:
+                ellipse = Ellipse(array_result[1], array_result[2], array_result[3], array_result[4], self.colorPen, self.method)
                 self.ellipses.append(ellipse)
             else:
                 self.senderErrorMessage("Ошибка при вводе значений построения эллипса!")
@@ -162,6 +165,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
     def eventAddSpectorCircle(self):
         self.addSpectorCircle()
+        self.paint()
 
 
     def addSpectorCircle(self):
@@ -190,29 +194,29 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
     def eventAddSpectorEllipse(self):
         self.addSpectorEllipse()
+        self.paint()
 
 
     def addSpectorEllipse(self):
         tmp_cx = self.lineEditCX.text()
         tmp_cy = self.lineEditCY.text()
-        tmp_start_h = self.lineEditCircleSpectorH.text()
-        tmp_start_w = self.lineEditCircleSpectorW.text()
+        tmp_start_h = self.lineEditElipseSpectorH.text()
+        tmp_start_w = self.lineEditElipseSpectorW.text()
         tmp_step_r = self.lineEditStep.text()
         tmp_cnt = self.lineEditCount.text()
-        array_result_start = checkFloatNum(tmp_cx, tmp_cy, tmp_start_h, tmp_start_w)
-        array_result_step = checkIntNum(tmp_step_r, tmp_cnt)
+        array_result_start = checkFloatNum(tmp_cx, tmp_cy, tmp_start_h, tmp_start_w, tmp_step_r)
+        array_result_step = checkIntNum(tmp_cnt)
         if array_result_start[0] == OK and array_result_step[0] == OK:
             cx = array_result_start[1]
             cy = array_result_start[2]
-            if array_result_start[3] > 0 and array_result_step[1] > 0 and array_result_step[2] > 0:
+            if array_result_start[3] > 0 and array_result_start[4] > 0 and array_result_start[5] > 0 and array_result_step[1] > 0:
                 h = array_result_start[3]
                 w = array_result_start[4]
-                step = array_result_step[1]
-                for i in range(array_result_step[2]):
-                        ellipse = Ellipse(cx, cy, h / 2, w / 2, self.colorPen, self.method)
-                        self.ellipses.append(ellipse)
-                        h += step
-                        w += step
+                step = array_result_start[5]
+                for i in range(array_result_step[1]):
+                    self.ellipses.append(Ellipse(cx, cy, h, w, self.colorPen, self.method))
+                    h += step
+                    w += step
             else:
                 self.senderErrorMessage("Ошибка при вводе значений спектра кругов!")
         else:
@@ -221,6 +225,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
     def eventCleanCanvas(self):
         self.ellipses.clear()
+        self.initQPainter()
         self.paint()
 
 
@@ -231,18 +236,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
         painter.setPen(pen)
 
         for ellipse in self.ellipses:
-            print(ellipse.color)
-            pen.setColor(QColor(ellipse.color))
-            painter.setPen(pen)
-            rect = QRectF(
-                (ellipse.cx - ellipse.rx) + X_OFFSET,
-                Y_OFFSET - (ellipse.cy + ellipse.ry),
-                ellipse.rx * 2,
-                ellipse.ry * 2
-            )
-            print((ellipse.cx - ellipse.rx) + X_OFFSET)
-            print(Y_OFFSET - (ellipse.cy - ellipse.ry))
-            painter.drawEllipse(rect)
+            mainPainter(painter, pen, ellipse)
         painter.end()
         self.canvas.repaint()
 

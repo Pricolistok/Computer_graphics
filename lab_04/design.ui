@@ -328,7 +328,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Ширина</string>
+     <string>По оси Y</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelColorCircleR_3">
@@ -346,7 +346,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Длина</string>
+     <string>По оси X</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEditCX">
@@ -575,7 +575,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Начальная высота</string>
+     <string>По оси Y</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelColorBG_6">
@@ -593,7 +593,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Начальная длина</string>
+     <string>По оси X</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelColorCircleR_7">

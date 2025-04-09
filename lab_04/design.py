@@ -263,8 +263,8 @@ class Ui_MainWindow(object):
         self.labelColorBG_3.setText(_translate("MainWindow", "Построение эллипса"))
         self.pushButtonDrawEllipse.setText(_translate("MainWindow", "Нарисовать\n"
 "эллипс"))
-        self.labelColorCircleR_2.setText(_translate("MainWindow", "Ширина"))
-        self.labelColorCircleR_3.setText(_translate("MainWindow", "Длина"))
+        self.labelColorCircleR_2.setText(_translate("MainWindow", "По оси Y"))
+        self.labelColorCircleR_3.setText(_translate("MainWindow", "По оси X"))
         self.labelColorYC.setText(_translate("MainWindow", "Yc"))
         self.labelXC.setText(_translate("MainWindow", "Xc"))
         self.label_5.setText(_translate("MainWindow", "__________________________________________________________________________________________________"))
@@ -277,8 +277,8 @@ class Ui_MainWindow(object):
         self.labelColorBG_5.setText(_translate("MainWindow", "Построение спектра\n"
 "окружности"))
         self.labelColorCircleR_5.setText(_translate("MainWindow", "Начальный радиус"))
-        self.labelColorCircleR_6.setText(_translate("MainWindow", "Начальная высота"))
-        self.labelColorBG_6.setText(_translate("MainWindow", "Начальная длина"))
+        self.labelColorCircleR_6.setText(_translate("MainWindow", "По оси Y"))
+        self.labelColorBG_6.setText(_translate("MainWindow", "По оси X"))
         self.labelColorCircleR_7.setText(_translate("MainWindow", "Шаг отрисовки"))
         self.labelColorCircleR_8.setText(_translate("MainWindow", "Количество фигур"))
         self.pushButtonClear.setText(_translate("MainWindow", "Очистка"))
