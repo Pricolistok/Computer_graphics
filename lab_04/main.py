@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtCore import QRectF, QPoint
+from timeanalysis import *
 from PyQt5.QtGui import QPen, QColor, QPainter, QPixmap
 from PyQt5.QtWidgets import QApplication, QMainWindow, QColorDialog, QMessageBox
 from design import Ui_MainWindow
@@ -7,6 +7,8 @@ from consts import *
 from errors import *
 from ellipses import Ellipse
 from maindrawer import mainPainter
+from time import time
+from math import pi
 
 
 def checkFloatNum(*args):
@@ -46,6 +48,9 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
         self.ellipses = []
 
+        self.time_circle = DatasetCircle()
+        self.time_ellipse = DatasetEllipse()
+
         self.initConnections()
         self.initQPainter()
         self.initDesign()
@@ -64,7 +69,110 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.pushButtonDrawSpectorCircle.clicked.connect(self.eventAddSpectorCircle)
         self.pushButtonDrawSpectorEllipse.clicked.connect(self.eventAddSpectorEllipse)
         self.pushButtonClear.clicked.connect(self.eventCleanCanvas)
+        self.pushButtonData.clicked.connect(self.createDataset)
         self.comboBox.activated.connect(self.eventSetMethod)
+
+    def createDataset(self):
+        self.time_ellipse.param.clear()
+        self.time_ellipse.canonical.clear()
+        self.time_ellipse.bresenham.clear()
+        self.time_ellipse.middle.clear()
+        self.time_ellipse.radius.clear()
+
+        self.time_circle.param.clear()
+        self.time_circle.canonical.clear()
+        self.time_circle.bresenham.clear()
+        self.time_circle.middle.clear()
+        self.time_circle.radius.clear()
+
+        min_radius = 100
+        max_radius = 10000
+        step = 100
+
+        self.pixMap = QPixmap(WIDTH_CANVAS, HEIGHT_CANVAS)
+        self.canvas.setPixmap(self.pixMap)
+
+        painter = QPainter(self.canvas.pixmap())
+        pen = QPen()
+        pen.setColor(QColor(self.colorPen))
+        painter.setPen(pen)
+
+        self.createDatasetCircle(min_radius, max_radius, step, painter, pen)
+        self.createDatasetEllipse(min_radius, max_radius, step, painter, pen)
+
+        painter.end()
+        self.canvas.repaint()
+
+        creatorGraphics(self.time_circle, self.time_ellipse)
+
+
+    def createDatasetCircle(self, min_radius, max_radius, step, painter, pen):
+
+        for radius in range(min_radius, max_radius, step):
+            # start = datetime.now()
+            # mainPainter(painter, pen, Ellipse(0, 0, radius, radius, self.colorPen, Methods.METHOD_LIB), False)
+            # finish = datetime.now()
+            # self.time_circle.lib_func.append(start - finish)
+
+            start = time()
+            mainPainter(painter, pen, Ellipse(0, 0, radius, radius, self.colorPen, Methods.METHOD_CANONICAL),
+                        False)
+            finish = time()
+            self.time_circle.canonical.append((finish - start) * 1_000)
+
+            start = time()
+            mainPainter(painter, pen, Ellipse(0, 0, radius, radius, self.colorPen, Methods.METHOD_PARAM),
+                        False)
+            finish = time()
+            self.time_circle.param.append((finish - start) * 1_000)
+
+            start = time()
+            mainPainter(painter, pen, Ellipse(0, 0, radius, radius, self.colorPen, Methods.METHOD_AVERAGE),
+                        False)
+            finish = time()
+            self.time_circle.middle.append((finish - start) * 1_000)
+
+            start = time()
+            mainPainter(painter, pen, Ellipse(0, 0, radius, radius, self.colorPen, Methods.METHOD_BRESENHAM),
+                        False)
+            finish = time()
+            self.time_circle.bresenham.append((finish - start) * 1_000)
+
+            self.time_circle.radius.append(radius)
+
+
+    def createDatasetEllipse(self, min_radius, max_radius, step, painter, pen):
+        for radius in range(min_radius, max_radius, step):
+            # start = datetime.now()
+            # mainPainter(painter, pen, Ellipse(0, 0, radius, radius, self.colorPen, Methods.METHOD_LIB), False)
+            # finish = datetime.now()
+            # self.time_ellipse.lib_func.append(start - finish)
+
+            start = time()
+            mainPainter(painter, pen, Ellipse(0, 0, radius, radius + 20, self.colorPen, Methods.METHOD_CANONICAL),
+                        False)
+            finish = time()
+            self.time_ellipse.canonical.append((finish - start) * 1_000)
+
+            start = time()
+            mainPainter(painter, pen, Ellipse(0, 0, radius, radius, self.colorPen, Methods.METHOD_PARAM),
+                        False)
+            finish = time()
+            self.time_ellipse.param.append((finish - start) * 1_000)
+
+            start = time()
+            mainPainter(painter, pen, Ellipse(0, 0, radius, radius, self.colorPen, Methods.METHOD_AVERAGE),
+                        False)
+            finish = time()
+            self.time_ellipse.middle.append((finish - start) * 1_000)
+
+            start = time()
+            mainPainter(painter, pen, Ellipse(0, 0, radius, radius, self.colorPen, Methods.METHOD_BRESENHAM),
+                        False)
+            finish = time()
+            self.time_ellipse.bresenham.append((finish - start) * 1_000)
+
+            self.time_ellipse.radius.append(radius)
 
 
     def eventSetMethod(self, index: int):
