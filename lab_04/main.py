@@ -1,12 +1,12 @@
 import sys
-from PyQt5.QtCore import QRectF
+from PyQt5.QtCore import QRectF, QPoint
 from PyQt5.QtGui import QPen, QColor, QPainter, QPixmap
 from PyQt5.QtWidgets import QApplication, QMainWindow, QColorDialog, QMessageBox
 from design import Ui_MainWindow
 from consts import *
 from errors import *
 from ellipses import Ellipse
-from draw import mainPainter
+from maindrawer import mainPainter
 
 
 def checkFloatNum(*args):
@@ -74,11 +74,11 @@ class MainApp(QMainWindow, Ui_MainWindow):
             case 1:
                 self.method = Methods.METHOD_CANONICAL
             case 2:
-                self.method = Methods.METHOD_CANONICAL
+                self.method = Methods.METHOD_PARAM
             case 3:
-                self.method = Methods.METHOD_CANONICAL
+                self.method = Methods.METHOD_AVERAGE
             case 4:
-                self.method = Methods.METHOD_LIB
+                self.method = Methods.METHOD_BRESENHAM
 
 
 
@@ -226,6 +226,9 @@ class MainApp(QMainWindow, Ui_MainWindow):
     def eventCleanCanvas(self):
         self.ellipses.clear()
         self.initQPainter()
+        self.colorBG = 'black'
+        self.colorPen = 'white'
+        self.initDesign()
         self.paint()
 
 
