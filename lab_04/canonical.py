@@ -7,7 +7,7 @@ def canonicalCircle(canvas, xc, yc, r, draw):
 
     border = round(xc + r / m.sqrt(2))
 
-    for x in range(xc, border + 1):
+    for x in range(round(xc), border + 1):
         y = yc + m.sqrt(sqr_r - (x - xc) ** 2)
         if draw:
             drawSimPixels(canvas, [x, y], xc, yc, circle=True)
