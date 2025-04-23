@@ -1,10 +1,37 @@
 import sys
+from PyQt5.QtCore import Qt, pyqtSignal, QPoint, QRect
 from PyQt5.QtGui import QPen, QColor, QPainter, QPixmap
-from PyQt5.QtWidgets import QApplication, QMainWindow, QColorDialog, QMessageBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QColorDialog, QMessageBox, QButtonGroup, QRadioButton, QLabel
 from design import Ui_MainWindow
 from consts import *
 from errors import *
 from ellipses import Ellipse
+from dataclasses import dataclass
+
+
+@dataclass
+class Point:
+    x: int
+    y: int
+
+
+@dataclass
+class Figure:
+    dots: list[Point]
+
+
+@dataclass
+class Circle:
+    center: Point
+    radius: int
+
+
+@dataclass
+class Ellipse:
+    center: Point
+    radiusX = int
+    radiusY: int
+
 
 
 def checkFloatNum(*args):
@@ -31,6 +58,25 @@ def checkIntNum(*args):
     return array_result
 
 
+class CanvasLabel(QLabel):
+    clickedLeft = pyqtSignal(QPoint)
+    clickedRight = pyqtSignal(QPoint)
+    clickedMiddle = pyqtSignal(QPoint)
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setMouseTracking(True)
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.clickedLeft.emit(event.pos())
+        elif event.button() == Qt.RightButton:
+            self.clickedRight.emit(event.pos())
+        elif event.button() == Qt.MiddleButton:
+            self.clickedMiddle.emit(event.pos())
+
+
+
 class MainApp(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
@@ -41,18 +87,59 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.colorBG = 'black'
         self.colorBorder = 'white'
         self.colorShading = 'red'
-        self.method = Methods.METHOD_LIB
+        self.dataset = []
+        self.dotsSeed = []
+        self.button_group = QButtonGroup()
+        self.mode_delay = 1
 
         self.ellipses = []
+        self.tmp_dots_array = []
 
         self.initConnections()
         self.initQPainter()
         self.initDesign()
-
+        self.initRadioButton()
 
     def initQPainter(self):
+        self.canvas.setParent(None)
+        self.canvas.deleteLater()
+
+        self.canvas = CanvasLabel(self)
+        self.canvas.setGeometry(CANVAS_MARGIN_X, CANVAS_MARGIN_Y, WIDTH_CANVAS, HEIGHT_CANVAS)
+        self.canvas.setObjectName("canvas")
         self.pixMap = QPixmap(WIDTH_CANVAS, HEIGHT_CANVAS)
         self.canvas.setPixmap(self.pixMap)
+        self.canvas.setParent(self.centralwidget)
+        self.canvas.show()
+
+        self.canvas.clickedLeft.connect(self.onCanvasLeftClick)
+        self.canvas.clickedRight.connect(self.onCanvasRightClick)
+        self.canvas.clickedMiddle.connect(self.onCanvasMiddleClick)
+
+    def onCanvasLeftClick(self, pos):
+        self.tmp_dots_array.append(Point(pos.x(), pos.y()))
+
+    def onCanvasRightClick(self, pos):
+        array = self.tmp_dots_array.copy()
+        self.dataset.append(Figure(dots=array))
+        self.paint()
+
+    def onCanvasMiddleClick(self, pos):
+        self.dotsSeed.append(Point(pos.x(), pos.y()))
+
+    def initRadioButton(self):
+        self.radioButtonNoDelay.setChecked(True)
+        self.button_group = QButtonGroup()
+        self.button_group.addButton(self.radioButtonDelay)
+        self.button_group.addButton(self.radioButtonNoDelay)
+        self.button_group.buttonClicked.connect(self.eventRadioButton)
+
+
+    def eventRadioButton(self, button: QRadioButton):
+        if button.text() == 'С задержкой':
+            self.mode_delay = 0
+        else:
+            self.mode_delay = 1
 
 
     def initConnections(self):
@@ -173,7 +260,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.ellipses.clear()
         self.initQPainter()
         self.colorBG = 'black'
-        self.colorPen = 'white'
+        self.colorBorder = 'white'
         self.initDesign()
         self.paint()
 
@@ -181,12 +268,15 @@ class MainApp(QMainWindow, Ui_MainWindow):
     def paint(self):
         painter = QPainter(self.canvas.pixmap())
         pen = QPen()
-        pen.setColor(QColor(self.colorPen))
+        pen.setColor(QColor(self.colorBorder))
         painter.setPen(pen)
-
-        # for ellipse in self.ellipses:
-        #     mainPainter(painter, pen, ellipse)
-        # painter.end()
+        for i in range(len(self.dataset) - 1):
+            if type(self.dataset[i]) == Figure:
+                if len(self.dataset[i].dots) > 1:
+                    print("JJJJ")
+                    print(len(self.dataset[i].dots))
+                    for j in range(len(self.dataset[i].dots) - 1):
+                        painter.drawLine(self.dataset[i].dots[j].x, self.dataset[i].dots[j].y, self.dataset[i].dots[j + 1].x, self.dataset[i].dots[j + 1].y)
         self.canvas.repaint()
 
 
