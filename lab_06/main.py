@@ -5,8 +5,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QColorDialog, QMessageBox
 from design import Ui_MainWindow
 from consts import *
 from errors import *
-from ellipses import Ellipse
 from dataclasses import dataclass
+
 
 
 @dataclass
@@ -29,21 +29,8 @@ class Circle:
 @dataclass
 class Ellipse:
     center: Point
-    radiusX = int
+    radiusX: int
     radiusY: int
-
-
-
-def checkFloatNum(*args):
-    error_code = OK
-    array_result = [error_code]
-    try:
-        for i in args:
-            array_result.append(float(i))
-    except ValueError:
-        array_result[-1] = 0
-        array_result[0] = ERROR_INPUT_DATA
-    return array_result
 
 
 def checkIntNum(*args):
@@ -87,12 +74,14 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.colorBG = 'black'
         self.colorBorder = 'white'
         self.colorShading = 'red'
-        self.dataset = []
+        self.dataset_figures = []
+        self.dataset_circles = []
+        self.dataset_ellipses = []
         self.dotsSeed = []
         self.button_group = QButtonGroup()
         self.mode_delay = 1
+        self.mode_draw = None
 
-        self.ellipses = []
         self.tmp_dots_array = []
 
         self.initConnections()
@@ -118,11 +107,18 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
     def onCanvasLeftClick(self, pos):
         self.tmp_dots_array.append(Point(pos.x(), pos.y()))
+        print(len(self.tmp_dots_array))
+        self.mode_draw = Methods.MODE_DRAW_FIGURE
+        print(self.mode_draw)
+        self.paint()
 
     def onCanvasRightClick(self, pos):
+        self.tmp_dots_array.append(self.tmp_dots_array[0])
         array = self.tmp_dots_array.copy()
-        self.dataset.append(Figure(dots=array))
+        self.dataset_figures.append(Figure(dots=array))
+        self.mode_draw = Methods.MODE_DRAW_FIGURE
         self.paint()
+        self.tmp_dots_array.clear()
 
     def onCanvasMiddleClick(self, pos):
         self.dotsSeed.append(Point(pos.x(), pos.y()))
@@ -143,7 +139,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
 
     def initConnections(self):
-        self.pushButtonClearCanvas.clicked.connect(self.eventCleaner)
+        self.pushButtonClearCanvas.clicked.connect(self.eventCleanCanvas)
         self.pushButtonColorBG.clicked.connect(self.eventChooseColorBG)
         self.pushButtonColorBorder.clicked.connect(self.eventChooseColorBorder)
         self.pushButtonColorFigure.clicked.connect(self.eventChooseColorShading)
@@ -186,7 +182,8 @@ class MainApp(QMainWindow, Ui_MainWindow):
         pass
 
     def eventCreateEllipse(self):
-        pass
+        self.addEllipse()
+        self.paint()
 
     def eventCreateDot(self):
         pass
@@ -214,54 +211,33 @@ class MainApp(QMainWindow, Ui_MainWindow):
         message.exec_()
 
 
-    def eventAddCircle(self):
-        self.addCircle()
-        self.paint()
-
-
-    def addCircle(self):
-        tmp_cx = self.lineEditCX.text()
-        tmp_cy = self.lineEditCY.text()
-        tmp_r = self.lineEditCircleR.text()
-        array_result = checkFloatNum(tmp_cx, tmp_cy, tmp_r)
-        if array_result[0] == OK:
-            if array_result[3] > 0:
-                ellipse = Ellipse(array_result[1], array_result[2], array_result[3], array_result[3], self.colorPen, self.method)
-                self.ellipses.append(ellipse)
-            else:
-                self.senderErrorMessage("Ошибка при вводе значений построения круга!")
-        else:
-            self.senderErrorMessage("Ошибка при вводе значений построения круга!")
-
-
-    def eventAddEllipse(self):
-        self.addEllipse()
-        self.paint()
-
-
     def addEllipse(self):
-        tmp_cx = self.lineEditCX.text()
-        tmp_cy = self.lineEditCY.text()
-        tmp_rx = self.lineEditElipseH.text()
-        tmp_ry = self.lineEditElipseW.text()
-        array_result = checkFloatNum(tmp_cx, tmp_cy, tmp_rx, tmp_ry)
+        tmp_cx = self.lineEditXC.text()
+        tmp_cy = self.lineEditYC.text()
+        tmp_rx = self.lineEditRX.text()
+        tmp_ry = self.lineEditRY.text()
+        array_result = checkIntNum(tmp_cx, tmp_cy, tmp_rx, tmp_ry)
         if array_result[0] == OK:
             if array_result[3] > 0 and array_result[4] > 0:
-                ellipse = Ellipse(array_result[1], array_result[2], array_result[3], array_result[4], self.colorPen, self.method)
-                self.ellipses.append(ellipse)
+                point = Point(array_result[1], array_result[2])
+                ellipse = Ellipse(point, array_result[3], array_result[4])
+                self.dataset_ellipses.append(ellipse)
             else:
                 self.senderErrorMessage("Ошибка при вводе значений построения эллипса!")
         else:
             self.senderErrorMessage("Ошибка при вводе значений построения эллипса!")
-
+        self.mode_draw = Methods.MODE_DRAW_ELLIPSE
+        self.paint()
 
 
     def eventCleanCanvas(self):
-        self.ellipses.clear()
         self.initQPainter()
-        self.colorBG = 'black'
-        self.colorBorder = 'white'
+        self.dataset_figures.clear()
+        self.dataset_circles.clear()
+        self.dataset_ellipses.clear()
+        self.tmp_dots_array.clear()
         self.initDesign()
+        self.mode_draw = Methods.MODE_DRAW_CLEAR
         self.paint()
 
 
@@ -270,14 +246,22 @@ class MainApp(QMainWindow, Ui_MainWindow):
         pen = QPen()
         pen.setColor(QColor(self.colorBorder))
         painter.setPen(pen)
-        for i in range(len(self.dataset) - 1):
-            if type(self.dataset[i]) == Figure:
-                if len(self.dataset[i].dots) > 1:
-                    print("JJJJ")
-                    print(len(self.dataset[i].dots))
-                    for j in range(len(self.dataset[i].dots) - 1):
-                        painter.drawLine(self.dataset[i].dots[j].x, self.dataset[i].dots[j].y, self.dataset[i].dots[j + 1].x, self.dataset[i].dots[j + 1].y)
-        self.canvas.repaint()
+
+        match self.mode_draw:
+            case Methods.MODE_DRAW_FIGURE:
+                if len(self.tmp_dots_array) > 1:
+                    painter.drawLine(self.tmp_dots_array[-2].x, self.tmp_dots_array[-2].y, self.tmp_dots_array[-1].x, self.tmp_dots_array[-1].y)
+            case Methods.MODE_DRAW_SEED:
+                pass
+            case Methods.MODE_DRAW_ELLIPSE:
+                painter.drawEllipse(QRect((self.dataset_ellipses[-1].center.x - self.dataset_ellipses[-1].radiusX), (self.dataset_ellipses[-1].center.y - self.dataset_ellipses[-1].radiusY),
+                                           self.dataset_ellipses[-1].radiusX * 2, self.dataset_ellipses[-1].radiusY * 2))
+                pass
+            case Methods.MODE_DRAW_CLEAR:
+                self.canvas.repaint()
+            case _:
+                pass
+        self.canvas.update()
 
 
 def main():
