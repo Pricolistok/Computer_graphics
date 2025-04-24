@@ -246,6 +246,9 @@ class MainApp(QMainWindow, Ui_MainWindow):
         if not self.dataset_figures and not self.dataset_circles and not self.dataset_ellipses and not self.tmp_dots_array:
             self.senderErrorMessage("Фигура не введена для закраски!")
             return
+        if len(self.tmp_dots_array) != 0:
+            self.senderErrorMessage("Фигура не замкнута!")
+            return
         if not self.dotsSeed:
             self.senderErrorMessage("Затравочный пиксел не установлен!")
             return
