@@ -16,6 +16,11 @@ class Point:
 
 
 @dataclass
+class SeedPoint:
+    point: Point
+    color: str
+
+@dataclass
 class Figure:
     dots: list[Point]
 
@@ -49,18 +54,30 @@ class CanvasLabel(QLabel):
     clickedLeft = pyqtSignal(QPoint)
     clickedRight = pyqtSignal(QPoint)
     clickedMiddle = pyqtSignal(QPoint)
+    draggedLeft = pyqtSignal(QPoint)
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setMouseTracking(True)
+        self.left_button_pressed = False
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
+            self.left_button_pressed = True
             self.clickedLeft.emit(event.pos())
         elif event.button() == Qt.RightButton:
             self.clickedRight.emit(event.pos())
         elif event.button() == Qt.MiddleButton:
             self.clickedMiddle.emit(event.pos())
+
+    def mouseMoveEvent(self, event):
+        if self.left_button_pressed:
+            self.draggedLeft.emit(event.pos())
+
+    def mouseReleaseEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.left_button_pressed = False
+
 
 
 
@@ -88,6 +105,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.initQPainter()
         self.initDesign()
         self.initRadioButton()
+        self.initMouse()
 
     def initQPainter(self):
         self.canvas.setParent(None)
@@ -101,15 +119,15 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.canvas.setParent(self.centralwidget)
         self.canvas.show()
 
+    def initMouse(self):
         self.canvas.clickedLeft.connect(self.onCanvasLeftClick)
         self.canvas.clickedRight.connect(self.onCanvasRightClick)
         self.canvas.clickedMiddle.connect(self.onCanvasMiddleClick)
+        self.canvas.draggedLeft.connect(self.onCanvasLeftDragged)
 
     def onCanvasLeftClick(self, pos):
         self.tmp_dots_array.append(Point(pos.x(), pos.y()))
-        print(len(self.tmp_dots_array))
         self.mode_draw = Methods.MODE_DRAW_FIGURE
-        print(self.mode_draw)
         self.paint()
 
     def onCanvasRightClick(self, pos):
@@ -120,8 +138,13 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.paint()
         self.tmp_dots_array.clear()
 
+    def onCanvasLeftDragged(self, pos):
+        self.tmp_dots_array.append(Point(pos.x(), pos.y()))
+        self.mode_draw = Methods.MODE_DRAW_FIGURE
+        self.paint()
+
     def onCanvasMiddleClick(self, pos):
-        self.dotsSeed.append(Point(pos.x(), pos.y()))
+        self.dotsSeed.append(SeedPoint(Point(pos.x(), pos.y()), self.colorShading))
 
     def initRadioButton(self):
         self.radioButtonNoDelay.setChecked(True)
@@ -179,20 +202,22 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.pushButtonColorBorder.setStyleSheet(f"background-color: {self.colorBorder}")
 
     def eventCreateCircle(self):
-        pass
+        self.addCircle()
+        self.paint()
 
     def eventCreateEllipse(self):
         self.addEllipse()
         self.paint()
 
     def eventCreateDot(self):
-        pass
+        self.addDotCoords()
+        self.paint()
 
     def eventCreateFigure(self):
-        pass
+        self.addFigure()
 
     def eventCreateSeed(self):
-        pass
+        self.addDotSeed()
 
     def eventShading(self):
         pass
@@ -209,6 +234,53 @@ class MainApp(QMainWindow, Ui_MainWindow):
         message.setWindowTitle("Ошибка")
         message.setText(text)
         message.exec_()
+
+    def addDotCoords(self):
+        tmp_x = self.lineEditLineCreatorX.text()
+        tmp_y = self.lineEditLineCreatorY.text()
+        array_result = checkIntNum(tmp_x, tmp_y)
+        if array_result[0] == OK:
+            point = Point(array_result[1], array_result[2])
+            self.tmp_dots_array.append(point)
+        else:
+            self.senderErrorMessage("Ошибка при вводе значений построения точки!")
+        self.mode_draw = Methods.MODE_DRAW_FIGURE
+
+    def addDotSeed(self):
+        tmp_x = self.lineEditLineCreatorX.text()
+        tmp_y = self.lineEditLineCreatorY.text()
+        array_result = checkIntNum(tmp_x, tmp_y)
+        if array_result[0] == OK:
+            seed_point = SeedPoint(Point(array_result[1], array_result[2]), self.colorShading)
+            self.dotsSeed.append(seed_point)
+        else:
+            self.senderErrorMessage("Ошибка при вводе значений построения точки затравки!")
+        print(self.dotsSeed)
+
+    def addFigure(self):
+        self.tmp_dots_array.append(self.tmp_dots_array[0])
+        array = self.tmp_dots_array.copy()
+        self.dataset_figures.append(Figure(dots=array))
+        self.mode_draw = Methods.MODE_DRAW_FIGURE
+        self.paint()
+        self.tmp_dots_array.clear()
+
+    def addCircle(self):
+        tmp_cx = self.lineEditXC.text()
+        tmp_cy = self.lineEditYC.text()
+        tmp_r = self.lineEditR.text()
+        array_result = checkIntNum(tmp_cx, tmp_cy, tmp_r)
+        if array_result[0] == OK:
+            if array_result[3] > 0:
+                point = Point(array_result[1], array_result[2])
+                circle = Circle(point, array_result[3])
+                self.dataset_circles.append(circle)
+            else:
+                self.senderErrorMessage("Ошибка при вводе значений построения окружности!")
+        else:
+            self.senderErrorMessage("Ошибка при вводе значений построения окружности!")
+        self.mode_draw = Methods.MODE_DRAW_CIRCLE
+        self.paint()
 
 
     def addEllipse(self):
@@ -256,7 +328,10 @@ class MainApp(QMainWindow, Ui_MainWindow):
             case Methods.MODE_DRAW_ELLIPSE:
                 painter.drawEllipse(QRect((self.dataset_ellipses[-1].center.x - self.dataset_ellipses[-1].radiusX), (self.dataset_ellipses[-1].center.y - self.dataset_ellipses[-1].radiusY),
                                            self.dataset_ellipses[-1].radiusX * 2, self.dataset_ellipses[-1].radiusY * 2))
-                pass
+
+            case Methods.MODE_DRAW_CIRCLE:
+                painter.drawEllipse(QRect((self.dataset_circles[-1].center.x - self.dataset_circles[-1].radius), (self.dataset_circles[-1].center.y - self.dataset_circles[-1].radius),
+                                           self.dataset_circles[-1].radius * 2, self.dataset_circles[-1].radius * 2))
             case Methods.MODE_DRAW_CLEAR:
                 self.canvas.repaint()
             case _:
