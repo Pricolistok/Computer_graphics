@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtCore import Qt, pyqtSignal, QPoint, QRect
-from PyQt5.QtGui import QPen, QColor, QPainter, QPixmap
+from PyQt5.QtGui import QPen, QColor, QPainter, QPixmap, QIcon
 from PyQt5.QtWidgets import QApplication, QMainWindow, QColorDialog, QMessageBox, QButtonGroup, QRadioButton, QLabel
 from design import Ui_MainWindow
 from consts import *
@@ -86,6 +86,8 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
 
         self.pixMap = None
+        self.setWindowTitle('CG lab_06')
+        self.setWindowIcon(QIcon('icon.ico'))
 
         self.colorBG = 'black'
         self.colorBorder = 'white'
