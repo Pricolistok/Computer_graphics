@@ -5,15 +5,13 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QColorDialog, QMessageBox
 from design import Ui_MainWindow
 from consts import *
 from errors import *
-from dataclasses import dataclass
-
-
+from brezenhem import *
+from filler import line_by_line_filling_algorithm_with_seed
 
 @dataclass
 class Point:
     x: int
     y: int
-
 
 @dataclass
 class SeedPoint:
@@ -95,6 +93,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.dataset_circles = []
         self.dataset_ellipses = []
         self.dotsSeed = []
+        self.allPoints: list[Point] = []
         self.button_group = QButtonGroup()
         self.mode_delay = 1
         self.mode_draw = None
@@ -106,6 +105,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.initDesign()
         self.initRadioButton()
         self.initMouse()
+        self.plainTextEditData.appendPlainText("_____START_____")
 
     def initQPainter(self):
         self.canvas.setParent(None)
@@ -129,22 +129,33 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.tmp_dots_array.append(Point(pos.x(), pos.y()))
         self.mode_draw = Methods.MODE_DRAW_FIGURE
         self.paint()
+        self.appendLog('X: {:>6d} Y: {:>6d}'.format(pos.x(), pos.y()))
 
     def onCanvasRightClick(self, pos):
+        if len(self.tmp_dots_array) < 2:
+            self.senderErrorMessage('Ошибка, фигура не может быть замкнута!')
+            return
         self.tmp_dots_array.append(self.tmp_dots_array[0])
         array = self.tmp_dots_array.copy()
         self.dataset_figures.append(Figure(dots=array))
         self.mode_draw = Methods.MODE_DRAW_FIGURE
         self.paint()
+        self.allPoints += self.tmp_dots_array
         self.tmp_dots_array.clear()
+        self.appendLog('____CLOSED____')
 
     def onCanvasLeftDragged(self, pos):
         self.tmp_dots_array.append(Point(pos.x(), pos.y()))
         self.mode_draw = Methods.MODE_DRAW_FIGURE
         self.paint()
+        self.appendLog('X: {:>6d} Y: {:>6d}'.format(pos.x(), pos.y()))
 
     def onCanvasMiddleClick(self, pos):
         self.dotsSeed.append(SeedPoint(Point(pos.x(), pos.y()), self.colorShading))
+        self.eventShading()
+        self.appendLog('Seed Point')
+        self.appendLog('X: {:>6d} Y: {:>6d}'.format(pos.x(), pos.y()))
+        self.appendLog('____CLOSED____')
 
     def initRadioButton(self):
         self.radioButtonNoDelay.setChecked(True)
@@ -179,12 +190,14 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.pixMap.fill(QColor(self.colorBG))
         self.pushButtonColorBG.setStyleSheet(f"background-color: {self.colorBG}")
         self.pushButtonColorFigure.setStyleSheet(f"background-color: {self.colorShading}")
+        self.plainTextEditData.setReadOnly(True)
+        self.plainTextEditData.setStyleSheet("background-color: white")
         self.pushButtonColorBorder.setStyleSheet(f"background-color: {self.colorBorder}")
 
-
-
-    def eventCleaner(self):
-        pass
+    def appendLog(self, text: str):
+        self.plainTextEditData.appendPlainText(text)
+        scrollbar = self.plainTextEditData.verticalScrollBar()
+        scrollbar.setValue(scrollbar.maximum())
 
     def eventChooseColorBG(self):
         self.colorBG = self.eventChooseColor()
@@ -219,9 +232,53 @@ class MainApp(QMainWindow, Ui_MainWindow):
     def eventCreateSeed(self):
         self.addDotSeed()
 
-    def eventShading(self):
-        pass
+    def checkerFigures(self):
+        for i in self.dataset_figures:
+            if i[0] != i[-1]:
+                return ERROR
+        return OK
 
+    def eventShading(self):
+        print(self.dotsSeed)
+        if not self.dataset_figures and not self.dataset_circles and not self.dataset_ellipses and not self.tmp_dots_array:
+            self.senderErrorMessage("Фигура не введена для закраски!")
+            return
+        if not self.dotsSeed:
+            self.senderErrorMessage("Затравочный пиксел не установлен!")
+            return
+        if self.colorBorder == self.colorShading:
+            self.senderErrorMessage("Цвет границы и цвет закраски не должны совпадать!")
+            return
+        if self.colorBG == self.colorBorder:
+            self.senderErrorMessage("Цвет границы и цвет фона не должны совпадать!")
+            return
+        if self.colorBG == self.colorShading:
+            self.senderErrorMessage("Цвет фона и цвет закраски не должны совпадать!")
+            return
+
+        delay = not self.mode_delay
+        last_seed = self.dotsSeed[-1].point
+
+        painter = QPainter(self.canvas.pixmap())
+        pen = QPen()
+        pen.setColor(QColor(self.colorShading))
+        painter.setPen(pen)
+        from filler import Point as SeedPointClass
+        try:
+            line_by_line_filling_algorithm_with_seed(
+                painter,
+                self.canvas,
+                self.canvas.pixmap(),
+                self.colorBorder,
+                self.colorShading,
+                SeedPointClass(last_seed.x, last_seed.y),
+                delay,
+            )
+        except Exception as e:
+            import traceback
+            print("Ошибка при выполнении закраски:")
+            traceback.print_exc()
+            self.senderErrorMessage(f"Ошибка: {e}")
 
     @staticmethod
     def eventChooseColor():
@@ -244,7 +301,9 @@ class MainApp(QMainWindow, Ui_MainWindow):
             self.tmp_dots_array.append(point)
         else:
             self.senderErrorMessage("Ошибка при вводе значений построения точки!")
+            return
         self.mode_draw = Methods.MODE_DRAW_FIGURE
+        self.appendLog('X: {:>6d} Y: {:>6d}'.format(array_result[1], array_result[2]))
 
     def addDotSeed(self):
         tmp_x = self.lineEditLineCreatorX.text()
@@ -255,15 +314,23 @@ class MainApp(QMainWindow, Ui_MainWindow):
             self.dotsSeed.append(seed_point)
         else:
             self.senderErrorMessage("Ошибка при вводе значений построения точки затравки!")
-        print(self.dotsSeed)
+            return
+        self.appendLog('Seed Point')
+        self.appendLog('X: {:>6d} Y: {:>6d}'.format(array_result[1], array_result[2]))
+        self.appendLog('____CLOSED____')
 
     def addFigure(self):
+        if len(self.tmp_dots_array) < 2:
+            self.senderErrorMessage('Ошибка, фигура не может быть замкнута!')
+            return
         self.tmp_dots_array.append(self.tmp_dots_array[0])
         array = self.tmp_dots_array.copy()
         self.dataset_figures.append(Figure(dots=array))
         self.mode_draw = Methods.MODE_DRAW_FIGURE
         self.paint()
+        self.allPoints += self.tmp_dots_array
         self.tmp_dots_array.clear()
+        self.appendLog('____CLOSED____')
 
     def addCircle(self):
         tmp_cx = self.lineEditXC.text()
@@ -277,10 +344,18 @@ class MainApp(QMainWindow, Ui_MainWindow):
                 self.dataset_circles.append(circle)
             else:
                 self.senderErrorMessage("Ошибка при вводе значений построения окружности!")
+                return
         else:
             self.senderErrorMessage("Ошибка при вводе значений построения окружности!")
+            return
         self.mode_draw = Methods.MODE_DRAW_CIRCLE
         self.paint()
+        points = bresenham_circle(array_result[1], array_result[2], array_result[3])
+        self.allPoints += points
+        self.appendLog('CIRCLE')
+        self.appendLog('XC: {:>6d} YC: {:>6d}'.format(array_result[1], array_result[2]))
+        self.appendLog('RX: {:>6d}'.format(array_result[3]))
+        self.appendLog('____CLOSED____')
 
 
     def addEllipse(self):
@@ -296,11 +371,18 @@ class MainApp(QMainWindow, Ui_MainWindow):
                 self.dataset_ellipses.append(ellipse)
             else:
                 self.senderErrorMessage("Ошибка при вводе значений построения эллипса!")
+                return
         else:
             self.senderErrorMessage("Ошибка при вводе значений построения эллипса!")
+            return
         self.mode_draw = Methods.MODE_DRAW_ELLIPSE
         self.paint()
-
+        points = bresenham_ellipse(array_result[1], array_result[2], array_result[3], array_result[4])
+        self.allPoints += points
+        self.appendLog('ELLIPSE')
+        self.appendLog('XC: {:>6d} YC: {:>6d}'.format(array_result[1], array_result[2]))
+        self.appendLog('RX: {:>6d} RY: {:>6d}'.format(array_result[3], array_result[4]))
+        self.appendLog('____CLOSED____')
 
     def eventCleanCanvas(self):
         self.initQPainter()
@@ -308,8 +390,11 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.dataset_circles.clear()
         self.dataset_ellipses.clear()
         self.tmp_dots_array.clear()
+        self.dotsSeed.clear()
         self.initDesign()
+        self.allPoints.clear()
         self.mode_draw = Methods.MODE_DRAW_CLEAR
+        self.initMouse()
         self.paint()
 
 

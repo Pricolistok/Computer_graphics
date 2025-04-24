@@ -603,24 +603,11 @@
      <string>------------------------------------------------------------------------------------------------------------------------</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>1160</x>
-      <y>60</y>
-      <width>261</width>
-      <height>701</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>1270</x>
-      <y>20</y>
+      <x>1320</x>
+      <y>10</y>
       <width>71</width>
       <height>31</height>
      </rect>
@@ -641,6 +628,34 @@
     <property name="text">
      <string>Зажатая левая кнопка - нарисовать
 криввую</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelTime">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>730</y>
+      <width>221</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Время закраски:</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="plainTextEditData">
+    <property name="geometry">
+     <rect>
+      <x>1233</x>
+      <y>40</y>
+      <width>221</width>
+      <height>701</height>
+     </rect>
     </property>
    </widget>
   </widget>
