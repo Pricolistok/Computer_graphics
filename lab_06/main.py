@@ -7,6 +7,7 @@ from consts import *
 from errors import *
 from brezenhem import *
 from filler import line_by_line_filling_algorithm_with_seed
+from time import time
 
 @dataclass
 class Point:
@@ -265,6 +266,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
         painter.setPen(pen)
         from filler import Point as SeedPointClass
         try:
+            start = time()
             line_by_line_filling_algorithm_with_seed(
                 painter,
                 self.canvas,
@@ -274,6 +276,8 @@ class MainApp(QMainWindow, Ui_MainWindow):
                 SeedPointClass(last_seed.x, last_seed.y),
                 delay,
             )
+            finish = time()
+            self.labelTime.setText('Время закраски: {:7.5f}c'.format(finish - start))
         except Exception as e:
             import traceback
             print("Ошибка при выполнении закраски:")
